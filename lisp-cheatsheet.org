@@ -1,0 +1,128 @@
+#+TITLE: Common Lisp Cheatsheet
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+INCLUDE: header.org
+
+This cheatsheet covers most of the stuff needed for COMP-348. Every function referenced in the
+lectures and tutorials should appear here. If there's something that I missed, please let me know!
+
+* Functions and variables
+
+| Function    | Example                     | Output     | Description                                         |
+|-------------+-----------------------------+------------+-----------------------------------------------------|
+| ~defvar~      | ~(defvar x 10)~               | X = 10     | Creates a new global variable                       |
+| ~defun~       | ~(defun f (x) ...)~           | F(X) = ... | Creates a new function                              |
+| ~set~         | ~(set 'x 20)~                 | X = 20     | Sets the value of a quoted symbol.                  |
+| ~setq~        | ~(setq x 30)~                 | X = 30     | Same as ~set~ except you don't need to quote          |
+| ~setf~        | ~(setf x 40)~                 | X = 40     | Same as ~setq~ except you can set inside lists        |
+| ~let~         | ~(let ((x 1)) x)~             | X = 1      | Creates a locally-scoped variable inside the block  |
+| ~let*~        | ~(let ((x 1) (y (+ x 2))) y)~ | 3          | Same as ~let~, but you can use previous bindings      |
+| ~defconstant~ | ~(defconstant x 10)~          | X = 10     | Creates a new global constant. Cannot change value. |
+| ~boundp~      | ~(boundp 'x)~                 | t          | Returns t if symbol is bound to a value             |
+
+* Functions
+
+| Function | Example              | Output     | Description                                                     |
+|----------+----------------------+------------+-----------------------------------------------------------------|
+| ~defun~    | ~(defun f (x) ...)~    | F(X) = ... | Creates a new function                                          |
+| ~lambda~   | ~(lambda (x) (* x 2))~ | <function> | An instance of a lambda function. Can be assigned to variables. |
+| ~funcall~  | ~(funcall #'oddp 1)~   | T          | Calls the given function with it's arguments                    |
+| ~apply~    | ~(apply #'oddp '(1))~  | T          | Calls the given function with a list of it's arguments          |
+
+* Lists
+
+| Function  | Example                  | Output     | Description                                                       |
+|-----------+--------------------------+------------+-------------------------------------------------------------------|
+| ~null~      | ~(null (list 1 2 3))~      | NIL        | Returns t if the list is empty or value is nil.                   |
+| ~listp~     | ~(listp (list 1 2 3))~     | T          | Returns t if the element passed in is a list                      |
+| ~list~      | ~(list 1 2 3)~             | '(1 2 3)   | Returns a new list of the elements passed to it.                  |
+| ~cons~      | ~(cons 1 '(2 3))~          | '(1 2 3)   | Constructs a list given a head and a tail.                        |
+| ~car~       | ~(car '(1 2 3))~           | 1          | Returns the head of a list.                                       |
+| ~cdr~       | ~(cdr '(1 2 3))~           | '(2 3)     | Returns the tail of a list.                                       |
+| ~append~    | ~(append '(1) '(2) '(3))~  | '(1 2 3)   | Appends multiple lists together.                                  |
+| ~length~    | ~(length '(1 2 3))~        | 3          | Returns the length of the given list.                             |
+| ~member~    | ~(member 2 '(1 2 3))~      | '(2 3)     | Returns the list starting at the first occurence of the element   |
+| ~copy-list~ | ~(copy-list '(1 2 3))~     | '(1 2 3)   | Returns a copy of the list, copying each element.                 |
+| ~mapcar~    | ~(mapcar #'oddp '(1 2 3))~ | '(T NIL T) | Returns a new list with a given function applied to every element |
+
+* Conditionals
+
+| Function | Example                  | Output | Description                                                          |
+|----------+--------------------------+--------+----------------------------------------------------------------------|
+| ~if~       | ~(if t 10 20)~             |     10 | If the condition is true, run the first block, otherwise the second. |
+| ~and~      | ~(and 10 20)~              |     20 | Return the last value, or nil if they're not all true.               |
+| ~or~       | ~(or nil 10)~              |     10 | Return the first non-nil value, or nil if non are true.              |
+| ~cond~     | ~(cond (nil 1) (t 2))~     |      2 | Runs the first body who's condition evaluates to true.               |
+| ~case~     | ~(case 'a ('a 1) (t 3))~   |      1 | Runs the first body who's condition evaluates to true.               |
+| ~when~     | ~(when t (print 1) 2)~     |   1, 2 | Runs the body if the condition evaluates to true.                    |
+| ~unless~   | ~(unless nil (print 1) 2)~ |   1, 2 | Runs the body if the condition evaluates to false.                   |
+| ~not~      | ~(not nil)~                |      T | Returns T if argument is NIL, returns NIL if argumnent in non-nil. |
+
+* Comparisons
+
+| Function | Example     | Output | Description                                                                  |
+|----------+-------------+--------+------------------------------------------------------------------------------|
+| ~=~        | ~(= 1 2)~     | nil    | Used for comparing the equality of /numbers/ only.                             |
+| ~<~        | ~(< 1 2)~     | t      | Checks if all arguments are smaller than the following arguments             |
+| ~>~        | ~(> 1 2)~     | nil    | Checks if all arguments are greater than the following arguments             |
+| ~<=~       | ~(<= 1 2)~    | t      | Checks if all arguments are smaller than or equal to the following arguments |
+| ~=>~       | ~(=> 1 2)~    | nil    | Checks if all arguments are greater than or equal to the following arguments |
+| ~eq~      | ~(eq 1 2)~   | nil    | Checks if two numbers or characters have the same value. |
+| ~eql~      | ~(eql 1 2)~   | nil    | Checks if two values refer to the same object or are ~eq~. |
+| ~equal~    | ~(equal 1 2)~ | nil    | Checks if two values are equal. Numbers, symbols, strings, lists, etc.       |
+
+* Numerical functions
+
+| Function | Example        | Output | Description                                             |
+|----------+----------------+--------+---------------------------------------------------------|
+| ~numberp~  | ~(numberp 1)~    |      T | Returns true if it's argument is a number.              |
+| ~zerop~    | ~(zerop 0)~      |      T | Returns true if it's argument is zero.                  |
+| ~evenp~    | ~(evenp 2)~      |      T | Returns true if it's argument is an even number.        |
+| ~oddp~     | ~(oddp 3)~       |      T | Returns true if it's argument is an odd number.         |
+| ~plusp~    | ~(plusp -1)~     |    NIL | Returns true if it's argument is a positive number      |
+| ~integerp~ | ~(integerp 1.2)~ |    NIL | Returns true if it's argument is an integer             |
+| ~+~        | ~(+ 1 2 3 4 5)~  |     15 | Takes the sum of all it's arguments                     |
+| ~-~        | ~(- 5 4 3 2 1)~  |     -5 | Subtracts all of it's arguments                         |
+| ~*~        | ~(* 1 2 3 4 5)~  |    120 | Takes the product of all it's arguments                 |
+| ~/~        | ~(/ 20 2 2)~     |      5 | Divides all of it's arguments                           |
+| ~gcd~      | ~(gcd 64 72)~    |      8 | Finds the greatest common denominator of it's arguments |
+| ~abs~      | ~(abs -3)~       |      3 | Finds the absolute value of it's argument               |
+| ~sin~      | ~(sin 0)~        |      0 | Finds sin(x)                                            |
+| ~cos~      | ~(cos 0)~        |      1 | Fins cos(x)                                             |
+
+* Output 
+
+| Function | Example              | Output  | Description                                       |
+|----------+----------------------+---------+---------------------------------------------------|
+| ~print~    | ~(print "Hello")~      | "Hello" | Prints it's arguments to stdout                   |
+| ~format~   | ~(format t "X: ~a" 'Y)~ | "X: Y"  | Print's it's formatted arguments to stdout        |
+| ~terpri~   | ~(terpri)~             | "\n"    | Prints a newline. Equivalent to ~(format t "\~%")~. |
+
+* Predicates 
+
+| Function | Example             | Output | Description                                        |
+|----------+---------------------+--------+----------------------------------------------------|
+| ~boundp~   | ~(boundp 'x)~         | T      | Returns true if symbol is bound to a value         |
+| ~null~     | ~(null (list 1 2 3))~ | NIL    | Returns true if the list is empty or value is nil. |
+| ~atom~     | ~(atom "hello")~      | T      | Returns true if it's argument is an atom or nil    |
+| ~listp~    | ~(listp '(1 2))~      | T      | Returns true if it's argument is a list or nil.    |
+| ~numberp~  | ~(numberp 1)~         | T      | Returns true if it's argument is a number.         |
+| ~evenp~    | ~(evenp 2)~           | T      | Returns true if it's argument is an even number.   |
+| ~oddp~     | ~(oddp 3)~            | T      | Returns true if it's argument is an odd number.    |
+| ~zerop~    | ~(zerop 0)~           | T      | Returns true if it's argument is zero.             |
+| ~plusp~    | ~(plusp -1)~          | NIL    | Returns true if it's argument is a positive number |
+| ~integerp~ | ~(integerp 1.2)~      | NIL    | Returns true if it's argument is an integer        |
+| ~stringp~  | ~(stringp "a")~       | T      | Returns true if it's argument is a string.         |
+| ~symbolp~  | ~(symbolp 'a)~        | T      | Returns true if it's argument is a symbol.         |
+| ~keywordp~ | ~(keywordp :a)~       | T      | Returns true if it's argument is a keyword.        |
+
+* Miscellaneous
+
+| Function | Example             | Output | Description                                                         |
+|----------+---------------------+--------+---------------------------------------------------------------------|
+| ~quote~    | ~(quote a)~           | A      | Returns it's arguments literally, as passed in.                     |
+| ~'~        | ~'a~                  | A      | Same as ~quote~, but a nice shorthand.                                |
+| ~progn~    | ~(progn (print 1) 2)~ | 1, 2   | Evaluates every expression in it's body and returns the last value. |
+
+
+

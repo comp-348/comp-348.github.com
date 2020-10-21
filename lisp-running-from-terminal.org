@@ -1,0 +1,101 @@
+#+TITLE: Running Lisp from the terminal
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+INCLUDE: header.org
+
+* Question:
+How do I run lisp code from my terminal in vscode? 
+
+There are a few different ways that you can do it, and it depends on what compiler you're
+using. Refer to the section for your compiler. 
+
+** SBCL:
+With SBCL there are two options you'll care about, ~--script~ and ~--load~. 
+
+
+<<script>>
+*** ~--script~
+The first of the two will be most like running a Python script or something like that. You pass it 
+a file, it'll evaluate the file, write to your terminal, and then exit. 
+
+So if we have the following file:
+
+#+begin_src lisp
+;; filename.lisp
+(print "hello world")
+#+end_src
+
+And then we run this in the terminal:
+
+#+begin_src bash
+$ sbcl --script filename.lisp
+"hello world"
+$
+#+end_src
+
+You can see that it'll execute the file, print things, and then exit.
+
+<<load>>
+*** ~--load~
+
+If you use ~--load~, then it will evaluate everything in your file, and then drop you into an
+interactive prompt so that you can interact with your program:
+
+So let's say we have the following file:
+
+#+begin_src lisp
+;; filename.lisp
+(defun sum (list)
+  (if list (+ (car list) (sum (cdr list))) 0))
+#+end_src
+
+And we call ~--load~ in the terminal:
+
+#+begin_src bash
+$ sbcl --load filename.lisp
+#<some preamble about sbcl you can ignore>
+,* (sum '(1 2 3 4 5))
+15
+#+end_src
+
+Then as you can see, we're able to interact with our program, call functions defined in our file and
+stuff like that right from our terminal.
+
+When we're interacting with Lisp like this, we can also reload our file without ever exiting from
+Lisp, so we can do:
+
+#+begin_src bash
+$ sbcl --load filename.lisp
+#<some preamble about sbcl you can ignore>
+,* (sum (list 1 2 3 4 5))
+15
+# Make some changes to our filename.lisp file
+,* (load "filename.lisp")
+
+T
+,* (new-function-that-wasnt-there-before)
+NIL
+#+end_src
+
+** CCL
+CCL mostly has one argument for using it at the terminal that you'll care about, which is the ~--load~
+argument. When you give CCL the ~--load~ argument, it will drop you into an interactive prompt the
+same way that it will do when using ~--load~ with SBCL. Refer to the section about [[load][~--load~]] for SBCL.
+
+** CLisp
+CLisp can be used almost the same as SBCL, with a couple differences. You have two main options with
+CLisp for how to execute your Lisp files. You can either execute the entire Lisp file and terminate
+the program after the file is done, or you can load the program into an interactive prompt and
+interact with your program.
+
+To run a file and terminal, simply do:
+ #+begin_src bash
+$ clisp filename.txt
+ #+end_src
+ 
+To know more about how this works, refer to the [[script][~--script~]] option for SBCL. Just keep in mind that
+anywhere that the ~--script~ option is provided in SBCL, you want to ignore that flag.
+
+ To load a file and interact with it, you use the ~-repl~ option. To learn about how to use this
+ option, you can refer to the [[load][~--load~]] instructions for SBCL. Just keep in mind to replace any
+ instance of ~--load~ with ~-repl~.

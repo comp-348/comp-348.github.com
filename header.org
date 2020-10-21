@@ -1,0 +1,3 @@
+#+BEGIN_CENTER
+[[file:index.org][Back]]
+#+END_CENTER

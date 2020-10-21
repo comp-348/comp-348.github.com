@@ -1,0 +1,234 @@
+#+TITLE: Debugging Lisp
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+INCLUDE: header.org
+
+* Question
+How do I debug a Lisp program?
+
+As with any programming language, when working in Lisp, we want access to a good debugger that we
+can use. Thankfully, most Lisp compilers come with a debugger built-in. Of course, you could always
+just forget about debugging and use ~print~ everywhere, but for a lot of people that's not ideal. 
+
+Debugging will likely vary depending on what Lisp compiler you're using, so for sake of my own
+sanity, I'm going to be assuming you're using SBCL. I'm sure a lot of this will work in other
+compilers too, and perhaps in the future I'll update this to use others, but for now, I'll assume
+SBCL. 
+
+** SBCL
+If you're using vscode, Atom, Sublime, Vim, etc., then you're likely just running your Lisp from your
+terminal. The way that you're able to debug is going to be partly dependend on how you're executing
+your code. If you're running it interactively, then refer to the [[load][~--load~]] section, if you're
+executing it like a script, then refer to the [[script][~--script~]] section.
+
+<<load>>
+*** ~--load~
+If you're using ~--load~, then whenever you encounter an error, SBCL will give you several options for
+how you want to proceed. For example:
+#+begin_src lisp
+$ sbcl
+,* (print x) ; Where x isn't defined
+
+debugger invoked on a UNBOUND-VARIABLE in thread
+,#<THREAD "main thread" RUNNING {10009F80D3}>:
+  The variable X is unbound.
+
+Type HELP for debugger help, or (SB-EXT:EXIT) to exit from SBCL.
+
+restarts (invokable by number or by possibly-abbreviated name):
+  0: [CONTINUE   ] Retry using X.
+  1: [USE-VALUE  ] Use specified value.
+  2: [STORE-VALUE] Set specified value and use it.
+  3: [ABORT      ] Exit debugger, returning to top level.
+
+(SB-INT:SIMPLE-EVAL-IN-LEXENV X ,#<NULL-LEXENV>)
+0] 1
+
+Enter a form to be evaluated: "hello"
+#+end_src
+
+Here, I tried printing a variable ~x~ that wasn't defined. SBCL will ask you in this case how you want
+to proceed. 
+
+0) This option allows you to simply retry. Unless you're using SWANK (if you don't know if you're
+   using it, you probably aren't), this option won't be too useful to you.
+1) This option allows us to simply provide SBCL with a new value, and to use that value instead of
+   ~x~. This can be very helpful when something crashes and you want to make sure that it succeeds
+   with specific data. 
+2) This option is the same as above, but will also set the value of the ~x~ variable. So it will
+   essentially give ~x~ a value that you enter, and then it'll retry.
+3) Will simply quit the debugger and send you back to the interactive prompt. 
+
+There are many options that you can encounter in many different scenarios, so the best thing that
+you can do is simply read the options presented to you at that time and try them out, mess
+around. There's a lot of things you can do with this. 
+
+Everything relevant in the next section is also applicable when using ~--load~.
+
+<<script>>
+*** ~--script~
+When using ~--script~, SBCL will simply evaluate your entire program and then quit. This gives you
+less opportunity to interact with your program the same way as you do when using ~--load~. Because of
+this, to debug we'll need to be inserting things into our code, similar to how we debug using ~trace~
+in Prolog. 
+
+The first thing that we'll do is add the following to the top of the file to turn on the debuggin
+optimizations:
+#+begin_src lisp
+(declaim (optimize (debug 3)))
+#+end_src
+
+This will allow us to get the most out of the following functions as possible since the compiler
+will hold onto more meta-data that allow us to debug more effectively.
+
+Let's say that the following function is what we're trying to debug. The problem with this function
+is that the condition on the ~if~ is inverted. Let's see how we can figure that out:
+
+#+begin_src lisp
+(defun sum (list)
+  (if (null list)
+      (+ (car list) (sum (cdr list)))
+      0))
+#+end_src
+
+**** Trace 
+The first tool we'll use is ~trace~. We can set up trace to watch a specific function and then print
+out the call stack that happens when we call that function. So let's set up ~trace~ to trace a call to
+our ~sum~ function:
+
+#+begin_src lisp
+(trace sum)
+#+end_src
+
+Now if we call ~(sum '(1 2 3 4 5))~, we should get the following:
+
+#+begin_src lisp
+  0: (SUM (1 2 3 4 5))
+  0: SUM returned 0
+#+end_src
+
+So we can see here that it prints out the call stack for our function. We can see here that sum
+returns 0, so we know immediately that it just went straight into the ~else~ branch of our ~if~. If we
+invert the condition, then we can see how our stack trace would change: 
+
+#+begin_src lisp
+  0: (SUM (1 2 3 4 5))
+    1: (SUM (2 3 4 5))
+      2: (SUM (3 4 5))
+        3: (SUM (4 5))
+          4: (SUM (5))
+            5: (SUM NIL)
+            5: SUM returned 0
+          4: SUM returned 5
+        3: SUM returned 9
+      2: SUM returned 12
+    1: SUM returned 14
+  0: SUM returned 15
+#+end_src
+
+Now we can see the full call-stack for the ~sum~ function. As you can see, trace is particularly handy
+for recursive functions. We can also add trace to functions that are called by our own functions to
+see a little more in depth what's going on. 
+
+**** Step
+The other tool that we can use is ~step~. Step is more like the type of interactive debugger that
+you'd use for Java. You can use ~step~ simply by wrapping your function call in a call to the ~step~
+function, like so:
+
+#+begin_src lisp
+(step (sum '(1 2 3 4 5)))
+#+end_src
+
+Now if we run this, we'll get an interactive debugger. Now, this debugger is command-line based, so
+it'll be a little different than the typical GUI one you'd get in Eclipse for Java. When invoking
+the debugger using ~step~, you'll get something like the following:
+
+#+begin_src lisp
+,* (step (sum '(1 2 3 4 5)))
+; Evaluating call:
+;   (SUM '(1 2 3 4 5))
+; With arguments:
+;   (1 2 3 4 5)
+
+1] 
+#+end_src
+
+At this point, there are lots of things you can enter here to help with your debugging. We'll go
+through some of the most important options:
+
+***** ~step~
+The aptly named ~step~ will allow us to step into the function call to see what's going on. To use
+this, we simply type ~step~ into the prompt. In this case, we'll get the following when calling ~step~:
+
+#+begin_src lisp
+1] step
+; Evaluating call:
+;   (SUM (CDR LST))
+; With arguments:
+;   (2 3 4 5)
+
+1]
+#+end_src
+
+So it'll step into the function call and evaluate it, the return you back to the debugger. 
+
+***** ~list-locals~
+This option does exactly what it says, it allows us to list all of the variables so that we can see
+their values at a certain point:
+
+#+begin_src lisp
+1] list-locals
+LST  =  (1 2 3 4 5)
+#+end_src
+
+So here we can see the value of our parameter ~lst~. 
+
+***** ~source~ and ~print~
+~source~ and ~print~ allow us to inspect the function call so that we can see what's being passed to
+it. We can use both of them like so:
+
+#+begin_src lisp
+1] print
+(SUM (1 2 3 4 5))
+1] source
+
+(SUM (CDR LST))
+1]
+#+end_src
+
+Both of them will be used in similar ways, and which one you use just depends on the context.
+
+***** ~next~
+We can use ~next~ to inspect the next function call. For example:
+
+#+begin_src lisp
+1] next
+; Evaluating call:
+;   (+ (CAR LST) (SUM (CDR LST)))
+; With unknown arguments
+
+0]
+#+end_src
+
+To be quite honest, I see ~next~ as mostly being helpful to see the source for what's being
+evaluated. I'm not 100% certain how to use it and there's very little information available about it
+since 99% of people who use Common Lisp in any serious capacity use Emacs and there's a phenomenal
+debugger in Common Lisp that kind of abstracts over all of this command line based stuff. 
+
+I'll update this page once I figure out more about how to effectively use ~next~. 
+
+**** break
+The last thing that we'll look into is using ~break~ to debug. This allows us to set breakpoints in
+our code that we'll stop at like in Java. When using ~break~ it allows us to control where we set our
+breakpoints inside functions, and then step through similarly to when using ~step~. 
+
+** Portacle/Emacs
+If you're using Portacle, then you're likely using [[https://common-lisp.net/project/slime/][SLIME]] for executing your Lisp. SLIME is pretty
+advanced, so I think you'll have better luck reading through their [[https://common-lisp.net/project/slime/#documentation][documentation]] and tutorials
+that they provide on the site. 
+
+
+** Conclusion
+As you can see, there's lots of ways that we can debug in Common Lisp using the command line. Of
+course, simply using ~print~ works too, but sometimes you just really want to use a debugger depending
+on what the problem is.

@@ -1,0 +1,52 @@
+#+TITLE: Let scoping
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+INCLUDE: header.org
+
+* Question 
+Why does this return 2 and not 3?
+
+#+begin_src lisp
+(let ((c 1))
+  (let ((c 2)
+        (a (+ c 1)))
+    a)); RETURNS 2
+#+end_src
+
+The reason here is because of how the scoping works in Lisp when using ~let~. When you use ~let~,
+variables that you're binding aren't able to see variables bound before it in the same ~let~. If we
+did
+
+#+begin_src lisp
+(let ((a 1)
+      (b (+ a 1)))
+  (print b))
+#+end_src
+
+This would give us an error, because ~a~ isn't available when binding ~b~. So logically, Lisp would need
+to look to the enclosing scopes to try to find that variable ~a~. That's what's happening in the
+example above as well. Lisp isn't able to bind ~a~ to the value of the ~c~ bound immediately before it,
+so Lisp looks to the enclosing scope and find that there's a variable ~c~ in that scope, and uses it. 
+
+If we change our inner ~let~ to be ~let*~, then we get another interesting question:
+
+#+begin_src lisp
+(let ((c 1))
+  (let* ((c 2)
+         (a (+ c 1)))
+    a))
+#+end_src
+
+Now what will the value of ~a~ be? In this case, it'll be 3, because our second ~c~ shadows the value of
+the first. So whenever we refer to ~c~ inside our nested ~let*~ here, it'll be referring to the ~c~
+declared in that block.
+
+#+begin_src lisp
+(let ((c 1))
+  (let* ((c 2))
+    (setf c 20)
+    (print c))
+  (print c))
+#+end_src
+
+What do you think this program will output now?

@@ -1,0 +1,110 @@
+#+TITLE: Ways to define functions
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+INCLUDE: header.org
+
+* Question:
+How can we define a function that can be called multiple ways? 
+
+There are a few different ways that we can do this, namely using /optional/ parameters, /keyword/
+parameters and /rest/ parameters.
+
+** Regular function definition
+Normal function definitions are very simple. 
+
+#+begin_src lisp
+(defun function-name (arg-1 arg-2 arg-3 ...)
+  (function-body))
+#+end_src
+
+We use the ~defun~ built-in to create functions. The first argument to this is the name of the
+function we want to define. After that, we have a list of all the arguments to the
+function. Finally, there's the body of the function. Everything after the parameter list will be
+evaluated in sequence and the last expression evaluated will be returned from the function.
+
+** Optional parameters
+Optional parameters are very simple, we can use them to set default values when we don't want to be
+passing an argument to a function every time we want to call it:
+
+#+begin_src lisp
+(defun function-name (a b &optional c d)
+  (print a)
+  (print b)
+  (print c)
+  (print d))
+  
+(function-name 1 2) ;; 1 2 nil nil
+(function-name 1 2 3) ;; 1 2 3 nil
+(function-name 1 2 3 4) ;; 1 2 3 4
+#+end_src
+
+We can also change the default values for our optional arguments so that they aren't ~nil~:
+
+#+begin_src lisp
+(defun function-name (a &optional (b 2))
+  (print a)
+  (print b))
+  
+(function-name 1) ;; 1 2
+(function-name 1 3) ;; 1 3
+#+end_src
+
+Optional arguments are very helpful for having multi-arity functions.
+
+** Keyword parameters
+Keyword arguments can be used somewhat like option arguments, except that when we pass them to the
+function they must be passed explicitely.
+
+#+begin_src lisp
+(defun function-name (a b &key c d)
+  (print a)
+  (print b)
+  (print c)
+  (print d))
+  
+(function-name 1 2) ;; 1 2 nil nil
+(function-name 1 2 :c 3) ;; 1 2 3 nil
+(function-name 1 2 :d 4) ;; 1 2 nil 4
+(function-name 1 2 :c 3 :d 4) ;; 1 2 3 4
+(function-name 1 2 :d 4 :c 3) ;; 1 2 3 4
+#+end_src
+
+Notice that the order that optional arguments are supplied doesn't matter.
+
+As with optional parameters, we can also provide default values the exact same way we did with
+optional arguments.
+
+** Rest parameters
+Finally, we can use rest parameters to collect any extra arguments to our function into a list:
+
+#+begin_src lisp
+(defun function-name (a b &rest c)
+  (print a)
+  (print c))
+  
+(function-name 1) ;; 1 ()
+(function-name 1 2) ;; 1 (2)
+(function-name 1 2 3) ;; 1 (2 3)
+(function-name 1 2 3 4) ;; 1 (2 3 4)
+(function-name 1 (2 3 4)) ;; 1 ((2 3 4))
+#+end_src
+
+** Putting them together
+Putting them together can be useful in some situations, but isn't generally recommended. Optional
+and rest parameters work together fine, but neither optional or rest arguments work well with
+keyword arguments, and it should generally be avoided.
+
+#+begin_src lisp
+(defun function-name (a &optional b &rest c)
+  (print a)
+  (print b)
+  (print c))
+  
+(function-name 1) ;; 1 nil ()
+(function-name 1 2) ;; 1 2 ()
+(function-name 1 2 3) ;; 1 2 (3)
+#+end_src
+
+Using keyword arguments along with optional or rest paremeters /can/ work, but you need to be very
+careful about doing it, and as such wouldn't recommend. Also Common Lisp will likely warn you that
+it's a bad idea.

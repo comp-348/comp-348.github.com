@@ -1,0 +1,87 @@
+#+TITLE: Declaring and modifying variables in Common Lisp
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+INCLUDE: header.org
+
+* Question: 
+How do we set a variable in Lisp?
+
+There are lots of ways to declare variables and change their values in Lisp, each one we use in
+different situations. For this class, we really only need to worry about 3. 
+
+** Declaring top-level variables
+For creating variables that aren't inside a function, we use the ~defvar~ builtin:
+
+#+begin_src common-lisp
+(defvar sym 'hello)
+(defvar num 20)
+(defvar str "Hello world")
+(defvar lst '(hello 20 "hello world"))
+#+end_src
+
+We could use ~defvar~ to declare variables inside of functions as well, but Lisp will give us a
+warning about this - although it will still work. 
+
+** Declaring local variables
+For creating variables inside a function, or to create locally-scoped variables, we use ~let~ and ~let*~
+
+#+begin_src common-lisp
+(let ((sym 'hello)
+      (num 20)
+      (str "Hello world")
+      (lst '(hello 20 "Hello world")))
+  (format t "Values: ~s, ~d, ~s, ~a" sym num str lst))
+(print "None of those variables are visible here")
+#+end_src
+
+We can also use ~let*~ to be able to access previous bindings in the same ~let~:
+
+#+begin_src lisp
+(let* ((sym 'hello)
+       (num 20)
+       (str "Hello world")
+       (lst (list sym num str))) ; No need to redeclare the values here
+  (format t "Values: ~s, ~d, ~s, ~a" sym num str lst))
+(print "None of those variables are visible here")
+#+end_src
+
+** Mutating existing variables
+To change the value of a variable, we use the ~set[f/q]~ functions. 
+
+*** ~set~
+The ~set~ function is the most basic of the 3 ways to set a value in Lisp. We simply pass it an atom
+and a value, and it binds that value to the symbol:
+
+#+begin_src lisp
+(set 'x 10)
+#+end_src
+
+*** ~setq~
+The ~setq~ tool means "set quoted". It's very similar to ~set~, except that we don't have to quote the
+symbol being passed to it:
+
+#+begin_src common-lisp
+(setq x 10)
+#+end_src
+
+Now, unlike ~set~, if we call ~setq~ with a variable that doesn't exist yet, Lisp will give us a
+warning. So if you need to, you can use ~set~ to declare variables, but ~setq~ will warn you against it.
+
+*** ~setf~
+The ~setf~ tool means "set field". It behaves the same as ~setq~ when trying to set just the value of a
+variable:
+
+#+begin_src lisp
+(let ((x 10) (y 20))
+  (setq x 20)
+  (setf y 30))
+#+end_src
+
+Will do the exact same thing. However, we can /also/ use ~setf~ to set the values /inside/ a list:
+
+#+begin_src lisp
+(defvar lst '(1 2 3 4 5))
+(setq (car lst) 10) ; This will give an error
+(setf (car lst) 10) ; This will mutate the list
+(print lst) ; '(10 2 3 4 5)
+#+end_src

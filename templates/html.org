@@ -1,0 +1,3 @@
+#+EMAIL: phdumaresq@protonmail.com
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+#+LANGUAGE: en

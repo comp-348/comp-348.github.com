@@ -1,0 +1,39 @@
+#+TITLE: Debugging Prolog
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+INCLUDE: header.org
+
+* Question
+How do I debug my Prolog queries?
+
+Debugging Prolog can be done pretty easily using a built-in tool called ~trace~. Now, since the online
+[[https://swish.swi-prolog.org/][swish]] editor for Prolog is fantastic, I'll be assuming you're using that, but this can all be done
+using [[https://www.swi-prolog.org/][swipl]] from your terminal as well. 
+
+Let's say you have the following dataset:
+
+#+begin_src prolog
+parent(tom, adam).
+parent(tom, alex).
+parent(tom, luna).
+parent(mel, adam).
+parent(mel, alex).
+parent(mel, luna).
+
+sibling(X,Y):- 
+    parent(P, X), parent(P, Y), X \= Y.
+#+end_src
+
+And we want to track down an error in our ~sibling~ rule. When querying against this rule, we can
+prefix our query with ~trace/0~ to interactively follow what Prolog is doing:
+
+#+begin_src prolog
+?- trace, sibling(X, adam).
+#+end_src
+
+This will allow us to step through our code using step-into, step-over, step-out and retry, just
+like when we're debugging in Java.  
+
+~trace~ is the main tool that I use for debugging Prolog, but there's a number of other tools that you
+can use here to learn how to debug Prolog better, all of which are explained in the [[https://www.swi-prolog.org/pldoc/man?section=debugger][swi-prolog
+documentation]]

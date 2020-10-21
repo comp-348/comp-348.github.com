@@ -1,0 +1,34 @@
+#+TITLE: Questions
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+OPTIONS: toc:nil
+
+** COMMENT Java
+This section is for all questions relating to Java, in particular the ~stream~ API.
+
+** Prolog
+This section is for all questions relating to Prolog
+- [[file:prolog-debugging.org][Debugging in Prolog]]
+
+** Lisp
+This section is for all questions relating to Common Lisp.
+
+For a guide on the things you'll need to know about Lisp for this course, you can read [[file:lisp-tutorial.org][this tutorial]]
+and it should cover most of this couse, without showing you how to do things the wrong way.
+
+For a quick reference, I've put together this [[file:lisp-cheatsheet.org][cheat sheet]] for you as well.
+
+For any other questions you might have, you can check out the questions I've received below.
+
+- [[file:lisp-setting-variables.org][How to declare and set variables in Lisp]]
+- [[file:lisp-quote-vs-'.org][The difference between ~quote~ and ~'~]]
+- [[file:lisp-let-scoping.org][Variable scoping and ~let~ bindings]]
+- [[file:lisp-running-from-terminal.org][Running Lisp from any terminal]]
+- [[file:lisp-debugging.org][Debugging Common Lisp from the terminal]]
+- [[file:lisp-function-definitions.org][Different ways to define functions]]
+
+** COMMENT C
+This section is for all questions relating to Lisp, Scheme, Clojure, etc
+
+** COMMENT Ruby
+This section is for all questions relating to Lisp, Scheme, Clojure, etc

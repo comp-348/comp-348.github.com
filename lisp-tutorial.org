@@ -1,0 +1,167 @@
+#+TITLE: Lisp tutorial for COMP 348
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+INCLUDE: header.org
+
+* Lisp at a high level
+Lisp is a high-level, dynamically typed functional programming language. Lisp first came out in
+1959, around the same time as FORTRAN. Back then it was LISP, which stood for LISt Processing. As
+the name indicates, Lisp is very very good at processing linked lists, and was originally created to
+prerform tasks in symbolic computation and artificial intelligence. Today, there are many modern
+derivatives to LISP, such as Common Lisp, Scheme, Racket and Clojure. In this course, we focus on
+Common Lisp, which first appeared in the last 1980's as a standardization by ANSI converging
+features from several prominent dialects at the time. 
+
+** Lisp Syntax
+Lisp syntax is very simple. Unlike most programming languages that are filled with different
+syntaxes, keywords and operators, Lisp's syntax is uniform and concise. Everything that you write in
+Lisp will take the form ~(function-name arg-1 arg-2 ...)~. That's the whole syntax for the
+language. For example, to define a linked list, we use the ~list~ function, like so: 
+
+ #+begin_src lisp
+(list 1 2 3 4 5)
+ #+end_src
+
+** Core functions 
+
+Would as you could guess, create a list with 5 elements. Now, as mentioned, Lisp is very good at
+processing linked lists, which includes extracting data from the lists, transforming them, etc. Two
+of the most important functions for this are ~car~ and ~cdr~. The first one, ~car~ will return the first
+element of a list, and ~cdr~ will return a list containing everything /except/ the first element - the
+tail of the list. 
+
+#+begin_src lisp
+(defvar my-list (list 1 2 3 4 5))
+
+(car my-list) ; 1
+(cdr my-list) ; '(2 3 4 5)
+#+end_src
+
+So in this snippet we simply define a variable called ~my-list~ and then get the head and the tail of
+that list. The 3 important function that we need to use when dealing with lists is called ~cons~, and
+it allows us to ~cons~-truct new lists. The arguments to ~cons~ are going to be the first element of the
+new list, and the /tail/ of the new list. For example, 
+
+#+begin_src lisp
+(cons 1 (list 2 3 4 5)) ; '(1 2 3 4 5)
+#+end_src
+
+*** Destructing and rebuilding lists
+
+We can use these 3 functions, ~car~, ~cdr~ and ~cons~ to take apart lists and put them back together very
+easily. Consider the following function:
+
+#+begin_src lisp
+(defun list-identity (list)
+  (if (null list)
+      ()
+      (cons (car list) (list-identity (cdr list)))))
+#+end_src
+
+This is an /identity/ function for a list, meaning it outputs whatever was input to it. It takes a
+single parameter, ~list~. It first checks if the list is empty using ~(null list)~ - in Lisp, an empty
+list is considered null. If it is empty, then we return an empty list. If it is not, then we
+reconstruct a new list from the components: the head of the list, and a recursive call to the
+identity function with the tail of the list. This is all just an overly comlicated way of showing
+that we can use these 3 functions to take apart a list and rebuild it again recursively, and this is
+a pattern that we see a lot of in Lisp. For example, let's say we wanted to add a constant number to
+every value in that list:
+
+ #+begin_src lisp
+(defun list-add-constant (list constant)
+  (if (null list)
+      ()
+      (cons (+ (car list) constant) 
+            (list-add-constant (cdr list) constant))))
+ #+end_src
+ 
+Here we have almost the same function as before: we check if the list is empty, if it is, we return
+an empty list, otherwise, we construct a new list and return that. The only difference here is that
+we add the constant to our number, and then pass the constant as the second argument to our
+recursive call.
+
+Like I said, this is a really common pattern in Lisp and in functional programming languages in
+general, and this general pattern is going to be very helpful in your assignments. 
+
+** Trees
+One of the things we do a lot of in this class is talk about binary trees. Building binary trees,
+searching binary trees, balancing binary trees, etc. Here's how we tend to represent binary trees in
+this course: 
+
+ #+begin_src lisp
+(7 (1 nil 
+      (2 nil nil)) 
+   (8 nil 
+      (9 nil nil)))
+#+end_src
+
+Here, we have a single tree who's root node is ~7~. It has a left subtree and a right subtree, both of
+which have 2 nodes in their subtrees. If we were to visualize this as a normal tree, it would look
+like this:
+
+#+begin_src java
+    7
+  /   \
+ 1     8
+/ \   / \
+   2     9
+  / \   / \
+#+end_src
+
+Now, since creating binary trees and balancing them is sometimes on assignments, I can't provide
+those as examples, but I can do binary-search and tree traversals. 
+
+*** Binary Search:
+A Binary search is a divide and conquer algorithm, so by nature it's going to be recursive. The
+algorithm for binary search is simple:
+1) if the element we're searching for is equal to the head, return true. 
+2) if the element we're searching for is less than the head, binary search the left subtree
+3) if the element we're searching for is greater than the head, binary search the right subtree
+4) If the subtree is empty, return false. 
+
+Here's how we'll implement that in Common Lisp:
+
+#+begin_src lisp
+(defun binary-search (list element)
+  (cond 
+    ; If the subtree is empty, return false
+    ((null list) nil)
+    ; If the head is equal to what we're search for, return true
+    ((equal (car list) element) t)
+    ; If the head is greater than the element, binary search the left subtree
+    ((> (car list) element)
+     (binary-search (second list) element))
+    ; If the head is less than the element, binary search the right subtree
+    ((< (car list) element)
+     (binary-search (third list) element)))))
+#+end_src
+
+As you can see this is basically just a direct transcription of the algorithm for a binary
+search. We use ~cond~ as our control flow here, which acts as a sequence of if/else if expressions and
+just return from whichever condition is true.
+
+*** Tree Traversals
+Another common thing we want to do with trees is traverse them in various ways. With a binary-tree,
+we often want to do an in-order traversal because it will visit each element in a sorted order. The
+algorithm for an in-order traversal is pretty simple:
+1) If the subtree is null, stop
+2) Otherwise: 
+  1) perform in-order-traversal on the left subtree
+  2) Visit the root node 
+  3) Perform in-order-traversal on the right subtree
+
+#+begin_src lisp
+(defun in-order-traversal (tree)
+  (cond
+    ((null tree) nil)
+    (t (in-order-traversal (second tree))
+       (print (first tree))
+       (in-order-traversal (third tree)))))
+#+end_src
+
+So if we run this with the same tree as above, it'll print 1, 2, 7, 8, 9. 
+
+Now, from here there's a lot of very basic changes that we could make to make this function do some
+other stuff, like instead of just printing every node, we could pass a lambda function that we call
+instead of ~print~. Or we could append the 3 things together to build a sorted list, or all sorts of
+other things. 

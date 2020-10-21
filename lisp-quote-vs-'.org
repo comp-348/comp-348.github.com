@@ -1,0 +1,27 @@
+#+TITLE: quote vs ' in Lisp
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+INCLUDE: header.org
+
+* Question: 
+The notes use ~(quote a)~ but lisp outputs ~'a~ - what's the difference?
+
+** Short answer:
+There is no difference, they mean the same thing. ~'a~ is just a shorthand for saying ~(quote
+a)~. Sometimes in the notes you may see ~(quote a)~ instead ~a~, this could be just up to whatever
+compiler the professor used to get the results, or they just computed the result manually and didn't
+copy/paste into a compiler.
+
+** Long answer:
+~(quote a)~ is construct built into the language. It will take all of the arguments to it literally
+and won't interpret them at all. If ~a~ is bound to a variable it doesn't matter, it will be looked at
+as the literal symbol ~a~. 
+
+~'a~ is what's called a /reader macro/. While almost all of Lisp is the same parentheses syntax
+everywhere, Lisp allows you to define reader macros to modify the way Lisp syntax is read in. You
+can think of it as a way to extend the parser that Lisp uses to transform to transform source-code
+into an internal representation. So there's a reader macro that basically says "when the symbol ~'~ is
+encountered, take everything that follows it and wrap it in a list with ~quote~ as the first symbol". 
+
+Now, this is much more advanced topics in Lisp that are not covered by this class and so you will
+not be tested on them at all, but for anyone who was curious, here's what the ~'~ really means.
