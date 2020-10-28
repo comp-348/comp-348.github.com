@@ -1,0 +1,14 @@
+#+SETUPFILE: templates/html.org
+#+TITLE: Setting up your Lisp environment
+
+* Question
+
+There is several different environments that you can use for writing Common Lisp code, in this
+guide you will pick an environment and learn to set it up.
+
+For Common Lisp, you can use either an online text-editor or an IDE locally on your computer. While
+the Swish-Prolog environment works great for Prolog, the online editors for Lisp don't really meet
+the same standard. If you'd like and you don't want to bother with setting up a local environment,
+then you can use either the [[https://www.tutorialspoint.com/execute_lisp_online.php][tutorialspoint.com]] editor or [[https://rextester.com/l/common_lisp_online_compiler][rextester]].
+
+If you'd like to set up a local environment, then you can follow down below.
