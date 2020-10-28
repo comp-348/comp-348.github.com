@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-27 Tue 23:28 -->
+<!-- 2020-10-27 Tue 23:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Questions</title>
+<title>(list) vs list</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="author" content="Philip" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -219,51 +219,73 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">Questions</h1>
-
-<div id="outline-container-org6935d4a" class="outline-2">
-<h2 id="org6935d4a">Prolog</h2>
-<div class="outline-text-2" id="text-org6935d4a">
+<h1 class="title">(list) vs list</h1>
 <p>
-This section is for all questions relating to Prolog
-</p>
-<ul class="org-ul">
-<li><a href="prolog-debugging.html">Debugging in Prolog</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orga9043a5" class="outline-2">
-<h2 id="orga9043a5">Lisp</h2>
-<div class="outline-text-2" id="text-orga9043a5">
-<p>
-This section is for all questions relating to Common Lisp.
+One problem that I&rsquo;ve seen a lot is confusion between using <code>list</code> and <code>(list)</code>. The two are very
+different and knowing the difference between them is important.
 </p>
 
 <p>
-For a guide on the things you&rsquo;ll need to know about Lisp for this course, you can read <a href="lisp-tutorial.html">this tutorial</a>
-and it should cover most of this couse, without showing you how to do things the wrong way.
+Consider the following Java code:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #51afef;">class</span> <span style="color: #ECBE7B;">Example</span> <span style="color: #51afef;">{</span>
+  <span style="color: #ECBE7B;">Example</span> <span style="color: #dcaeea;">Example</span>;
+
+  <span style="color: #ECBE7B;">Example</span> <span style="color: #c678dd;">Example</span><span style="color: #c678dd;">()</span> <span style="color: #c678dd;">{</span> <span style="color: #51afef;">return</span> Example; <span style="color: #c678dd;">}</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+
+<p>
+This is perfectly valid, albeit confusing Java code. We have a class named <code>Example</code> and it
+contains an attribute <i>and</i> a method also named <code>Example</code>. Now, in this code Java always knows how to
+handle each different version of <code>Example</code>, and it so it allows us to assign this name multiple times
+because each <code>Example</code> exists in a different namespace. Our class <code>Example</code> lives in the class&rsquo;
+namespace, the attribute <code>Example</code> lives in the class&rsquo;s attribute namespace and finally the <code>Example</code>
+method exists in the class&rsquo;s method namespace. If we have the following code, Java knows exactly how
+to handle it:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #ECBE7B;">Example</span> <span style="color: #dcaeea;">Example</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Example</span><span style="color: #51afef;">()</span>;
+System.out.println<span style="color: #51afef;">(</span><span style="color: #a9a1e1;">Example</span>.Example<span style="color: #51afef;">)</span>;
+System.out.println<span style="color: #51afef;">(</span><span style="color: #a9a1e1;">Example</span>.Example<span style="color: #c678dd;">()</span><span style="color: #51afef;">)</span>;
+</pre>
+</div>
+
+<p>
+When we say <code>Example.Example</code>, the lack of parentheses indicate to Java to get this value out of the
+attribute namespace. When we say <code>Example.Example()</code>, it indicated to Java to call this method from
+the method namespace.
 </p>
 
 <p>
-For any other questions you might have, you can check out the questions I&rsquo;ve received below.
+This is the exact same thing we have going on Lisp. In Lisp we have 2 namespace: a function and a
+variable namespace. When we say:
 </p>
 
-<ul class="org-ul">
-<li><a href="lisp-setting-variables.html">How to declare and set variables in Lisp</a></li>
-<li><a href="lisp-quote-vs-'.html">The difference between <code>quote</code> and <code>'</code></a></li>
-<li><a href="lisp-let-scoping.html">Variable scoping and <code>let</code> bindings</a></li>
-<li><a href="lisp-running-from-terminal.html">Running Lisp from any terminal</a></li>
-<li><a href="lisp-debugging.html">Debugging Common Lisp from the terminal</a></li>
-<li><a href="lisp-function-definitions.html">Different ways to define functions</a></li>
-<li><a href="lisp-namespaces.html"><code>list</code> vs <code>(list)</code> - namespaces in Lisp</a></li>
-</ul>
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span>list '<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print list<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print <span style="color: #98be65;">(</span>list<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
 </div>
-</div>
+
+<p>
+it knows exactly how to handle both uses of <code>list</code>. In the first <code>print</code>, the output will be the list
+that we defined in the <code>let</code> block and in the second <code>print</code> the output will be a call to the <code>list</code>
+function with no parameters, which is an empty list.
+</p>
+
+<p>
+Be mindful when using <code>list</code> as a variable whether you&rsquo;ve surrounded it with parentheses or not,
+because the two mean different things and will give unexpected results if you miss your problem.
+</p>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-10-27 Tue 23:28</p>
+<p class="author">Author: Philip</p>
+<p class="date">Created: 2020-10-27 Tue 23:27</p>
 </div>
 </body>
 </html>
