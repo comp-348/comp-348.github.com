@@ -1,0 +1,48 @@
+#+SETUPFILE: templates/html.org
+#+TITLE: (list) vs list
+
+One problem that I've seen a lot is confusion between using ~list~ and ~(list)~. The two are very
+different and knowing the difference between them is important.
+
+Consider the following Java code:
+#+begin_src java
+class Example {
+  Example Example;
+
+  Example Example() { return Example; }
+}
+#+end_src
+
+This is perfectly valid, albeit confusing Java code. We have a class named ~Example~ and it
+contains an attribute /and/ a method also named ~Example~. Now, in this code Java always knows how to
+handle each different version of ~Example~, and it so it allows us to assign this name multiple times
+because each ~Example~ exists in a different namespace. Our class ~Example~ lives in the class'
+namespace, the attribute ~Example~ lives in the class's attribute namespace and finally the ~Example~
+method exists in the class's method namespace. If we have the following code, Java knows exactly how
+to handle it:
+
+#+begin_src java
+Example Example = new Example();
+System.out.println(Example.Example);
+System.out.println(Example.Example());
+#+end_src
+
+When we say ~Example.Example~, the lack of parentheses indicate to Java to get this value out of the
+attribute namespace. When we say ~Example.Example()~, it indicated to Java to call this method from
+the method namespace.
+
+This is the exact same thing we have going on Lisp. In Lisp we have 2 namespace: a function and a
+variable namespace. When we say:
+
+#+begin_src lisp
+(let ((list '(1 2 3 4 5)))
+  (print list)
+  (print (list)))
+#+end_src
+
+it knows exactly how to handle both uses of ~list~. In the first ~print~, the output will be the list
+that we defined in the ~let~ block and in the second ~print~ the output will be a call to the ~list~
+function with no parameters, which is an empty list.
+
+Be mindful when using ~list~ as a variable whether you've surrounded it with parentheses or not,
+because the two mean different things and will give unexpected results if you miss your problem.
