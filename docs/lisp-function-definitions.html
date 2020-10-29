@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-21 Wed 11:44 -->
+<!-- 2020-10-29 Thu 19:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ways to define functions</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,13 +224,13 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org95ca90b">Question:</a>
+<li><a href="#org4bb1e45">Question:</a>
 <ul>
-<li><a href="#org5b2d760">Regular function definition</a></li>
-<li><a href="#org7398b87">Optional parameters</a></li>
-<li><a href="#org5ee1910">Keyword parameters</a></li>
-<li><a href="#org57982b2">Rest parameters</a></li>
-<li><a href="#orgb7519d0">Putting them together</a></li>
+<li><a href="#org9932213">Regular function definition</a></li>
+<li><a href="#org41f3c58">Optional parameters</a></li>
+<li><a href="#orgb79884f">Keyword parameters</a></li>
+<li><a href="#orgbea2edb">Rest parameters</a></li>
+<li><a href="#org00d8042">Putting them together</a></li>
 </ul>
 </li>
 </ul>
@@ -266,9 +242,9 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org95ca90b" class="outline-2">
-<h2 id="org95ca90b">Question:</h2>
-<div class="outline-text-2" id="text-org95ca90b">
+<div id="outline-container-org4bb1e45" class="outline-2">
+<h2 id="org4bb1e45">Question:</h2>
+<div class="outline-text-2" id="text-org4bb1e45">
 <p>
 How can we define a function that can be called multiple ways? 
 </p>
@@ -279,60 +255,60 @@ parameters and <i>rest</i> parameters.
 </p>
 </div>
 
-<div id="outline-container-org5b2d760" class="outline-3">
-<h3 id="org5b2d760">Regular function definition</h3>
-<div class="outline-text-3" id="text-org5b2d760">
+<div id="outline-container-org9932213" class="outline-3">
+<h3 id="org9932213">Regular function definition</h3>
+<div class="outline-text-3" id="text-org9932213">
 <p>
 Normal function definitions are very simple. 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> (arg-1 arg-2 arg-3 ...<span style="color: #5B6268;">)</span>
-  (function-body<span style="color: #5B6268;">))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>arg-1 arg-2 arg-3 ...<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>function-body<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
 <p>
 We use the <code>defun</code> built-in to create functions. The first argument to this is the name of the
 function we want to define. After that, we have a list of all the arguments to the
-function. Finally, there's the body of the function. Everything after the parameter list will be
+function. Finally, there&rsquo;s the body of the function. Everything after the parameter list will be
 evaluated in sequence and the last expression evaluated will be returned from the function.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7398b87" class="outline-3">
-<h3 id="org7398b87">Optional parameters</h3>
-<div class="outline-text-3" id="text-org7398b87">
+<div id="outline-container-org41f3c58" class="outline-3">
+<h3 id="org41f3c58">Optional parameters</h3>
+<div class="outline-text-3" id="text-org41f3c58">
 <p>
-Optional parameters are very simple, we can use them to set default values when we don't want to be
+Optional parameters are very simple, we can use them to set default values when we don&rsquo;t want to be
 passing an argument to a function every time we want to call it:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> (a b <span style="color: #ECBE7B;">&amp;optional</span> c d<span style="color: #5B6268;">)</span>
-  (print a<span style="color: #5B6268;">)</span>
-  (print b<span style="color: #5B6268;">)</span>
-  (print c<span style="color: #5B6268;">)</span>
-  (print d<span style="color: #5B6268;">))</span>
-
-(function-name 1 2) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 nil nil</span>
-(function-name 1 2 3) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 nil</span>
-(function-name 1 2 3 4) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 4</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a b <span style="color: #ECBE7B;">&amp;optional</span> c d<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print b<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print c<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print d<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+  
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 nil nil</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 nil</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 4</span>
 </pre>
 </div>
 
 <p>
-We can also change the default values for our optional arguments so that they aren't <code>nil</code>:
+We can also change the default values for our optional arguments so that they aren&rsquo;t <code>nil</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> (a <span style="color: #ECBE7B;">&amp;optional</span> (b 2<span style="color: #5B6268;">))</span>
-  (print a<span style="color: #5B6268;">)</span>
-  (print b<span style="color: #5B6268;">))</span>
-
-(function-name 1) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2</span>
-(function-name 1 3) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 3</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a <span style="color: #ECBE7B;">&amp;optional</span> <span style="color: #98be65;">(</span>b <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print b<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+  
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 3</span>
 </pre>
 </div>
 
@@ -342,31 +318,31 @@ Optional arguments are very helpful for having multi-arity functions.
 </div>
 </div>
 
-<div id="outline-container-org5ee1910" class="outline-3">
-<h3 id="org5ee1910">Keyword parameters</h3>
-<div class="outline-text-3" id="text-org5ee1910">
+<div id="outline-container-orgb79884f" class="outline-3">
+<h3 id="orgb79884f">Keyword parameters</h3>
+<div class="outline-text-3" id="text-orgb79884f">
 <p>
 Keyword arguments can be used somewhat like option arguments, except that when we pass them to the
 function they must be passed explicitely.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> (a b <span style="color: #ECBE7B;">&amp;key</span> c d<span style="color: #5B6268;">)</span>
-  (print a<span style="color: #5B6268;">)</span>
-  (print b<span style="color: #5B6268;">)</span>
-  (print c<span style="color: #5B6268;">)</span>
-  (print d<span style="color: #5B6268;">))</span>
-
-(function-name 1 2) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 nil nil</span>
-(function-name 1 2 <span style="color: #c678dd;">:c</span> 3) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 nil</span>
-(function-name 1 2 <span style="color: #c678dd;">:d</span> 4) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 nil 4</span>
-(function-name 1 2 <span style="color: #c678dd;">:c</span> 3 <span style="color: #c678dd;">:d</span> 4) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 4</span>
-(function-name 1 2 <span style="color: #c678dd;">:d</span> 4 <span style="color: #c678dd;">:c</span> 3) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 4</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a b <span style="color: #ECBE7B;">&amp;key</span> c d<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print b<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print c<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print d<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+  
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 nil nil</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #c678dd;">:c</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 nil</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #c678dd;">:d</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 nil 4</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #c678dd;">:c</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #c678dd;">:d</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 4</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #c678dd;">:d</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #c678dd;">:c</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 4</span>
 </pre>
 </div>
 
 <p>
-Notice that the order that optional arguments are supplied doesn't matter.
+Notice that the order that optional arguments are supplied doesn&rsquo;t matter.
 </p>
 
 <p>
@@ -376,53 +352,53 @@ optional arguments.
 </div>
 </div>
 
-<div id="outline-container-org57982b2" class="outline-3">
-<h3 id="org57982b2">Rest parameters</h3>
-<div class="outline-text-3" id="text-org57982b2">
+<div id="outline-container-orgbea2edb" class="outline-3">
+<h3 id="orgbea2edb">Rest parameters</h3>
+<div class="outline-text-3" id="text-orgbea2edb">
 <p>
 Finally, we can use rest parameters to collect any extra arguments to our function into a list:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> (a b <span style="color: #ECBE7B;">&amp;rest</span> c<span style="color: #5B6268;">)</span>
-  (print a<span style="color: #5B6268;">)</span>
-  (print c<span style="color: #5B6268;">))</span>
-
-(function-name 1) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 ()</span>
-(function-name 1 2) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 (2)</span>
-(function-name 1 2 3) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 (2 3)</span>
-(function-name 1 2 3 4) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 (2 3 4)</span>
-(function-name 1 (2 3 4)) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 ((2 3 4))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a b <span style="color: #ECBE7B;">&amp;rest</span> c<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print c<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+  
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 ()</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 (2)</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 (2 3)</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 (2 3 4)</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> '<span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 ((2 3 4))</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb7519d0" class="outline-3">
-<h3 id="orgb7519d0">Putting them together</h3>
-<div class="outline-text-3" id="text-orgb7519d0">
+<div id="outline-container-org00d8042" class="outline-3">
+<h3 id="org00d8042">Putting them together</h3>
+<div class="outline-text-3" id="text-org00d8042">
 <p>
-Putting them together can be useful in some situations, but isn't generally recommended. Optional
+Putting them together can be useful in some situations, but isn&rsquo;t generally recommended. Optional
 and rest parameters work together fine, but neither optional or rest arguments work well with
 keyword arguments, and it should generally be avoided.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> (a <span style="color: #ECBE7B;">&amp;optional</span> b <span style="color: #ECBE7B;">&amp;rest</span> c<span style="color: #5B6268;">)</span>
-  (print a<span style="color: #5B6268;">)</span>
-  (print b<span style="color: #5B6268;">)</span>
-  (print c<span style="color: #5B6268;">))</span>
-
-(function-name 1) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 nil ()</span>
-(function-name 1 2) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 ()</span>
-(function-name 1 2 3) <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 (3)</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a <span style="color: #ECBE7B;">&amp;optional</span> b <span style="color: #ECBE7B;">&amp;rest</span> c<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print b<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>print c<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+  
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 nil ()</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 ()</span>
+<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 (3)</span>
 </pre>
 </div>
 
 <p>
 Using keyword arguments along with optional or rest paremeters <i>can</i> work, but you need to be very
-careful about doing it, and as such wouldn't recommend. Also Common Lisp will likely warn you that
-it's a bad idea.
+careful about doing it, and as such wouldn&rsquo;t recommend. Also Common Lisp will likely warn you that
+it&rsquo;s a bad idea.
 </p>
 </div>
 </div>
@@ -430,8 +406,7 @@ it's a bad idea.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-10-21 Wed 11:44</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-10-29 Thu 19:20</p>
 </div>
 </body>
 </html>
