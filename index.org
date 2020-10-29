@@ -7,10 +7,13 @@
 This section is for all questions relating to Java, in particular the ~stream~ API.
 
 ** Prolog
-This section is for all questions relating to Prolog
+
+This section is for all questions relating to Prolog.
+
 - [[file:prolog-debugging.org][Debugging in Prolog]]
 
 ** Lisp
+
 This section is for all questions relating to Common Lisp.
 
 For a guide on the things you'll need to know about Lisp for this course, you can read [[file:lisp-tutorial.org][this tutorial]]
@@ -24,9 +27,13 @@ For any other questions you might have, you can check out the questions I've rec
 - [[file:lisp-running-from-terminal.org][Running Lisp from any terminal]]
 - [[file:lisp-debugging.org][Debugging Common Lisp from the terminal]]
 - [[file:lisp-function-definitions.org][Different ways to define functions]]
+- [[file:lisp-namespaces.org][~list~ vs ~(list)~ - namespaces in Lisp]]
 
-** COMMENT C
-This section is for all questions relating to Lisp, Scheme, Clojure, etc
+** C
+
+This section is for all questions relating to C.
+
+- [[file:c-booleans.org][Booleans in C]]
 
 ** COMMENT Ruby
 This section is for all questions relating to Lisp, Scheme, Clojure, etc

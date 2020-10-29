@@ -6,9 +6,9 @@
 <!-- 2020-10-27 Tue 23:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Questions</title>
+<title>Booleans in C</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="author" content="Nicholas Nagy" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -219,64 +219,93 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">Questions</h1>
-
-<div id="outline-container-org6935d4a" class="outline-2">
-<h2 id="org6935d4a">Prolog</h2>
-<div class="outline-text-2" id="text-org6935d4a">
+<h1 class="title">Booleans in C</h1>
+<div class="org-center">
 <p>
-This section is for all questions relating to Prolog.
+<a href="index.html">Back</a>
 </p>
-
-<ul class="org-ul">
-<li><a href="prolog-debugging.html">Debugging in Prolog</a></li>
-</ul>
-</div>
 </div>
 
-<div id="outline-container-orga9043a5" class="outline-2">
-<h2 id="orga9043a5">Lisp</h2>
-<div class="outline-text-2" id="text-orga9043a5">
+<div id="outline-container-orgaafdcdc" class="outline-2">
+<h2 id="orgaafdcdc">Question</h2>
+<div class="outline-text-2" id="text-orgaafdcdc">
 <p>
-This section is for all questions relating to Common Lisp.
+Why can we use numbers as a conditional statement in C?
 </p>
 
 <p>
-For a guide on the things you&rsquo;ll need to know about Lisp for this course, you can read <a href="lisp-tutorial.html">this tutorial</a>
-and it should cover most of this couse, without showing you how to do things the wrong way.
+In C, there are no boolean data types. The way everything is represented is very low-level, so in
+order to determine whether to execute a code block in an if statement, for example, C will try to
+evaluate if the statement evaluates to 0. If the statement evaluates to 0, then it won’t evaluate
+the code block (like false in most programming languages). If the statement evaluates to anything
+other than 0, then it will evaluate the code block (much like true in most other programming
+languages).
 </p>
 
 <p>
-For any other questions you might have, you can check out the questions I&rsquo;ve received below.
+Since C99, this has changed somewhat. Starting from this version, you can import a part of the
+standard library called stdbool.h. This library allows users to declare boolean data types and use
+true and false in C programs. However, the underlying data is still stored as 0 for false, and 1
+for true, so the underlying data has not actually been changed. The main contribution for this
+library was that before it was introduced, many developers used different workarounds, and there
+was no consensus in the community on how booleans should be represented. Therefore, it provided a
+central way for how they can be represented. 
 </p>
 
-<ul class="org-ul">
-<li><a href="lisp-setting-variables.html">How to declare and set variables in Lisp</a></li>
-<li><a href="lisp-quote-vs-'.html">The difference between <code>quote</code> and <code>'</code></a></li>
-<li><a href="lisp-let-scoping.html">Variable scoping and <code>let</code> bindings</a></li>
-<li><a href="lisp-running-from-terminal.html">Running Lisp from any terminal</a></li>
-<li><a href="lisp-debugging.html">Debugging Common Lisp from the terminal</a></li>
-<li><a href="lisp-function-definitions.html">Different ways to define functions</a></li>
-<li><a href="lisp-namespaces.html"><code>list</code> vs <code>(list)</code> - namespaces in Lisp</a></li>
-</ul>
+<p>
+The following is a code example showing how conditional statements work in C.
+</p>
+<div class="org-src-container">
+<pre class="src src-c"><span style="color: #51afef; font-weight: bold;">#include</span> <span style="color: #98be65;">&lt;stdio.h&gt;</span>
+<span style="color: #5B6268;">// </span><span style="color: #5B6268;">necessary to use true and false keywords</span>
+<span style="color: #51afef; font-weight: bold;">#include</span> <span style="color: #98be65;">&lt;stdbool.h&gt;</span>
+
+<span style="color: #ECBE7B;">int</span> <span style="color: #c678dd;">main</span>() {
+  printf(<span style="color: #98be65;">"%d\n"</span>, <span style="color: #da8548; font-weight: bold;">10</span> &lt; <span style="color: #da8548; font-weight: bold;">20</span>); <span style="color: #5B6268;">// </span><span style="color: #5B6268;">output: 1</span>
+  printf(<span style="color: #98be65;">"%d\n"</span>, <span style="color: #da8548; font-weight: bold;">10</span> &gt; <span style="color: #da8548; font-weight: bold;">20</span>); <span style="color: #5B6268;">// </span><span style="color: #5B6268;">output: 0</span>
+
+  <span style="color: #5B6268;">// </span><span style="color: #5B6268;">true and false actually get replaced with 1 and 0, respectively</span>
+  printf(<span style="color: #98be65;">"%d\n"</span>, <span style="color: #a9a1e1;">true</span>);  <span style="color: #5B6268;">// </span><span style="color: #5B6268;">output: 1</span>
+  printf(<span style="color: #98be65;">"%d\n"</span>, <span style="color: #a9a1e1;">false</span>); <span style="color: #5B6268;">// </span><span style="color: #5B6268;">output: 0</span>
+
+  <span style="color: #51afef;">if</span> (<span style="color: #da8548; font-weight: bold;">1</span>)
+    printf(<span style="color: #98be65;">"I get printed\n"</span>);
+  <span style="color: #51afef;">if</span> (<span style="color: #da8548; font-weight: bold;">0</span>)
+    printf(<span style="color: #98be65;">"I don't get printed!\n"</span>);
+  <span style="color: #51afef;">if</span> (-<span style="color: #da8548; font-weight: bold;">76478</span>)
+    printf(<span style="color: #98be65;">"-76478 is actually true\n"</span>);
+  <span style="color: #51afef;">if</span> (<span style="color: #da8548; font-weight: bold;">734</span>)
+    printf(<span style="color: #98be65;">"734 is also true\n"</span>);
+  <span style="color: #51afef;">if</span> (<span style="color: #98be65;">'a'</span>)
+    printf(<span style="color: #98be65;">"Characters are also true, such as \'a\'.\n"</span>);
+
+  <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>;
+}
+</pre>
 </div>
-</div>
 
-<div id="outline-container-org905134e" class="outline-2">
-<h2 id="org905134e">C</h2>
-<div class="outline-text-2" id="text-org905134e">
 <p>
-This section is for all questions relating to C.
+The output of the above code:
 </p>
 
-<ul class="org-ul">
-<li><a href="c-booleans.html">Booleans in C</a></li>
-</ul>
+<div class="org-src-container">
+<pre class="src src-c"><span style="color: #5B6268;">/*</span>
+<span style="color: #5B6268;">1</span>
+<span style="color: #5B6268;">0</span>
+<span style="color: #5B6268;">1</span>
+<span style="color: #5B6268;">0</span>
+<span style="color: #5B6268;">I get printed</span>
+<span style="color: #5B6268;">-76478 is actually true</span>
+<span style="color: #5B6268;">734 is also true</span>
+<span style="color: #5B6268;">Characters are also true, such as 'a'.</span>
+<span style="color: #5B6268;">*/</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Philip Dumaresq</p>
+<p class="author">Author: Nicholas Nagy</p>
 <p class="date">Created: 2020-10-27 Tue 23:48</p>
 </div>
 </body>
