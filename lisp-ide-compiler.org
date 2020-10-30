@@ -2,9 +2,8 @@
 #+TITLE: Setting up your Lisp environment
 
 * Question
-
-There is several different environments that you can use for writing Common Lisp code, in this
-guide you will pick an environment and learn to set it up.
+There are tons of different environments that you can use for writing Common Lisp code, in this
+guide I outline how to set up some of the most common ones.
 
 For Common Lisp, you can use either an online text-editor or an IDE locally on your computer. While
 the Swish-Prolog environment works great for Prolog, the online editors for Lisp don't really meet
@@ -12,3 +11,189 @@ the same standard. If you'd like and you don't want to bother with setting up a 
 then you can use either the [[https://www.tutorialspoint.com/execute_lisp_online.php][tutorialspoint.com]] editor or [[https://rextester.com/l/common_lisp_online_compiler][rextester]].
 
 If you'd like to set up a local environment, then you can follow down below.
+
+** Compilers
+There are many compilers available for Common Lisp including Steel Bank Common Lisp, Clozure Common
+Lisp, CLisp and more. I would recommend that you use Steel Bank Common Lisp. While for the most part
+it won't really matter what you're using, Steel Bank Common Lisp runs on every platform, is widely
+used and is what I assume you're using throughout most of the guides in this website. While it
+should be mostly the same for any other compiler, some differences may exist, so to simply things I
+would recommend simply sticking to SBCL.
+
+** Text Editors
+When it comes to the text editor that you use, there's a lot more variation. I can't cover how to
+set up your environment for every text editor, so I'm going to stick to the most common ones being
+vscode, Atom and Emacs.
+
+*** Emacs
+Emacs is going to be the best text editor for Common Lisp. /However/ emacs will also require you to do
+some learning as it is more complicated than vscode or Atom. If you'd like to use Emacs, then I
+would recommend installing [[https://spacemacs.org][Spacemacs]] which is an Emacs configuration that gives you a comfortable
+experience out of the box. Without it, Emacs is a weird and confusing esoteric text editor that is
+very difficult to learn. To start using Spacemacs, just clone the GitHub repository to your home
+directory and you're good to go. To do that, it should be something like this:
+
+#+BEGIN_SRC bash
+$ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+#+END_SRC
+
+Then, you need to install actual Emacs. Spacemacs is just a set of configuration files for Emacs and
+doesn't ship with Emacs itself. The instructions to install Emacs for Windows, MacOS and Linux can
+be found on the [[https://www.gnu.org/software/emacs/download.html][Emacs website]].
+
+Once installed, running Emacs should start up the Spacemacs configuration.
+
+Once Spacemacs is done installing everything, it will prompt you a couple of times for basic things
+you want in your configuration. The only one that will really matter to you is whether you want to
+use Emacs keybindings or Evil-mode. If you know Vim, use evil-mode. If you don't know Vim, I would
+still recommend evil-mode if you're willing to do a little bit more learning.
+
+Once installed, open up your Common Lisp file. Spacemacs will ship with a package called SLIME
+(Superior Lisp Interaction Mode for Emacs) which is what you use in Emacs for executing your Lisp
+code. After opening your file, hit ~SPC m s i~  to start SLIME. You'll see another window open, and
+that's where you're going to execute your code. If you hit the keys ~SPC m c l~ then your entire file
+will be compiled and you can navigate over to the other window to call your functions from the file.
+For example, if I have the following file:
+
+#+BEGIN_SRC lisp
+(defun add (a b)
+  (+ a b))
+
+(let ((x 10) (y 20))
+  (print (add x y)))
+#+END_SRC
+
+And I start SLIME with ~SPC m s i~ and then load the file, then it will first print out the sum of 10
+and 20, then put you in a REPL where you can interact with the program. So you can do ~(add 10 20)~
+and it'll have that file compiled and loaded into the running process. To make changes to your code
+you can just go back to your file and hit ~SPC m c l~ again to re-load the whole file. If you only
+want to reload the function you've changed, then you can do ~SPC m c f~ and it will compile the
+function that you're currently focused on. If you want to run a sequence of expressions to test your
+code, then you can select the lines for all the expressions you want to evaluate, then do ~SPC m e r~
+to evaluate that region.
+
+There's tons more things that you can do, all of the hotkeys are available to look at by hitting
+~SPC m~ and then waiting a second to see all the possible hotkeys show up at the bottom of the frame. 
+
+*** Visual Studio Code
+Visual Studio Code is probably what most people use for this course. It won't have as good of
+support as Emacs, but it will be easier to use.
+
+To install Visual Studio Code you can go to it's [[https://code.visualstudio.com/Download][website and download]] from there.
+
+*Sidenote: VSCode without the telemetry*
+The source code for Visual Studio Code is free and open source, /however/ the binaries that Microsoft
+releases on their website are under a different license and have telemetry and reporting software
+bundled in. If you don't like that, you can download pre-built binaries of vscode /without/ the
+telemetry from the [[https://github.com/VSCodium/vscodium/releases][vscodium]] project. VSCodium is the /exact same thing/ just without the telemetry.
+Everything in this guide is the exact same for both vscode and vscodium.
+
+For writing Lisp in vscode, there's 3 primary extensions that I would recommend installing. 
+1) [[https://marketplace.visualstudio.com/items?itemName=mattn.Lisp][Syntax highlighting]]
+   Gotta have syntax highlighting, right?
+2) [[https://marketplace.visualstudio.com/items?itemName=2gua.rainbow-brackets][Rainbow Brackets]]
+   This will help make your code much more legible by highlighting each level of parentheses a
+   different colour, which helps you see matching parentheses more easily.
+3) [[https://marketplace.visualstudio.com/items?itemName=shaunlebron.vscode-parinfer][parinfer]]
+   This plugin helps make writing Lisp code feel more like Python. It automatically managers your
+   parentheses for you based on the indentation of your code. Which a) means you don't have to
+   manage them yourself and b) forces your code to be formatted properly. 
+
+ With these installed, there's two ways that you can execute your code from inside vscode - either
+   using the terminal, or telling vscode how to execute it with a run button.
+
+**** Terminal
+Running your code from the terminal will be the same no matter what editor you're using. With vscode
+you can use the buitl-in terminal and follow the instructions about [[file:lisp-running-from-terminal.org][running lisp from your terminal]]
+I wrote on another page.
+
+**** Integrated into vscode
+First, make your assignment directory the root of a new workspace in vscode. Then, create a
+directory named ~.vscode~. Inside that directory, you should make a new file called ~tasks.json~.
+
+#+BEGIN_SRC bash
+--- assignment/
+  |--- .vscode/
+  |  |--- tasks.json
+  |--- file-1.lisp
+  |--- file-2.lisp
+#+END_SRC
+
+Inside your ~tasks.json~ file, put the following content:
+
+#+BEGIN_SRC js
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+      {
+          "label": "sbcl",
+          "type": "shell",
+          "command": "sbcl --script ${file}",
+          "problemMatcher": [],
+          "group": {
+              "kind": "build",
+              "isDefault": true
+          }
+      }
+  ]
+}
+#+END_SRC
+
+Now, if you enter some code into ~file.lisp~ and hit they hotkey ~ctrl+shift+b~, to execute your code,
+then vscode will open a new panel to show you the output.
+
+*** Atom
+Atom is another popular editor that people use for this class and it has pretty decent support for
+Common Lisp.
+
+For writing Lisp in Atom, there's 4 primary extensions that I would recommend installing. 
+1) [[https://atom.io/packages/language-lisp][Syntax highlighting]]
+   Gotta have syntax highlighting, right?
+2) [[https://atom.io/packages/prismatic-parens][Rainbow Brackets]]
+   This will help make your code much more legible by highlighting each level of parentheses a
+   different colour, which helps you see matching parentheses more easily.
+3) [[https://atom.io/packages/parinfer][parinfer]]
+   This plugin helps make writing Lisp code feel more like Python. It automatically managers your
+   parentheses for you based on the indentation of your code. Which a) means you don't have to
+   manage them yourself and b) forces your code to be formatted properly. 
+4) [[https://atom.io/packages/slima][SLIMA]]
+   The Superior Lisp Interaction Mode for Atom. Very heavily inspired from a similar plugin for
+   Emacs, it's probably the best way to run Lisp code inside Atom.
+
+With these installed, there's two ways that you can execute your code from inside vscode - either
+using the terminal, or through SLIMA.
+
+I've never used SLIMA before however, so I would recommend that you read through the page for it
+linked about that guides you through setting it up and using it.
+
+*** Vim
+Vim isn't a super popular editor for students in this class, but if you use Vim then you use Vim.
+
+For writing Lisp in Vim, there's 3 primary extensions that I would recommend installing. 
+1) [[https://github.com/luochen1990/rainbow][Rainbow Brackets]]
+   This will help make your code much more legible by highlighting each level of parentheses a
+   different colour, which helps you see matching parentheses more easily.
+2) [[https://github.com/bhurlow/vim-parinfer][parinfer]]
+   This plugin helps make writing Lisp code feel more like Python. It automatically managers your
+   parentheses for you based on the indentation of your code. Which a) means you don't have to
+   manage them yourself and b) forces your code to be formatted properly. 
+3) [[https://www.vim.org/scripts/script.php?script_id=2531][SLIMV]]
+   The Superior Lisp Interaction Mode for Vim. Very heavily inspired from a similar plugin for
+   Emacs, it's probably the best way to run Lisp code inside Vim.
+
+   Note that I am not a vimmer myself and have no idea how well these plugins work.
+   
+*** Portacle
+Surprise! Portacle is actually just Emacs! Scroll back up to my recommendations for using Emacs
+instead of using Portacle right out of the box.
+
+*** Other
+At the end of the day, any text editor will work for writing your Lisp code. Notepad++, Vim,
+Sublime, etc. If you use any of these other editors though, I'd highly recommend taking some time to
+figure out what the best plugins for working with Lisp are because it will really be helpful.
+
+Unless you find a plugin that supports executing code from the editor, you'll also probably need to
+learn to compile your lisp code in the terminal/command line. I'd recommend
+[[file:lisp-running-from-terminal.org][reading about running from the terminal]] to familiarize yourself with the commands.
