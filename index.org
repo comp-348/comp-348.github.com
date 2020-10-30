@@ -16,6 +16,8 @@ This section is for all questions relating to Prolog.
 
 This section is for all questions relating to Common Lisp.
 
+Before getting started with Lisp, you should [[file:lisp-ide-compiler.org][set up your development environment]]. 
+
 For a guide on the things you'll need to know about Lisp for this course, you can read [[file:lisp-tutorial.org][this tutorial]]
 and it should cover most of this couse, without showing you how to do things the wrong way.
 
