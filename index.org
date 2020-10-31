@@ -30,6 +30,7 @@ For any other questions you might have, you can check out the questions I've rec
 - [[file:lisp-debugging.org][Debugging Common Lisp from the terminal]]
 - [[file:lisp-function-definitions.org][Different ways to define functions]]
 - [[file:lisp-namespaces.org][~list~ vs ~(list)~ - namespaces in Lisp]]
+- [[file:lisp-cons-cells.org][Seeing ~(X . Y)~ at the end of a list]]
 
 ** C
 

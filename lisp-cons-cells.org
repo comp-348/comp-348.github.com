@@ -1,0 +1,31 @@
+#+TITLE: What does (X . Y) mean?
+#+AUTHOR: Philip Dumaresq
+#+SETUPFILE: templates/html.org
+#+OPTIONS: toc:nil
+#+INCLUDE: header.org
+
+* Question
+When I print out my list, at the end of it I see ~.~ before the last element? What's going on here?
+
+In Lisp, we use ~cons~ to /construct/ lists. If we call
+
+#+BEGIN_SRC lisp
+(cons 'a ())
+#+END_SRC
+
+then that's how we could represent a list with a single element in it. In Common Lisp we happen to
+represent lists as a "chain" of what we call *cons cells*. The ~cons~ function in essence represents a
+struct with two pointers. The first pointer is what we call the ~car~ of the cons cell, and the second
+pointer is the ~cdr~ part of our cons cell. 
+
+However, the ~cdr~ pointer in our cons cell doesn't need to point to another cons cell, it can contain
+any value. So the following is a perfectly valid call to ~cons~: 
+
+#+BEGIN_SRC lisp
+(defvar wacky-cons (cons 'a "Hello world!"))
+(print wacky-cons)
+;; (A . "Hello world!")
+#+END_SRC
+
+And that's how you get the ~.~ at the end of your list - it occurs when the ~cdr~ part of your ~cons~ is
+an atom instead of another list or cons cell. 
