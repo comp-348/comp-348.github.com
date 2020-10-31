@@ -36,6 +36,8 @@ For any other questions you might have, you can check out the questions I've rec
 
 This section is for all questions relating to C.
 
+Before getting started with C you should [[file:c-ide-compiler.org][set up your development environment]].
+
 - [[file:c-booleans.org][Booleans in C]]
 
 ** COMMENT Ruby

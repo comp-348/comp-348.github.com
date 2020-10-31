@@ -6,7 +6,7 @@
 <!-- 2020-10-31 Sat 00:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Questions</title>
+<title>Setting up your C environment</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Philip Dumaresq" />
 <style type="text/css">
@@ -219,68 +219,109 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">Questions</h1>
-
-<div id="outline-container-org6935d4a" class="outline-2">
-<h2 id="org6935d4a">Prolog</h2>
-<div class="outline-text-2" id="text-org6935d4a">
-<p>
-This section is for all questions relating to Prolog.
-</p>
-
-<ul class="org-ul">
-<li><a href="prolog-debugging.html">Debugging in Prolog</a></li>
+<h1 class="title">Setting up your C environment</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org5923fde">Windows</a></li>
+<li><a href="#org7248716">MacOS and Linux</a>
+<ul>
+<li><a href="#orga1188f5">Compilers</a></li>
+<li><a href="#org09e4776">Editors</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orga9043a5" class="outline-2">
-<h2 id="orga9043a5">Lisp</h2>
-<div class="outline-text-2" id="text-orga9043a5">
+<div class="org-center">
 <p>
-This section is for all questions relating to Common Lisp.
+<a href="index.html">Back</a>
+</p>
+</div>
+
+<p>
+There are tons of different environments that you can use for writing C code, in this guide I
+outline how to set up some of the most common ones.
 </p>
 
 <p>
-Before getting started with Lisp, you should <a href="lisp-ide-compiler.html">set up your development environment</a>. 
+For C, you can use either an online text-editor or an IDE locally on your computer. With C you will
+need to do be able to accept command line arguments and/or do file IO. As such, if you use an online
+environment you will need one that supports these features. While I&rsquo;m sure there are others that
+exists, <a href="https://www.repl.it">repl.it</a> provides support file IO and cli arguments as well as big multi-file projects. If
+you&rsquo;d like to use something else, you&rsquo;re more than welcome as long as it supports CLI arguments and
+file IO.
 </p>
 
 <p>
-For a guide on the things you&rsquo;ll need to know about Lisp for this course, you can read <a href="lisp-tutorial.html">this tutorial</a>
-and it should cover most of this couse, without showing you how to do things the wrong way.
+If you&rsquo;d like to set up a local environment, then you can follow down below.
+</p>
+
+<div id="outline-container-org5923fde" class="outline-2">
+<h2 id="org5923fde">Windows</h2>
+<div class="outline-text-2" id="text-org5923fde">
+<p>
+If you&rsquo;re using Windows then I recommend using the JetBrains CLion IDE. CLion is a great IDE for C
+that comes allows interactive debugging, auto-complete, error reporting and everything you&rsquo;d expect
+from an industry-ready IDE. CLion also has a great <a href="https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-windows.html#">guide</a> on setting up your toolchain to run on
+Windows. I&rsquo;d recommend reading through that guide and setting it up.
 </p>
 
 <p>
-For any other questions you might have, you can check out the questions I&rsquo;ve received below.
+If you don&rsquo;t want to use CLion, then I would recommend installing the <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux</a>
+and compiling your C code from your terminal - or you can use Windows Subsystem for Linux with
+CLion for the best of both worlds.
 </p>
-
-<ul class="org-ul">
-<li><a href="lisp-setting-variables.html">How to declare and set variables in Lisp</a></li>
-<li><a href="lisp-quote-vs-'.html">The difference between <code>quote</code> and <code>'</code></a></li>
-<li><a href="lisp-let-scoping.html">Variable scoping and <code>let</code> bindings</a></li>
-<li><a href="lisp-running-from-terminal.html">Running Lisp from any terminal</a></li>
-<li><a href="lisp-debugging.html">Debugging Common Lisp from the terminal</a></li>
-<li><a href="lisp-function-definitions.html">Different ways to define functions</a></li>
-<li><a href="lisp-namespaces.html"><code>list</code> vs <code>(list)</code> - namespaces in Lisp</a></li>
-<li><a href="lisp-cons-cells.html">Seeing <code>(X . Y)</code> at the end of a list</a></li>
-</ul>
 </div>
 </div>
 
-<div id="outline-container-org905134e" class="outline-2">
-<h2 id="org905134e">C</h2>
-<div class="outline-text-2" id="text-org905134e">
+<div id="outline-container-org7248716" class="outline-2">
+<h2 id="org7248716">MacOS and Linux</h2>
+<div class="outline-text-2" id="text-org7248716">
 <p>
-This section is for all questions relating to C.
+On Mac and Linux there are many tools available, and for the most part it will be fairly similar
+between the two platforms. 
+</p>
+</div>
+
+<div id="outline-container-orga1188f5" class="outline-3">
+<h3 id="orga1188f5">Compilers</h3>
+<div class="outline-text-3" id="text-orga1188f5">
+<p>
+If you&rsquo;re using Mac or Linux, then there&rsquo;s many different tools that you can use. Mac and Linux both
+come with the <code>gcc</code> compiler for C already installed, you just need to open the terminal and invoke
+it using the command <code>gcc</code>. On Mac it may take a little bit to initialize the tools the first time
+you run it, and it may ask you to accept a EULA.
 </p>
 
 <p>
-Before getting started with C you should <a href="c-ide-compiler.html">set up your development environment</a>.
+Alternatively to GCC, you can also use the <code>clang</code> compiler if you prefer. Both will behave pretty
+much the exact same so it doesn&rsquo;t really matter which one you use. However, one argument in favour
+of the clang compiler is that it has much better error messages than <code>gcc</code>. I prefer clang, but as
+stated you&rsquo;re free to use either. On MacOS you can install <code>clang</code> from the <a href="https://brew.sh">brew package manager</a> and
+on Linux you can install it from your system package manager.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org09e4776" class="outline-3">
+<h3 id="org09e4776">Editors</h3>
+<div class="outline-text-3" id="text-org09e4776">
+<p>
+On both Linux and MacOS there are many editors you can use for C. I recommend using CLion for both,
+for the same reasons as with Windows: it&rsquo;s the most fully featured environment with debugging,
+auto-completion, error reporting and everything you would expect from a modern IDE out of the box.
+CLion will help you out a lot more than most other editors will. Jetbrains has a <a href="https://www.jetbrains.com/help/clion/clion-quick-start-guide.html#build-and-run">guide on setting up</a>
+CLion that I would recommend reading if you want to use it. 
 </p>
 
-<ul class="org-ul">
-<li><a href="c-booleans.html">Booleans in C</a></li>
-</ul>
+<p>
+If you don&rsquo;t want to use CLion, vscode or any other text editor are always options too. Just fire up
+a text editor and write your C code, then open a terminal to compile your code. You can also make
+use of <code>Makefile</code> or <code>CMake</code> to ensure that your project can easily be compiled and executed.
+</p>
+</div>
 </div>
 </div>
 </div>

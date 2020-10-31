@@ -1,0 +1,57 @@
+#+SETUPFILE: templates/html.org
+#+TITLE: Setting up your C environment
+#+AUTHOR: Philip Dumaresq
+#+INCLUDE: header.org
+
+There are tons of different environments that you can use for writing C code, in this guide I
+outline how to set up some of the most common ones.
+
+For C, you can use either an online text-editor or an IDE locally on your computer. With C you will
+need to do be able to accept command line arguments and/or do file IO. As such, if you use an online
+environment you will need one that supports these features. While I'm sure there are others that
+exists, [[https://www.repl.it][repl.it]] provides support file IO and cli arguments as well as big multi-file projects. If
+you'd like to use something else, you're more than welcome as long as it supports CLI arguments and
+file IO.
+
+If you'd like to set up a local environment, then you can follow down below.
+
+** Windows
+
+If you're using Windows then I recommend using the JetBrains CLion IDE. CLion is a great IDE for C
+that comes allows interactive debugging, auto-complete, error reporting and everything you'd expect
+from an industry-ready IDE. CLion also has a great [[https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-windows.html#][guide]] on setting up your toolchain to run on
+Windows. I'd recommend reading through that guide and setting it up.
+
+If you don't want to use CLion, then I would recommend installing the [[https://docs.microsoft.com/en-us/windows/wsl/install-win10][Windows Subsystem for Linux]]
+and compiling your C code from your terminal - or you can use Windows Subsystem for Linux with
+CLion for the best of both worlds.
+
+** MacOS and Linux
+
+On Mac and Linux there are many tools available, and for the most part it will be fairly similar
+between the two platforms. 
+
+*** Compilers
+
+If you're using Mac or Linux, then there's many different tools that you can use. Mac and Linux both
+come with the ~gcc~ compiler for C already installed, you just need to open the terminal and invoke
+it using the command ~gcc~. On Mac it may take a little bit to initialize the tools the first time
+you run it, and it may ask you to accept a EULA.
+
+Alternatively to GCC, you can also use the ~clang~ compiler if you prefer. Both will behave pretty
+much the exact same so it doesn't really matter which one you use. However, one argument in favour
+of the clang compiler is that it has much better error messages than ~gcc~. I prefer clang, but as
+stated you're free to use either. On MacOS you can install ~clang~ from the [[https://brew.sh][brew package manager]] and
+on Linux you can install it from your system package manager.
+
+*** Editors
+
+On both Linux and MacOS there are many editors you can use for C. I recommend using CLion for both,
+for the same reasons as with Windows: it's the most fully featured environment with debugging,
+auto-completion, error reporting and everything you would expect from a modern IDE out of the box.
+CLion will help you out a lot more than most other editors will. Jetbrains has a [[https://www.jetbrains.com/help/clion/clion-quick-start-guide.html#build-and-run][guide on setting up]]
+CLion that I would recommend reading if you want to use it. 
+
+If you don't want to use CLion, vscode or any other text editor are always options too. Just fire up
+a text editor and write your C code, then open a terminal to compile your code. You can also make
+use of ~Makefile~ or ~CMake~ to ensure that your project can easily be compiled and executed.
