@@ -10,6 +10,8 @@ This section is for all questions relating to Java, in particular the ~stream~ A
 
 This section is for all questions relating to Prolog.
 
+Before getting started with Prolog, you should [[file:prolog-ide-compiler.org][set up your development environment]]. 
+
 - [[file:prolog-debugging.org][Debugging in Prolog]]
 
 ** Lisp

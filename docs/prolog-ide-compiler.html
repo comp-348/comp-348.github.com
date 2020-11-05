@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-11-05 Thu 00:39 -->
+<!-- 2020-11-05 Thu 00:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Questions</title>
+<title>Setting up your Prolog environment</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Philip Dumaresq" />
 <style type="text/css">
@@ -219,78 +219,114 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">Questions</h1>
-
-<div id="outline-container-org6935d4a" class="outline-2">
-<h2 id="org6935d4a">Prolog</h2>
-<div class="outline-text-2" id="text-org6935d4a">
-<p>
-This section is for all questions relating to Prolog.
-</p>
-
-<p>
-Before getting started with Prolog, you should <a href="prolog-ide-compiler.html">set up your development environment</a>. 
-</p>
-
-<ul class="org-ul">
-<li><a href="prolog-debugging.html">Debugging in Prolog</a></li>
+<h1 class="title">Setting up your Prolog environment</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org00477c0">Setting up a local environment</a>
+<ul>
+<li><a href="#orgdb13997">Using the built-in editor</a></li>
+<li><a href="#orgbba45a3">Any other editor</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orga9043a5" class="outline-2">
-<h2 id="orga9043a5">Lisp</h2>
-<div class="outline-text-2" id="text-orga9043a5">
+<div class="org-center">
 <p>
-This section is for all questions relating to Common Lisp.
+<a href="index.html">Back</a>
+</p>
+</div>
+
+
+<p>
+There are a lot of different environments that you can use for writing Prolog, most students for
+this course I think use the SWIPL Prolog online IDE, <a href="https://swish.swi-prolog.org">SWISH</a>. SWISH is excellent as far as online IDEs
+go and I wouldn&rsquo;t discourage anyone from using it. It&rsquo;s simple and powerful.
+</p>
+
+<div id="outline-container-org00477c0" class="outline-2">
+<h2 id="org00477c0">Setting up a local environment</h2>
+<div class="outline-text-2" id="text-org00477c0">
+<p>
+If you&rsquo;d like to install a local environment, then you&rsquo;ll first need to install a Prolog compiler. I
+would recommend <a href="https://www.swi-prolog.org/download/stable">installing SWIPL</a>. It&rsquo;s a free and open source Prolog compiler that&rsquo;s available on
+Windows, MacOS and Linux.
 </p>
 
 <p>
-Before getting started with Lisp, you should <a href="lisp-ide-compiler.html">set up your development environment</a>. 
+Once you&rsquo;ve installed your Prolog compiler, you should be able to use most development environments
+such as visual studio code, GNU Emacs, Sublime Text, etc. for writing Prolog. SWIPL also comes with
+a version of GNU Emacs built-in that&rsquo;s modified for use with Prolog you can use.
+</p>
+</div>
+
+<div id="outline-container-orgdb13997" class="outline-3">
+<h3 id="orgdb13997">Using the built-in editor</h3>
+<div class="outline-text-3" id="text-orgdb13997">
+<p>
+To start using the built-in editor, you first need to fire up your Prolog REPL by typing <code>swipl</code> into
+your terminal. This will load you into an interactive prompt where you&rsquo;ll be able to enter all of
+your Prolog queries. To exit swipl, you use the un-guessable <code>halt.</code> command. There&rsquo;s no <code>exit</code> or <code>quit</code>
+here like in most languages, no, we use <code>halt</code> in Prolog land. Note that you need to end the line with
+<code>.</code> because that&rsquo;s like our semi-colon in other languages. All expressions will need to end with a
+period. To invoke our editor, you can type <code>emacs.</code> into your REPL and it will launch the editor to a
+new empty file. You can write your Prolog code in that empty file, then when you&rsquo;re done, hit <code>File
+-&gt; Save as</code> to save your Prolog code to a new file. Then you can exit Emacs by doing <code>File -&gt; Quit</code>.
+Note that when using the buttons from the menu bar, they have the associated shortcuts for doing
+those actions. Quitting Emacs for example is <code>Ctrl-x Ctrl-c</code> (or <code>C-x C-c</code> as Emacs will show you). So
+you can use those to learn the shortcuts - sadly Emacs doesn&rsquo;t use standard ones like <code>Ctrl-s</code> or
+<code>Ctrl-c</code> / <code>Ctrl-v</code>.
 </p>
 
 <p>
-For a guide on the things you&rsquo;ll need to know about Lisp for this course, you can read <a href="lisp-tutorial.html">this tutorial</a>
-and it should cover most of this couse, without showing you how to do things the wrong way.
+Once you&rsquo;ve exited Emacs and are back in your REPL, you can load the file that you just created by
+doing <code>[filename].</code> <i>without including the file extension</i>. Give your Prolog files the <code>.pl</code> or <code>.prolog</code>
+extension and this should work fine right away. 
 </p>
 
 <p>
-For any other questions you might have, you can check out the questions I&rsquo;ve received below.
+Once you&rsquo;ve got this going, you can get started writing your Prolog code and queries!
 </p>
-
-<ul class="org-ul">
-<li><a href="lisp-setting-variables.html">How to declare and set variables in Lisp</a></li>
-<li><a href="lisp-quote-vs-'.html">The difference between <code>quote</code> and <code>'</code></a></li>
-<li><a href="lisp-let-scoping.html">Variable scoping and <code>let</code> bindings</a></li>
-<li><a href="lisp-running-from-terminal.html">Running Lisp from any terminal</a></li>
-<li><a href="lisp-debugging.html">Debugging Common Lisp from the terminal</a></li>
-<li><a href="lisp-function-definitions.html">Different ways to define functions</a></li>
-<li><a href="lisp-namespaces.html"><code>list</code> vs <code>(list)</code> - namespaces in Lisp</a></li>
-<li><a href="lisp-cons-cells.html">Seeing <code>(X . Y)</code> at the end of a list</a></li>
-</ul>
 </div>
 </div>
 
-<div id="outline-container-org905134e" class="outline-2">
-<h2 id="org905134e">C</h2>
-<div class="outline-text-2" id="text-org905134e">
+<div id="outline-container-orgbba45a3" class="outline-3">
+<h3 id="orgbba45a3">Any other editor</h3>
+<div class="outline-text-3" id="text-orgbba45a3">
 <p>
-This section is for all questions relating to C.
+You can of course use any text editor for Prolog. VSCode, Vim, Sublime, Emacs, etc. I believe
+there&rsquo;s even an Eclipse plugin for Prolog. No matter what you use, you&rsquo;ll just write your Prolog
+code in your editor, and then execute it from a terminal.
 </p>
 
 <p>
-Before getting started with C you should <a href="c-ide-compiler.html">set up your development environment</a>.
+To load your Prolog file in your compiler, you can run the command
 </p>
 
-<ul class="org-ul">
-<li><a href="c-booleans.html">Booleans in C</a></li>
-</ul>
+<div class="org-src-container">
+<pre class="src src-bash">$ swipl -l filename.pl
+</pre>
+</div>
+
+<p>
+Then you&rsquo;ll be loaded into a interactive area that we call a REPL (Read Eval Print Loop). In the
+REPL is where you&rsquo;ll write your Prolog queries. You use <code>;</code> to view the next result or <code>.</code> to stop. To
+exit the REPL, you use <code>halt.</code>.
+</p>
+
+<p>
+The Prolog REPL is a little unconventional, and if you get stuck I recommend you check out the SWI
+Prolog website&rsquo;s page on <a href="https://www.swi-prolog.org/pldoc/man?section=quickstart">getting started</a> as it has command line instructions.
+</p>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-11-05 Thu 00:39</p>
+<p class="date">Created: 2020-11-05 Thu 00:37</p>
 </div>
 </body>
 </html>
