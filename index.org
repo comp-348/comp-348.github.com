@@ -1,4 +1,4 @@
-#+TITLE: Questions
+#+TITLE: COMP-348
 #+AUTHOR: Philip Dumaresq
 #+SETUPFILE: templates/html.org
 #+OPTIONS: toc:nil
@@ -43,4 +43,11 @@ Before getting started with C you should [[file:c-ide-compiler.org][set up your 
 - [[file:c-booleans.org][Booleans in C]]
 
 ** COMMENT Ruby
-This section is for all questions relating to Lisp, Scheme, Clojure, etc
+
+This section is for all questions relating to Ruby.
+
+** Contributing
+
+If you have something you'd like to contribute to this website, be it an answer to a question you
+want answered, you notice a typo, or anything else, feel free to make an issue or pull request on
+the [[https://github.com/comp-348/comp-348.github.com][GitHub repository]].
