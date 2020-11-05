@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-21 Wed 11:44 -->
+<!-- 2020-11-05 Thu 01:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Debugging Prolog</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,7 +224,7 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbd6b754">Question</a></li>
+<li><a href="#orga4ed3c9">Question</a></li>
 </ul>
 </div>
 </div>
@@ -258,21 +234,21 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orgbd6b754" class="outline-2">
-<h2 id="orgbd6b754">Question</h2>
-<div class="outline-text-2" id="text-orgbd6b754">
+<div id="outline-container-orga4ed3c9" class="outline-2">
+<h2 id="orga4ed3c9">Question</h2>
+<div class="outline-text-2" id="text-orga4ed3c9">
 <p>
 How do I debug my Prolog queries?
 </p>
 
 <p>
 Debugging Prolog can be done pretty easily using a built-in tool called <code>trace</code>. Now, since the online
-<a href="https://swish.swi-prolog.org/">swish</a> editor for Prolog is fantastic, I'll be assuming you're using that, but this can all be done
+<a href="https://swish.swi-prolog.org/">swish</a> editor for Prolog is fantastic, I&rsquo;ll be assuming you&rsquo;re using that, but this can all be done
 using <a href="https://www.swi-prolog.org/">swipl</a> from your terminal as well. 
 </p>
 
 <p>
-Let's say you have the following dataset:
+Let&rsquo;s say you have the following dataset:
 </p>
 
 <div class="org-src-container">
@@ -300,11 +276,11 @@ prefix our query with <code>trace/0</code> to interactively follow what Prolog i
 
 <p>
 This will allow us to step through our code using step-into, step-over, step-out and retry, just
-like when we're debugging in Java.  
+like when we&rsquo;re debugging in Java.  
 </p>
 
 <p>
-<code>trace</code> is the main tool that I use for debugging Prolog, but there's a number of other tools that you
+<code>trace</code> is the main tool that I use for debugging Prolog, but there&rsquo;s a number of other tools that you
 can use here to learn how to debug Prolog better, all of which are explained in the <a href="https://www.swi-prolog.org/pldoc/man?section=debugger">swi-prolog
 documentation</a>
 </p>
@@ -313,8 +289,7 @@ documentation</a>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-10-21 Wed 11:44</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-11-05 Thu 01:23</p>
 </div>
 </body>
 </html>

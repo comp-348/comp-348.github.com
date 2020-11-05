@@ -21,7 +21,7 @@ This section is for all questions relating to Common Lisp.
 Before getting started with Lisp, you should [[file:lisp-ide-compiler.org][set up your development environment]]. 
 
 For a guide on the things you'll need to know about Lisp for this course, you can read [[file:lisp-tutorial.org][this tutorial]]
-and it should cover most of this couse, without showing you how to do things the wrong way.
+and it should cover most of this course, without showing you how to do things the wrong way.
 
 For any other questions you might have, you can check out the questions I've received below.
 

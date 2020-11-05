@@ -57,8 +57,8 @@ and a value, and it binds that value to the symbol:
 #+end_src
 
 *** ~setq~
-The ~setq~ tool means "set quoted". It's very similar to ~set~, except that we don't have to quote the
-symbol being passed to it:
+The ~setq~ tool means "set quoted". It's similar to ~set~, except that we don't have to quote the symbol
+being passed to it: 
 
 #+begin_src common-lisp
 (setq x 10)
@@ -77,7 +77,7 @@ variable:
   (setf y 30))
 #+end_src
 
-Will do the exact same thing. However, we can /also/ use ~setf~ to set the values /inside/ a list:
+Will do the same thing. However, we can /also/ use ~setf~ to set the values /inside/ a list:
 
 #+begin_src lisp
 (defvar lst '(1 2 3 4 5))

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-21 Wed 11:44 -->
+<!-- 2020-11-05 Thu 01:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Running Lisp from the terminal</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,16 +224,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf1e6376">Question:</a>
+<li><a href="#orgbd3abf8">Question:</a>
 <ul>
-<li><a href="#orgd9d9f10">SBCL:</a>
+<li><a href="#org058a43e">SBCL:</a>
 <ul>
-<li><a href="#orgd7abf3e"><code>--script</code></a></li>
-<li><a href="#org01f4f70"><code>--load</code></a></li>
+<li><a href="#orgd251671"><code>--script</code></a></li>
+<li><a href="#org0c71ca5"><code>--load</code></a></li>
 </ul>
 </li>
-<li><a href="#org79cbef8">CCL</a></li>
-<li><a href="#orga5bac9a">CLisp</a></li>
+<li><a href="#orge3a3fe5">CCL</a></li>
+<li><a href="#org4c7d1ee">CLisp</a></li>
 </ul>
 </li>
 </ul>
@@ -269,37 +245,37 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orgf1e6376" class="outline-2">
-<h2 id="orgf1e6376">Question:</h2>
-<div class="outline-text-2" id="text-orgf1e6376">
+<div id="outline-container-orgbd3abf8" class="outline-2">
+<h2 id="orgbd3abf8">Question:</h2>
+<div class="outline-text-2" id="text-orgbd3abf8">
 <p>
 How do I run lisp code from my terminal in vscode? 
 </p>
 
 <p>
-There are a few different ways that you can do it, and it depends on what compiler you're
-using. Refer to the section for your compiler. 
+There are a couple different ways that you can do it, and it depends on what compiler you&rsquo;re using.
+Refer to the section for your compiler.
 </p>
 </div>
 
-<div id="outline-container-orgd9d9f10" class="outline-3">
-<h3 id="orgd9d9f10">SBCL:</h3>
-<div class="outline-text-3" id="text-orgd9d9f10">
+<div id="outline-container-org058a43e" class="outline-3">
+<h3 id="org058a43e">SBCL:</h3>
+<div class="outline-text-3" id="text-org058a43e">
 <p>
-With SBCL there are two options you'll care about, <code>--script</code> and <code>--load</code>. 
+With SBCL there are two options you&rsquo;ll care about, <code>--script</code> and <code>--load</code>. 
 </p>
 
 
 <p>
-<a id="org96115c7"></a>
+<a id="org7803418"></a>
 </p>
 </div>
-<div id="outline-container-orgd7abf3e" class="outline-4">
-<h4 id="orgd7abf3e"><code>--script</code></h4>
-<div class="outline-text-4" id="text-orgd7abf3e">
+<div id="outline-container-orgd251671" class="outline-4">
+<h4 id="orgd251671"><code>--script</code></h4>
+<div class="outline-text-4" id="text-orgd251671">
 <p>
 The first of the two will be most like running a Python script or something like that. You pass it 
-a file, it'll evaluate the file, write to your terminal, and then exit. 
+a file, it&rsquo;ll evaluate the file, write to your terminal, and then exit. 
 </p>
 
 <p>
@@ -308,7 +284,7 @@ So if we have the following file:
 
 <div class="org-src-container">
 <pre class="src src-lisp"><span style="color: #5B6268;">;; </span><span style="color: #5B6268;">filename.lisp</span>
-(print <span style="color: #98be65;">"hello world"</span><span style="color: #5B6268;">)</span>
+<span style="color: #51afef;">(</span>print <span style="color: #98be65;">"hello world"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -324,30 +300,30 @@ $
 </div>
 
 <p>
-You can see that it'll execute the file, print things, and then exit.
+You can see that it&rsquo;ll execute the file, print things, and then exit.
 </p>
 
 <p>
-<a id="org855ee99"></a>
+<a id="org6c92e1f"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org01f4f70" class="outline-4">
-<h4 id="org01f4f70"><code>--load</code></h4>
-<div class="outline-text-4" id="text-org01f4f70">
+<div id="outline-container-org0c71ca5" class="outline-4">
+<h4 id="org0c71ca5"><code>--load</code></h4>
+<div class="outline-text-4" id="text-org0c71ca5">
 <p>
 If you use <code>--load</code>, then it will evaluate everything in your file, and then drop you into an
 interactive prompt so that you can interact with your program:
 </p>
 
 <p>
-So let's say we have the following file:
+So let&rsquo;s say we have the following file:
 </p>
 
 <div class="org-src-container">
 <pre class="src src-lisp"><span style="color: #5B6268;">;; </span><span style="color: #5B6268;">filename.lisp</span>
-(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">sum</span> (list<span style="color: #5B6268;">)</span>
-  (<span style="color: #51afef;">if</span> list (+ (car list) (sum (cdr list))) 0<span style="color: #5B6268;">))</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">sum</span> <span style="color: #c678dd;">(</span>list<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">if</span> list <span style="color: #98be65;">(</span>+ <span style="color: #51afef;">(</span>car list<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>sum <span style="color: #c678dd;">(</span>cdr list<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span> <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -358,31 +334,31 @@ And we call <code>--load</code> in the terminal:
 <div class="org-src-container">
 <pre class="src src-bash">$ sbcl --load filename.lisp
 <span style="color: #5B6268;">#</span><span style="color: #5B6268;">&lt;some preamble about sbcl you can ignore&gt;</span>
-* (sum <span style="color: #98be65;">'(1 2 3 4 5))</span>
+* <span style="color: #51afef;">(</span>sum <span style="color: #98be65;">'(1 2 3 4 5))</span>
 <span style="color: #98be65;">15</span>
 </pre>
 </div>
 
 <p>
-Then as you can see, we're able to interact with our program, call functions defined in our file and
+Then as you can see, we&rsquo;re able to interact with our program, call functions defined in our file and
 stuff like that right from our terminal.
 </p>
 
 <p>
-When we're interacting with Lisp like this, we can also reload our file without ever exiting from
+When we&rsquo;re interacting with Lisp like this, we can also reload our file without ever exiting from
 Lisp, so we can do:
 </p>
 
 <div class="org-src-container">
 <pre class="src src-bash">$ sbcl --load filename.lisp
 <span style="color: #5B6268;">#</span><span style="color: #5B6268;">&lt;some preamble about sbcl you can ignore&gt;</span>
-* (sum (list 1 2 3 4 5))
-15
+* <span style="color: #51afef;">(</span>sum <span style="color: #c678dd;">(</span>list <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #da8548; font-weight: bold;">15</span>
 <span style="color: #5B6268;"># </span><span style="color: #5B6268;">Make some changes to our filename.lisp file</span>
-* (load <span style="color: #98be65;">"filename.lisp"</span>)
+* <span style="color: #51afef;">(</span>load <span style="color: #98be65;">"filename.lisp"</span><span style="color: #51afef;">)</span>
 
 T
-* (new-function-that-wasnt-there-before)
+* <span style="color: #51afef;">(</span>new-function-that-wasnt-there-before<span style="color: #51afef;">)</span>
 NIL
 </pre>
 </div>
@@ -390,20 +366,20 @@ NIL
 </div>
 </div>
 
-<div id="outline-container-org79cbef8" class="outline-3">
-<h3 id="org79cbef8">CCL</h3>
-<div class="outline-text-3" id="text-org79cbef8">
+<div id="outline-container-orge3a3fe5" class="outline-3">
+<h3 id="orge3a3fe5">CCL</h3>
+<div class="outline-text-3" id="text-orge3a3fe5">
 <p>
-CCL mostly has one argument for using it at the terminal that you'll care about, which is the <code>--load</code>
+CCL has one argument for using it at the terminal that you&rsquo;ll care about, which is the <code>--load</code>
 argument. When you give CCL the <code>--load</code> argument, it will drop you into an interactive prompt the
-same way that it will do when using <code>--load</code> with SBCL. Refer to the section about <a href="#org855ee99"><code>--load</code></a> for SBCL.
+same way that it will do when using <code>--load</code> with SBCL. Refer to the section about <a href="#org6c92e1f"><code>--load</code></a> for SBCL.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga5bac9a" class="outline-3">
-<h3 id="orga5bac9a">CLisp</h3>
-<div class="outline-text-3" id="text-orga5bac9a">
+<div id="outline-container-org4c7d1ee" class="outline-3">
+<h3 id="org4c7d1ee">CLisp</h3>
+<div class="outline-text-3" id="text-org4c7d1ee">
 <p>
 CLisp can be used almost the same as SBCL, with a couple differences. You have two main options with
 CLisp for how to execute your Lisp files. You can either execute the entire Lisp file and terminate
@@ -420,13 +396,13 @@ To run a file and terminal, simply do:
 </div>
 
 <p>
-To know more about how this works, refer to the <a href="#org96115c7"><code>--script</code></a> option for SBCL. Just keep in mind that
+To know more about how this works, refer to the <a href="#org7803418"><code>--script</code></a> option for SBCL. Just keep in mind that
 anywhere that the <code>--script</code> option is provided in SBCL, you want to ignore that flag.
 </p>
 
 <p>
 To load a file and interact with it, you use the <code>-repl</code> option. To learn about how to use this
-option, you can refer to the <a href="#org855ee99"><code>--load</code></a> instructions for SBCL. Just keep in mind to replace any
+option, you can refer to the <a href="#org6c92e1f"><code>--load</code></a> instructions for SBCL. Just keep in mind to replace any
 instance of <code>--load</code> with <code>-repl</code>.
 </p>
 </div>
@@ -435,8 +411,7 @@ instance of <code>--load</code> with <code>-repl</code>.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-10-21 Wed 11:44</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-11-05 Thu 01:23</p>
 </div>
 </body>
 </html>

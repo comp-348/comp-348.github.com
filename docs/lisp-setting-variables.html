@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-21 Wed 11:44 -->
+<!-- 2020-11-05 Thu 01:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Declaring and modifying variables in Common Lisp</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,15 +224,15 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga3e39a4">Question:</a>
+<li><a href="#org1250036">Question:</a>
 <ul>
-<li><a href="#org6e099c9">Declaring top-level variables</a></li>
-<li><a href="#orgf134e25">Declaring local variables</a></li>
-<li><a href="#org9b35784">Mutating existing variables</a>
+<li><a href="#org54cf200">Declaring top-level variables</a></li>
+<li><a href="#org3fd7689">Declaring local variables</a></li>
+<li><a href="#org20bd396">Mutating existing variables</a>
 <ul>
-<li><a href="#orgd549687"><code>set</code></a></li>
-<li><a href="#org3298918"><code>setq</code></a></li>
-<li><a href="#orga628a48"><code>setf</code></a></li>
+<li><a href="#org7a9290f"><code>set</code></a></li>
+<li><a href="#orgcef60bc"><code>setq</code></a></li>
+<li><a href="#org9fb79e2"><code>setf</code></a></li>
 </ul>
 </li>
 </ul>
@@ -270,9 +246,9 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orga3e39a4" class="outline-2">
-<h2 id="orga3e39a4">Question:</h2>
-<div class="outline-text-2" id="text-orga3e39a4">
+<div id="outline-container-org1250036" class="outline-2">
+<h2 id="org1250036">Question:</h2>
+<div class="outline-text-2" id="text-org1250036">
 <p>
 How do we set a variable in Lisp?
 </p>
@@ -283,18 +259,18 @@ different situations. For this class, we really only need to worry about 3.
 </p>
 </div>
 
-<div id="outline-container-org6e099c9" class="outline-3">
-<h3 id="org6e099c9">Declaring top-level variables</h3>
-<div class="outline-text-3" id="text-org6e099c9">
+<div id="outline-container-org54cf200" class="outline-3">
+<h3 id="org54cf200">Declaring top-level variables</h3>
+<div class="outline-text-3" id="text-org54cf200">
 <p>
-For creating variables that aren't inside a function, we use the <code>defvar</code> builtin:
+For creating variables that aren&rsquo;t inside a function, we use the <code>defvar</code> builtin:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-common-lisp">(<span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">sym</span> 'hello<span style="color: #5B6268;">)</span>
-(<span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">num</span> 20<span style="color: #5B6268;">)</span>
-(<span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">str</span> <span style="color: #98be65;">"Hello world"</span><span style="color: #5B6268;">)</span>
-(<span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">lst</span> '(hello 20 <span style="color: #98be65;">"hello world"</span><span style="color: #5B6268;">))</span>
+<pre class="src src-common-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">sym</span> 'hello<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">num</span> <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">str</span> <span style="color: #98be65;">"Hello world"</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">lst</span> '<span style="color: #c678dd;">(</span>hello <span style="color: #da8548; font-weight: bold;">20</span> <span style="color: #98be65;">"hello world"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -305,20 +281,20 @@ warning about this - although it will still work.
 </div>
 </div>
 
-<div id="outline-container-orgf134e25" class="outline-3">
-<h3 id="orgf134e25">Declaring local variables</h3>
-<div class="outline-text-3" id="text-orgf134e25">
+<div id="outline-container-org3fd7689" class="outline-3">
+<h3 id="org3fd7689">Declaring local variables</h3>
+<div class="outline-text-3" id="text-org3fd7689">
 <p>
 For creating variables inside a function, or to create locally-scoped variables, we use <code>let</code> and <code>let*</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-common-lisp">(<span style="color: #51afef;">let</span> ((sym 'hello<span style="color: #5B6268;">)</span>
-      (num 20<span style="color: #5B6268;">)</span>
-      (str <span style="color: #98be65;">"Hello world"</span><span style="color: #5B6268;">)</span>
-      (lst '(hello 20 <span style="color: #98be65;">"Hello world"</span><span style="color: #5B6268;">)))</span>
-  (format t <span style="color: #98be65;">"Values: ~s, ~d, ~s, ~a"</span> sym num str lst<span style="color: #5B6268;">))</span>
-(print <span style="color: #98be65;">"None of those variables are visible here"</span><span style="color: #5B6268;">)</span>
+<pre class="src src-common-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span>sym 'hello<span style="color: #98be65;">)</span>
+      <span style="color: #98be65;">(</span>num <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #98be65;">)</span>
+      <span style="color: #98be65;">(</span>str <span style="color: #98be65;">"Hello world"</span><span style="color: #98be65;">)</span>
+      <span style="color: #98be65;">(</span>lst '<span style="color: #51afef;">(</span>hello <span style="color: #da8548; font-weight: bold;">20</span> <span style="color: #98be65;">"Hello world"</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>format t <span style="color: #98be65;">"Values: ~s, ~d, ~s, ~a"</span> sym num str lst<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span>print <span style="color: #98be65;">"None of those variables are visible here"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -327,84 +303,84 @@ We can also use <code>let*</code> to be able to access previous bindings in the 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">let*</span> ((sym 'hello<span style="color: #5B6268;">)</span>
-       (num 20<span style="color: #5B6268;">)</span>
-       (str <span style="color: #98be65;">"Hello world"</span><span style="color: #5B6268;">)</span>
-       (lst (list sym num str))) <span style="color: #5B6268;">; No need to redeclare the values here</span>
-  (format t <span style="color: #98be65;">"Values: ~s, ~d, ~s, ~a"</span> sym num str lst<span style="color: #5B6268;">))</span>
-(print <span style="color: #98be65;">"None of those variables are visible here"</span><span style="color: #5B6268;">)</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span>sym 'hello<span style="color: #98be65;">)</span>
+       <span style="color: #98be65;">(</span>num <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #98be65;">)</span>
+       <span style="color: #98be65;">(</span>str <span style="color: #98be65;">"Hello world"</span><span style="color: #98be65;">)</span>
+       <span style="color: #98be65;">(</span>lst <span style="color: #51afef;">(</span>list sym num str<span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span> <span style="color: #5B6268;">; No need to redeclare the values here</span>
+  <span style="color: #c678dd;">(</span>format t <span style="color: #98be65;">"Values: ~s, ~d, ~s, ~a"</span> sym num str lst<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span>print <span style="color: #98be65;">"None of those variables are visible here"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9b35784" class="outline-3">
-<h3 id="org9b35784">Mutating existing variables</h3>
-<div class="outline-text-3" id="text-org9b35784">
+<div id="outline-container-org20bd396" class="outline-3">
+<h3 id="org20bd396">Mutating existing variables</h3>
+<div class="outline-text-3" id="text-org20bd396">
 <p>
 To change the value of a variable, we use the <code>set[f/q]</code> functions. 
 </p>
 </div>
 
-<div id="outline-container-orgd549687" class="outline-4">
-<h4 id="orgd549687"><code>set</code></h4>
-<div class="outline-text-4" id="text-orgd549687">
+<div id="outline-container-org7a9290f" class="outline-4">
+<h4 id="org7a9290f"><code>set</code></h4>
+<div class="outline-text-4" id="text-org7a9290f">
 <p>
 The <code>set</code> function is the most basic of the 3 ways to set a value in Lisp. We simply pass it an atom
 and a value, and it binds that value to the symbol:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(set 'x 10<span style="color: #5B6268;">)</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span>set 'x <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3298918" class="outline-4">
-<h4 id="org3298918"><code>setq</code></h4>
-<div class="outline-text-4" id="text-org3298918">
+<div id="outline-container-orgcef60bc" class="outline-4">
+<h4 id="orgcef60bc"><code>setq</code></h4>
+<div class="outline-text-4" id="text-orgcef60bc">
 <p>
-The <code>setq</code> tool means "set quoted". It's very similar to <code>set</code>, except that we don't have to quote the
-symbol being passed to it:
+The <code>setq</code> tool means &ldquo;set quoted&rdquo;. It&rsquo;s similar to <code>set</code>, except that we don&rsquo;t have to quote the symbol
+being passed to it: 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-common-lisp">(setq x 10<span style="color: #5B6268;">)</span>
+<pre class="src src-common-lisp"><span style="color: #51afef;">(</span>setq x <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
 <p>
-Now, unlike <code>set</code>, if we call <code>setq</code> with a variable that doesn't exist yet, Lisp will give us a
+Now, unlike <code>set</code>, if we call <code>setq</code> with a variable that doesn&rsquo;t exist yet, Lisp will give us a
 warning. So if you need to, you can use <code>set</code> to declare variables, but <code>setq</code> will warn you against it.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga628a48" class="outline-4">
-<h4 id="orga628a48"><code>setf</code></h4>
-<div class="outline-text-4" id="text-orga628a48">
+<div id="outline-container-org9fb79e2" class="outline-4">
+<h4 id="org9fb79e2"><code>setf</code></h4>
+<div class="outline-text-4" id="text-org9fb79e2">
 <p>
-The <code>setf</code> tool means "set field". It behaves the same as <code>setq</code> when trying to set just the value of a
+The <code>setf</code> tool means &ldquo;set field&rdquo;. It behaves the same as <code>setq</code> when trying to set just the value of a
 variable:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">let</span> ((x 10) (y 20<span style="color: #5B6268;">))</span>
-  (setq x 20<span style="color: #5B6268;">)</span>
-  (setf y 30<span style="color: #5B6268;">))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span>x <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #98be65;">)</span> <span style="color: #98be65;">(</span>y <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>setq x <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span>setf y <span style="color: #da8548; font-weight: bold;">30</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
 <p>
-Will do the exact same thing. However, we can <i>also</i> use <code>setf</code> to set the values <i>inside</i> a list:
+Will do the same thing. However, we can <i>also</i> use <code>setf</code> to set the values <i>inside</i> a list:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">lst</span> '(1 2 3 4 5<span style="color: #5B6268;">))</span>
-(setq (car lst) 10) <span style="color: #5B6268;">; This will give an error</span>
-(setf (car lst) 10) <span style="color: #5B6268;">; This will mutate the list</span>
-(print lst) <span style="color: #5B6268;">; '(10 2 3 4 5)</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">lst</span> '<span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span>setq <span style="color: #c678dd;">(</span>car lst<span style="color: #c678dd;">)</span> <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">; This will give an error</span>
+<span style="color: #51afef;">(</span>setf <span style="color: #c678dd;">(</span>car lst<span style="color: #c678dd;">)</span> <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">; This will mutate the list</span>
+<span style="color: #51afef;">(</span>print lst<span style="color: #51afef;">)</span> <span style="color: #5B6268;">; '(10 2 3 4 5)</span>
 </pre>
 </div>
 </div>
@@ -414,8 +390,7 @@ Will do the exact same thing. However, we can <i>also</i> use <code>setf</code> 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-10-21 Wed 11:44</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-11-05 Thu 01:23</p>
 </div>
 </body>
 </html>

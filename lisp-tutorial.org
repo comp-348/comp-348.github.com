@@ -6,17 +6,17 @@
 * Lisp at a high level
 Lisp is a high-level, dynamically typed functional programming language. Lisp first came out in
 1959, around the same time as FORTRAN. Back then it was LISP, which stood for LISt Processing. As
-the name indicates, Lisp is very very good at processing linked lists, and was originally created to
-prerform tasks in symbolic computation and artificial intelligence. Today, there are many modern
-derivatives to LISP, such as Common Lisp, Scheme, Racket and Clojure. In this course, we focus on
-Common Lisp, which first appeared in the last 1980's as a standardization by ANSI converging
-features from several prominent dialects at the time. 
+the name indicates, Lisp is good at processing linked lists, and was created to perform tasks in
+symbolic computation and artificial intelligence. Today, there are a lot of modern derivatives to
+LISP, such as Common Lisp, Scheme, Racket and Clojure. In this course, we focus on Common Lisp,
+which first appeared in the last 1980s as a standardization by ANSI converging features from
+several prominent dialects at the time.
 
 ** Lisp Syntax
-Lisp syntax is very simple. Unlike most programming languages that are filled with different
-syntaxes, keywords and operators, Lisp's syntax is uniform and concise. Everything that you write in
-Lisp will take the form ~(function-name arg-1 arg-2 ...)~. That's the whole syntax for the
-language. For example, to define a linked list, we use the ~list~ function, like so: 
+Lisp syntax is simple. Unlike most programming languages that are filled with different syntaxes,
+keywords and operators, Lisp's syntax is uniform and concise. Everything that you write in Lisp will
+take the form ~(function-name arg-1 arg-2 ...)~. That's the whole syntax for the language. For
+example, to define a linked list, we use the ~list~ function, like so: 
 
  #+begin_src lisp
 (list 1 2 3 4 5)
@@ -48,8 +48,8 @@ new list, and the /tail/ of the new list. For example,
 
 *** Destructing and rebuilding lists
 
-We can use these 3 functions, ~car~, ~cdr~ and ~cons~ to take apart lists and put them back together very
-easily. Consider the following function:
+We can use these 3 functions, ~car~, ~cdr~ and ~cons~ to take apart lists and put them back together
+easily. Consider the following function: 
 
 #+begin_src lisp
 (defun list-identity (list)
@@ -62,7 +62,7 @@ This is an /identity/ function for a list, meaning it outputs whatever was input
 single parameter, ~list~. It first checks if the list is empty using ~(null list)~ - in Lisp, an empty
 list is considered null. If it is empty, then we return an empty list. If it is not, then we
 reconstruct a new list from the components: the head of the list, and a recursive call to the
-identity function with the tail of the list. This is all just an overly comlicated way of showing
+identity function with the tail of the list. This is all just an overly complicated way of showing
 that we can use these 3 functions to take apart a list and rebuild it again recursively, and this is
 a pattern that we see a lot of in Lisp. For example, let's say we wanted to add a constant number to
 every value in that list:
@@ -81,7 +81,7 @@ we add the constant to our number, and then pass the constant as the second argu
 recursive call.
 
 Like I said, this is a really common pattern in Lisp and in functional programming languages in
-general, and this general pattern is going to be very helpful in your assignments. 
+general, and this general pattern is going to be helpful in your assignments. 
 
 ** Trees
 One of the things we do a lot of in this class is talk about binary trees. Building binary trees,
@@ -95,8 +95,8 @@ this course:
       (9 nil nil)))
 #+end_src
 
-Here, we have a single tree who's root node is ~7~. It has a left subtree and a right subtree, both of
-which have 2 nodes in their subtrees. If we were to visualize this as a normal tree, it would look
+Here, we have a single tree who's root node is ~7~. It has a left sub-tree and a right sub-tree, both of
+which have 2 nodes in their sub-trees. If we were to visualize this as a normal tree, it would look
 like this:
 
 #+begin_src java
@@ -112,12 +112,12 @@ Now, since creating binary trees and balancing them is sometimes on assignments,
 those as examples, but I can do binary-search and tree traversals. 
 
 *** Binary Search:
-A Binary search is a divide and conquer algorithm, so by nature it's going to be recursive. The
+A Binary search is a divide-and-conquer algorithm, so by nature it's going to be recursive. The
 algorithm for binary search is simple:
 1) if the element we're searching for is equal to the head, return true. 
-2) if the element we're searching for is less than the head, binary search the left subtree
-3) if the element we're searching for is greater than the head, binary search the right subtree
-4) If the subtree is empty, return false. 
+2) if the element we're searching for is less than the head, binary search the left sub-tree
+3) if the element we're searching for is greater than the head, binary search the right sub-tree
+4) If the sub-tree is empty, return false. 
 
 Here's how we'll implement that in Common Lisp:
 
@@ -133,7 +133,7 @@ Here's how we'll implement that in Common Lisp:
      (binary-search (second list) element))
     ; If the head is less than the element, binary search the right subtree
     ((< (car list) element)
-     (binary-search (third list) element)))))
+     (binary-search (third list) element))))
 #+end_src
 
 As you can see this is basically just a direct transcription of the algorithm for a binary
@@ -144,11 +144,11 @@ just return from whichever condition is true.
 Another common thing we want to do with trees is traverse them in various ways. With a binary-tree,
 we often want to do an in-order traversal because it will visit each element in a sorted order. The
 algorithm for an in-order traversal is pretty simple:
-1) If the subtree is null, stop
+1) If the sub-tree is null, stop
 2) Otherwise: 
-  1) perform in-order-traversal on the left subtree
+  1) perform in-order-traversal on the left sub-tree
   2) Visit the root node 
-  3) Perform in-order-traversal on the right subtree
+  3) Perform in-order-traversal on the right sub-tree
 
 #+begin_src lisp
 (defun in-order-traversal (tree)
@@ -161,7 +161,7 @@ algorithm for an in-order traversal is pretty simple:
 
 So if we run this with the same tree as above, it'll print 1, 2, 7, 8, 9. 
 
-Now, from here there's a lot of very basic changes that we could make to make this function do some
+Now, from here there's a lot of basic changes that we could make to make this function do some
 other stuff, like instead of just printing every node, we could pass a lambda function that we call
 instead of ~print~. Or we could append the 3 things together to build a sorted list, or all sorts of
 other things. 

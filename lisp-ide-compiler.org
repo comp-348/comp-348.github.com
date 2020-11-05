@@ -14,12 +14,12 @@ then you can use either the [[https://www.tutorialspoint.com/execute_lisp_online
 If you'd like to set up a local environment, then you can follow down below.
 
 * Compilers
-There are many compilers available for Common Lisp including Steel Bank Common Lisp, Clozure Common
-Lisp, CLisp and more. I would recommend that you use Steel Bank Common Lisp. While for the most part
-it won't really matter what you're using, Steel Bank Common Lisp runs on every platform, is widely
-used and is what I assume you're using throughout most of the guides in this website. While it
-should be mostly the same for any other compiler, some differences may exist, so to simply things I
-would recommend simply sticking to SBCL.
+There are lots of compilers available for Common Lisp including Steel Bank Common Lisp, Clozure
+Common Lisp, CLisp and more. I would recommend that you use Steel Bank Common Lisp. While for the
+most part it won't really matter what you're using, Steel Bank Common Lisp runs on every platform,
+is widely used and is what I assume you're using throughout most of the guides in this website.
+While it should be the same for any other compiler, some differences may exist, so to simply things
+I would recommend simply sticking to SBCL.
 
 * Text Editors
 When it comes to the text editor that you use, there's a lot more variation. I can't cover how to
@@ -27,11 +27,12 @@ set up your environment for every text editor, so I'm going to stick to the most
 vscode, Atom and Emacs.
 
 ** Emacs
+
 Emacs is going to be the best text editor for Common Lisp. /However/ emacs will also require you to do
 some learning as it is more complicated than vscode or Atom. If you'd like to use Emacs, then I
 would recommend installing [[https://spacemacs.org][Spacemacs]] which is an Emacs configuration that gives you a comfortable
 experience out of the box. Without it, Emacs is a weird and confusing esoteric text editor that is
-very difficult to learn. To start using Spacemacs, just clone the GitHub repository to your home
+difficult to learn. To start using Spacemacs, just clone the GitHub repository to your home
 directory and you're good to go. To do that, it should be something like this:
 
 #+BEGIN_SRC bash
@@ -82,12 +83,12 @@ support as Emacs, but it will be easier to use.
 
 To install Visual Studio Code you can go to it's [[https://code.visualstudio.com/Download][website and download]] from there.
 
-*Sidenote: VSCode without the telemetry*
+*Side-note: VSCode without the telemetry*
 The source code for Visual Studio Code is free and open source, /however/ the binaries that Microsoft
 releases on their website are under a different license and have telemetry and reporting software
 bundled in. If you don't like that, you can download pre-built binaries of vscode /without/ the
-telemetry from the [[https://github.com/VSCodium/vscodium/releases][vscodium]] project. VSCodium is the /exact same thing/ just without the telemetry.
-Everything in this guide is the exact same for both vscode and vscodium.
+telemetry from the [[https://github.com/VSCodium/vscodium/releases][vscodium]] project. VSCodium is the /same thing/ just without the telemetry.
+Everything in this guide is the same for both vscode and vscodium.
 
 For writing Lisp in vscode, there's 3 primary extensions that I would recommend installing. 
 1) [[https://marketplace.visualstudio.com/items?itemName=mattn.Lisp][Syntax highlighting]]
@@ -105,7 +106,7 @@ For writing Lisp in vscode, there's 3 primary extensions that I would recommend 
 
 *** Terminal
 Running your code from the terminal will be the same no matter what editor you're using. With vscode
-you can use the buitl-in terminal and follow the instructions about [[file:lisp-running-from-terminal.org][running lisp from your terminal]]
+you can use the built-in terminal and follow the instructions about [[file:lisp-running-from-terminal.org][running lisp from your terminal]]
 I wrote on another page.
 
 *** Integrated into vscode
@@ -146,6 +147,7 @@ Now, if you enter some code into ~file.lisp~ and hit they hotkey ~ctrl+shift+b~,
 then vscode will open a new panel to show you the output.
 
 ** Atom
+
 Atom is another popular editor that people use for this class and it has pretty decent support for
 Common Lisp.
 
@@ -160,7 +162,7 @@ For writing Lisp in Atom, there's 4 primary extensions that I would recommend in
    parentheses for you based on the indentation of your code. Which a) means you don't have to
    manage them yourself and b) forces your code to be formatted properly. 
 4) [[https://atom.io/packages/slima][SLIMA]]
-   The Superior Lisp Interaction Mode for Atom. Very heavily inspired from a similar plugin for
+   The Superior Lisp Interaction Mode for Atom. Heavily inspired from a similar plugin for
    Emacs, it's probably the best way to run Lisp code inside Atom.
 
 With these installed, there's two ways that you can execute your code from inside vscode - either
@@ -170,6 +172,7 @@ I've never used SLIMA before however, so I would recommend that you read through
 linked about that guides you through setting it up and using it.
 
 ** Vim
+
 Vim isn't a super popular editor for students in this class, but if you use Vim then you use Vim.
 
 For writing Lisp in Vim, there's 3 primary extensions that I would recommend installing. 
@@ -184,14 +187,16 @@ For writing Lisp in Vim, there's 3 primary extensions that I would recommend ins
    The Superior Lisp Interaction Mode for Vim. Very heavily inspired from a similar plugin for
    Emacs, it's probably the best way to run Lisp code inside Vim.
 
-   Note that I am not a vimmer myself and have no idea how well these plugins work.
+   Note that I am not a vim user myself and have no idea how well these plugins work.
    
 ** Portacle
+
 Surprise! Portacle is actually just Emacs! Scroll back up to my recommendations for using Emacs
 instead of using Portacle right out of the box.
 
 ** Other
-At the end of the day, any text editor will work for writing your Lisp code. Notepad++, Sublime,
+
+Ultimately, any text editor will work for writing your Lisp code. Notepad++, Sublime,
 etc. If you use any of these other editors though, I'd highly recommend taking some time to figure
 out what the best plugins for working with Lisp are because it will really be helpful.
 

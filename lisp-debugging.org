@@ -17,7 +17,7 @@ SBCL.
 
 ** SBCL
 If you're using vscode, Atom, Sublime, Vim, etc., then you're likely just running your Lisp from your
-terminal. The way that you're able to debug is going to be partly dependend on how you're executing
+terminal. The way that you're able to debug is going to be partly dependent on how you're executing
 your code. If you're running it interactively, then refer to the [[load][~--load~]] section, if you're
 executing it like a script, then refer to the [[script][~--script~]] section.
 
@@ -59,9 +59,9 @@ to proceed.
    essentially give ~x~ a value that you enter, and then it'll retry.
 3) Will simply quit the debugger and send you back to the interactive prompt. 
 
-There are many options that you can encounter in many different scenarios, so the best thing that
-you can do is simply read the options presented to you at that time and try them out, mess
-around. There's a lot of things you can do with this. 
+There are a lot of options that you can encounter in different scenarios, so the best thing that you
+can do is simply read the options presented to you at that time and try them out, mess around.
+There's a lot of things you can do with this.
 
 Everything relevant in the next section is also applicable when using ~--load~.
 
@@ -72,7 +72,7 @@ less opportunity to interact with your program the same way as you do when using
 this, to debug we'll need to be inserting things into our code, similar to how we debug using ~trace~
 in Prolog. 
 
-The first thing that we'll do is add the following to the top of the file to turn on the debuggin
+The first thing that we'll do is add the following to the top of the file to turn on the debugging
 optimizations:
 #+begin_src lisp
 (declaim (optimize (debug 3)))
@@ -127,7 +127,7 @@ invert the condition, then we can see how our stack trace would change:
 #+end_src
 
 Now we can see the full call-stack for the ~sum~ function. As you can see, trace is particularly handy
-for recursive functions. We can also add trace to functions that are called by our own functions to
+for recursive functions. We can also add trace to functions that get called by our own functions to
 see a little more in depth what's going on. 
 
 **** Step
@@ -210,8 +210,8 @@ We can use ~next~ to inspect the next function call. For example:
 0]
 #+end_src
 
-To be quite honest, I see ~next~ as mostly being helpful to see the source for what's being
-evaluated. I'm not 100% certain how to use it and there's very little information available about it
+To be honest, I see ~next~ mostly as being helpful to see the source for what's being
+evaluated. I'm not 100% certain how to use it and there's not much information available about it
 since 99% of people who use Common Lisp in any serious capacity use Emacs and there's a phenomenal
 debugger in Common Lisp that kind of abstracts over all of this command line based stuff. 
 

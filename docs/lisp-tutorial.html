@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-21 Wed 11:44 -->
+<!-- 2020-11-05 Thu 01:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Lisp tutorial for COMP 348</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,18 +224,18 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org835806e">Lisp at a high level</a>
+<li><a href="#orgf5bbddc">Lisp at a high level</a>
 <ul>
-<li><a href="#org0bea26f">Lisp Syntax</a></li>
-<li><a href="#orgc14b0ff">Core functions</a>
+<li><a href="#orgfc591d0">Lisp Syntax</a></li>
+<li><a href="#org5d21bc4">Core functions</a>
 <ul>
-<li><a href="#org09f7201">Destructing and rebuilding lists</a></li>
+<li><a href="#orged487d5">Destructing and rebuilding lists</a></li>
 </ul>
 </li>
-<li><a href="#org39d6dac">Trees</a>
+<li><a href="#orgde0915c">Trees</a>
 <ul>
-<li><a href="#orgd6b5655">Binary Search:</a></li>
-<li><a href="#org05ee49e">Tree Traversals</a></li>
+<li><a href="#org88d63aa">Binary Search:</a></li>
+<li><a href="#orgc397ad4">Tree Traversals</a></li>
 </ul>
 </li>
 </ul>
@@ -273,40 +249,40 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org835806e" class="outline-2">
-<h2 id="org835806e">Lisp at a high level</h2>
-<div class="outline-text-2" id="text-org835806e">
+<div id="outline-container-orgf5bbddc" class="outline-2">
+<h2 id="orgf5bbddc">Lisp at a high level</h2>
+<div class="outline-text-2" id="text-orgf5bbddc">
 <p>
 Lisp is a high-level, dynamically typed functional programming language. Lisp first came out in
 1959, around the same time as FORTRAN. Back then it was LISP, which stood for LISt Processing. As
-the name indicates, Lisp is very very good at processing linked lists, and was originally created to
-prerform tasks in symbolic computation and artificial intelligence. Today, there are many modern
-derivatives to LISP, such as Common Lisp, Scheme, Racket and Clojure. In this course, we focus on
-Common Lisp, which first appeared in the last 1980's as a standardization by ANSI converging
-features from several prominent dialects at the time. 
+the name indicates, Lisp is good at processing linked lists, and was created to perform tasks in
+symbolic computation and artificial intelligence. Today, there are a lot of modern derivatives to
+LISP, such as Common Lisp, Scheme, Racket and Clojure. In this course, we focus on Common Lisp,
+which first appeared in the last 1980s as a standardization by ANSI converging features from
+several prominent dialects at the time.
 </p>
 </div>
 
-<div id="outline-container-org0bea26f" class="outline-3">
-<h3 id="org0bea26f">Lisp Syntax</h3>
-<div class="outline-text-3" id="text-org0bea26f">
+<div id="outline-container-orgfc591d0" class="outline-3">
+<h3 id="orgfc591d0">Lisp Syntax</h3>
+<div class="outline-text-3" id="text-orgfc591d0">
 <p>
-Lisp syntax is very simple. Unlike most programming languages that are filled with different
-syntaxes, keywords and operators, Lisp's syntax is uniform and concise. Everything that you write in
-Lisp will take the form <code>(function-name arg-1 arg-2 ...)</code>. That's the whole syntax for the
-language. For example, to define a linked list, we use the <code>list</code> function, like so: 
+Lisp syntax is simple. Unlike most programming languages that are filled with different syntaxes,
+keywords and operators, Lisp&rsquo;s syntax is uniform and concise. Everything that you write in Lisp will
+take the form <code>(function-name arg-1 arg-2 ...)</code>. That&rsquo;s the whole syntax for the language. For
+example, to define a linked list, we use the <code>list</code> function, like so: 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(list 1 2 3 4 5<span style="color: #5B6268;">)</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span>list <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc14b0ff" class="outline-3">
-<h3 id="orgc14b0ff">Core functions</h3>
-<div class="outline-text-3" id="text-orgc14b0ff">
+<div id="outline-container-org5d21bc4" class="outline-3">
+<h3 id="org5d21bc4">Core functions</h3>
+<div class="outline-text-3" id="text-org5d21bc4">
 <p>
 Would as you could guess, create a list with 5 elements. Now, as mentioned, Lisp is very good at
 processing linked lists, which includes extracting data from the lists, transforming them, etc. Two
@@ -316,10 +292,10 @@ tail of the list.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">my-list</span> (list 1 2 3 4 5<span style="color: #5B6268;">))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">my-list</span> <span style="color: #c678dd;">(</span>list <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 
-(car my-list) <span style="color: #5B6268;">; 1</span>
-(cdr my-list) <span style="color: #5B6268;">; '(2 3 4 5)</span>
+<span style="color: #51afef;">(</span>car my-list<span style="color: #51afef;">)</span> <span style="color: #5B6268;">; 1</span>
+<span style="color: #51afef;">(</span>cdr my-list<span style="color: #51afef;">)</span> <span style="color: #5B6268;">; '(2 3 4 5)</span>
 </pre>
 </div>
 
@@ -331,24 +307,24 @@ new list, and the <i>tail</i> of the new list. For example,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(cons 1 (list 2 3 4 5)) <span style="color: #5B6268;">; '(1 2 3 4 5)</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span>cons <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #c678dd;">(</span>list <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">; '(1 2 3 4 5)</span>
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org09f7201" class="outline-4">
-<h4 id="org09f7201">Destructing and rebuilding lists</h4>
-<div class="outline-text-4" id="text-org09f7201">
+<div id="outline-container-orged487d5" class="outline-4">
+<h4 id="orged487d5">Destructing and rebuilding lists</h4>
+<div class="outline-text-4" id="text-orged487d5">
 <p>
-We can use these 3 functions, <code>car</code>, <code>cdr</code> and <code>cons</code> to take apart lists and put them back together very
-easily. Consider the following function:
+We can use these 3 functions, <code>car</code>, <code>cdr</code> and <code>cons</code> to take apart lists and put them back together
+easily. Consider the following function: 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">list-identity</span> (list<span style="color: #5B6268;">)</span>
-  (<span style="color: #51afef;">if</span> (null list<span style="color: #5B6268;">)</span>
-      (<span style="color: #5B6268;">)</span>
-      (cons (car list) (list-identity (cdr list<span style="color: #5B6268;">)))))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">list-identity</span> <span style="color: #c678dd;">(</span>list<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">if</span> <span style="color: #98be65;">(</span>null list<span style="color: #98be65;">)</span>
+      <span style="color: #98be65;">()</span>
+      <span style="color: #98be65;">(</span>cons <span style="color: #51afef;">(</span>car list<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>list-identity <span style="color: #c678dd;">(</span>cdr list<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -357,18 +333,18 @@ This is an <i>identity</i> function for a list, meaning it outputs whatever was 
 single parameter, <code>list</code>. It first checks if the list is empty using <code>(null list)</code> - in Lisp, an empty
 list is considered null. If it is empty, then we return an empty list. If it is not, then we
 reconstruct a new list from the components: the head of the list, and a recursive call to the
-identity function with the tail of the list. This is all just an overly comlicated way of showing
+identity function with the tail of the list. This is all just an overly complicated way of showing
 that we can use these 3 functions to take apart a list and rebuild it again recursively, and this is
-a pattern that we see a lot of in Lisp. For example, let's say we wanted to add a constant number to
+a pattern that we see a lot of in Lisp. For example, let&rsquo;s say we wanted to add a constant number to
 every value in that list:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">list-add-constant</span> (list constant<span style="color: #5B6268;">)</span>
-  (<span style="color: #51afef;">if</span> (null list<span style="color: #5B6268;">)</span>
-      (<span style="color: #5B6268;">)</span>
-      (cons (+ (car list) constant) 
-      (list-add-constant (cdr list) constant<span style="color: #5B6268;">))))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">list-add-constant</span> <span style="color: #c678dd;">(</span>list constant<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">if</span> <span style="color: #98be65;">(</span>null list<span style="color: #98be65;">)</span>
+      <span style="color: #98be65;">()</span>
+      <span style="color: #98be65;">(</span>cons <span style="color: #51afef;">(</span>+ <span style="color: #c678dd;">(</span>car list<span style="color: #c678dd;">)</span> constant<span style="color: #51afef;">)</span> 
+            <span style="color: #51afef;">(</span>list-add-constant <span style="color: #c678dd;">(</span>cdr list<span style="color: #c678dd;">)</span> constant<span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -381,82 +357,82 @@ recursive call.
 
 <p>
 Like I said, this is a really common pattern in Lisp and in functional programming languages in
-general, and this general pattern is going to be very helpful in your assignments. 
+general, and this general pattern is going to be helpful in your assignments. 
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org39d6dac" class="outline-3">
-<h3 id="org39d6dac">Trees</h3>
-<div class="outline-text-3" id="text-org39d6dac">
+<div id="outline-container-orgde0915c" class="outline-3">
+<h3 id="orgde0915c">Trees</h3>
+<div class="outline-text-3" id="text-orgde0915c">
 <p>
 One of the things we do a lot of in this class is talk about binary trees. Building binary trees,
-searching binary trees, balancing binary trees, etc. Here's how we tend to represent binary trees in
+searching binary trees, balancing binary trees, etc. Here&rsquo;s how we tend to represent binary trees in
 this course: 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(7 (1 nil 
-      (2 nil nil)) 
-   (8 nil 
-      (9 nil nil<span style="color: #5B6268;">)))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">7</span> <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> nil 
+      <span style="color: #98be65;">(</span><span style="color: #da8548; font-weight: bold;">2</span> nil nil<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span> 
+   <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">8</span> nil 
+      <span style="color: #98be65;">(</span><span style="color: #da8548; font-weight: bold;">9</span> nil nil<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
 <p>
-Here, we have a single tree who's root node is <code>7</code>. It has a left subtree and a right subtree, both of
-which have 2 nodes in their subtrees. If we were to visualize this as a normal tree, it would look
+Here, we have a single tree who&rsquo;s root node is <code>7</code>. It has a left sub-tree and a right sub-tree, both of
+which have 2 nodes in their sub-trees. If we were to visualize this as a normal tree, it would look
 like this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java">    7
+<pre class="src src-java">    <span style="color: #da8548; font-weight: bold;">7</span>
   /   \
- 1     8
+ <span style="color: #da8548; font-weight: bold;">1</span>     <span style="color: #da8548; font-weight: bold;">8</span>
 / \   / \
-   2     9
+   <span style="color: #da8548; font-weight: bold;">2</span>     <span style="color: #da8548; font-weight: bold;">9</span>
   / \   / \
 </pre>
 </div>
 
 <p>
-Now, since creating binary trees and balancing them is sometimes on assignments, I can't provide
+Now, since creating binary trees and balancing them is sometimes on assignments, I can&rsquo;t provide
 those as examples, but I can do binary-search and tree traversals. 
 </p>
 </div>
 
-<div id="outline-container-orgd6b5655" class="outline-4">
-<h4 id="orgd6b5655">Binary Search:</h4>
-<div class="outline-text-4" id="text-orgd6b5655">
+<div id="outline-container-org88d63aa" class="outline-4">
+<h4 id="org88d63aa">Binary Search:</h4>
+<div class="outline-text-4" id="text-org88d63aa">
 <p>
-A Binary search is a divide and conquer algorithm, so by nature it's going to be recursive. The
+A Binary search is a divide-and-conquer algorithm, so by nature it&rsquo;s going to be recursive. The
 algorithm for binary search is simple:
 </p>
 <ol class="org-ol">
-<li>if the element we're searching for is equal to the head, return true.</li>
-<li>if the element we're searching for is less than the head, binary search the left subtree</li>
-<li>if the element we're searching for is greater than the head, binary search the right subtree</li>
-<li>If the subtree is empty, return false.</li>
+<li>if the element we&rsquo;re searching for is equal to the head, return true.</li>
+<li>if the element we&rsquo;re searching for is less than the head, binary search the left sub-tree</li>
+<li>if the element we&rsquo;re searching for is greater than the head, binary search the right sub-tree</li>
+<li>If the sub-tree is empty, return false.</li>
 </ol>
 
 <p>
-Here's how we'll implement that in Common Lisp:
+Here&rsquo;s how we&rsquo;ll implement that in Common Lisp:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">binary-search</span> (list element<span style="color: #5B6268;">)</span>
-  (<span style="color: #51afef;">cond</span> 
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">binary-search</span> <span style="color: #c678dd;">(</span>list element<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">cond</span> 
     <span style="color: #5B6268;">; If the subtree is empty, return false</span>
-    ((null list) nil<span style="color: #5B6268;">)</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>null list<span style="color: #51afef;">)</span> nil<span style="color: #98be65;">)</span>
     <span style="color: #5B6268;">; If the head is equal to what we're search for, return true</span>
-    ((equal (car list) element) t<span style="color: #5B6268;">)</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>equal <span style="color: #c678dd;">(</span>car list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span> t<span style="color: #98be65;">)</span>
     <span style="color: #5B6268;">; If the head is greater than the element, binary search the left subtree</span>
-    ((&gt; (car list) element<span style="color: #5B6268;">)</span>
-     (binary-search (second list) element<span style="color: #5B6268;">))</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>&gt; <span style="color: #c678dd;">(</span>car list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span>
+     <span style="color: #51afef;">(</span>binary-search <span style="color: #c678dd;">(</span>second list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span><span style="color: #98be65;">)</span>
     <span style="color: #5B6268;">; If the head is less than the element, binary search the right subtree</span>
-    ((&lt; (car list) element<span style="color: #5B6268;">)</span>
-     (binary-search (third list) element<span style="color: #5B6268;">)))))</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>&lt; <span style="color: #c678dd;">(</span>car list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span>
+     <span style="color: #51afef;">(</span>binary-search <span style="color: #c678dd;">(</span>third list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -468,40 +444,40 @@ just return from whichever condition is true.
 </div>
 </div>
 
-<div id="outline-container-org05ee49e" class="outline-4">
-<h4 id="org05ee49e">Tree Traversals</h4>
-<div class="outline-text-4" id="text-org05ee49e">
+<div id="outline-container-orgc397ad4" class="outline-4">
+<h4 id="orgc397ad4">Tree Traversals</h4>
+<div class="outline-text-4" id="text-orgc397ad4">
 <p>
 Another common thing we want to do with trees is traverse them in various ways. With a binary-tree,
 we often want to do an in-order traversal because it will visit each element in a sorted order. The
 algorithm for an in-order traversal is pretty simple:
 </p>
 <ol class="org-ol">
-<li>If the subtree is null, stop</li>
+<li>If the sub-tree is null, stop</li>
 <li>Otherwise: 
 <ol class="org-ol">
-<li>perform in-order-traversal on the left subtree</li>
+<li>perform in-order-traversal on the left sub-tree</li>
 <li>Visit the root node</li>
-<li>Perform in-order-traversal on the right subtree</li>
+<li>Perform in-order-traversal on the right sub-tree</li>
 </ol></li>
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">in-order-traversal</span> (tree<span style="color: #5B6268;">)</span>
-  (<span style="color: #51afef;">cond</span>
-    ((null tree) nil<span style="color: #5B6268;">)</span>
-    (t (in-order-traversal (second tree<span style="color: #5B6268;">))</span>
-       (print (first tree<span style="color: #5B6268;">))</span>
-       (in-order-traversal (third tree<span style="color: #5B6268;">)))))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">in-order-traversal</span> <span style="color: #c678dd;">(</span>tree<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">cond</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>null tree<span style="color: #51afef;">)</span> nil<span style="color: #98be65;">)</span>
+    <span style="color: #98be65;">(</span>t <span style="color: #51afef;">(</span>in-order-traversal <span style="color: #c678dd;">(</span>second tree<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+       <span style="color: #51afef;">(</span>print <span style="color: #c678dd;">(</span>first tree<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+       <span style="color: #51afef;">(</span>in-order-traversal <span style="color: #c678dd;">(</span>third tree<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
 <p>
-So if we run this with the same tree as above, it'll print 1, 2, 7, 8, 9. 
+So if we run this with the same tree as above, it&rsquo;ll print 1, 2, 7, 8, 9. 
 </p>
 
 <p>
-Now, from here there's a lot of very basic changes that we could make to make this function do some
+Now, from here there&rsquo;s a lot of basic changes that we could make to make this function do some
 other stuff, like instead of just printing every node, we could pass a lambda function that we call
 instead of <code>print</code>. Or we could append the 3 things together to build a sorted list, or all sorts of
 other things. 
@@ -513,8 +489,7 @@ other things.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-10-21 Wed 11:44</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-11-05 Thu 01:23</p>
 </div>
 </body>
 </html>

@@ -22,9 +22,9 @@ However, the ~cdr~ pointer in our cons cell doesn't need to point to another con
 any value. So the following is a perfectly valid call to ~cons~: 
 
 #+BEGIN_SRC lisp
-(defvar wacky-cons (cons 'a "Hello world!"))
+(defvar wacky-cons (cons 'a "Hello world"))
 (print wacky-cons)
-;; (A . "Hello world!")
+;; (A . "Hello world")
 #+END_SRC
 
 And that's how you get the ~.~ at the end of your list - it occurs when the ~cdr~ part of your ~cons~ is

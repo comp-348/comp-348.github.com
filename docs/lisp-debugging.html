@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-21 Wed 11:44 -->
+<!-- 2020-11-05 Thu 01:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Debugging Lisp</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,16 +224,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga13191c">Question</a>
+<li><a href="#org6c7e3e4">Question</a>
 <ul>
-<li><a href="#org6cbe408">SBCL</a>
+<li><a href="#org6714ec4">SBCL</a>
 <ul>
-<li><a href="#org5457388"><code>--load</code></a></li>
-<li><a href="#org38b2d3e"><code>--script</code></a></li>
+<li><a href="#org1c8ede5"><code>--load</code></a></li>
+<li><a href="#org7afb445"><code>--script</code></a></li>
 </ul>
 </li>
-<li><a href="#orga7764fc">Portacle/Emacs</a></li>
-<li><a href="#orgd00baea">Conclusion</a></li>
+<li><a href="#org3611bc7">Portacle/Emacs</a></li>
+<li><a href="#orgaa1533c">Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -269,9 +245,9 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orga13191c" class="outline-2">
-<h2 id="orga13191c">Question</h2>
-<div class="outline-text-2" id="text-orga13191c">
+<div id="outline-container-org6c7e3e4" class="outline-2">
+<h2 id="org6c7e3e4">Question</h2>
+<div class="outline-text-2" id="text-org6c7e3e4">
 <p>
 How do I debug a Lisp program?
 </p>
@@ -279,81 +255,81 @@ How do I debug a Lisp program?
 <p>
 As with any programming language, when working in Lisp, we want access to a good debugger that we
 can use. Thankfully, most Lisp compilers come with a debugger built-in. Of course, you could always
-just forget about debugging and use <code>print</code> everywhere, but for a lot of people that's not ideal. 
+just forget about debugging and use <code>print</code> everywhere, but for a lot of people that&rsquo;s not ideal. 
 </p>
 
 <p>
-Debugging will likely vary depending on what Lisp compiler you're using, so for sake of my own
-sanity, I'm going to be assuming you're using SBCL. I'm sure a lot of this will work in other
-compilers too, and perhaps in the future I'll update this to use others, but for now, I'll assume
+Debugging will likely vary depending on what Lisp compiler you&rsquo;re using, so for sake of my own
+sanity, I&rsquo;m going to be assuming you&rsquo;re using SBCL. I&rsquo;m sure a lot of this will work in other
+compilers too, and perhaps in the future I&rsquo;ll update this to use others, but for now, I&rsquo;ll assume
 SBCL. 
 </p>
 </div>
 
-<div id="outline-container-org6cbe408" class="outline-3">
-<h3 id="org6cbe408">SBCL</h3>
-<div class="outline-text-3" id="text-org6cbe408">
+<div id="outline-container-org6714ec4" class="outline-3">
+<h3 id="org6714ec4">SBCL</h3>
+<div class="outline-text-3" id="text-org6714ec4">
 <p>
-If you're using vscode, Atom, Sublime, Vim, etc., then you're likely just running your Lisp from your
-terminal. The way that you're able to debug is going to be partly dependend on how you're executing
-your code. If you're running it interactively, then refer to the <a href="#org9e22d6e"><code>--load</code></a> section, if you're
-executing it like a script, then refer to the <a href="#org89a4184"><code>--script</code></a> section.
+If you&rsquo;re using vscode, Atom, Sublime, Vim, etc., then you&rsquo;re likely just running your Lisp from your
+terminal. The way that you&rsquo;re able to debug is going to be partly dependent on how you&rsquo;re executing
+your code. If you&rsquo;re running it interactively, then refer to the <a href="#org924007e"><code>--load</code></a> section, if you&rsquo;re
+executing it like a script, then refer to the <a href="#orgcd2b436"><code>--script</code></a> section.
 </p>
 
 <p>
-<a id="org9e22d6e"></a>
+<a id="org924007e"></a>
 </p>
 </div>
-<div id="outline-container-org5457388" class="outline-4">
-<h4 id="org5457388"><code>--load</code></h4>
-<div class="outline-text-4" id="text-org5457388">
+<div id="outline-container-org1c8ede5" class="outline-4">
+<h4 id="org1c8ede5"><code>--load</code></h4>
+<div class="outline-text-4" id="text-org1c8ede5">
 <p>
-If you're using <code>--load</code>, then whenever you encounter an error, SBCL will give you several options for
+If you&rsquo;re using <code>--load</code>, then whenever you encounter an error, SBCL will give you several options for
 how you want to proceed. For example:
 </p>
 <div class="org-src-container">
 <pre class="src src-lisp">$ sbcl
-* (print x) <span style="color: #5B6268;">; Where x isn't defined</span>
+* <span style="color: #51afef;">(</span>print x<span style="color: #51afef;">)</span> <span style="color: #5B6268;">; Where x isn't defined</span>
 
 debugger invoked on a UNBOUND-VARIABLE in thread
 ,#&lt;THREAD <span style="color: #98be65;">"main thread"</span> RUNNING {10009F80D3}&gt;:
   The variable X is unbound.
 
-Type HELP for debugger help, or (SB-EXT:EXIT) to exit from SBCL.
+Type HELP for debugger help, or <span style="color: #51afef;">(</span>SB-EXT:EXIT<span style="color: #51afef;">)</span> to exit from SBCL.
 
-restarts (invokable by number or by possibly-abbreviated name):
+restarts <span style="color: #51afef;">(</span>invokable by number or by possibly-abbreviated name<span style="color: #51afef;">)</span>:
   0: [CONTINUE   ] Retry using X.
   1: [USE-VALUE  ] Use specified value.
   2: [STORE-VALUE] Set specified value and use it.
   3: [ABORT      ] Exit debugger, returning to top level.
 
-(SB-INT:SIMPLE-EVAL-IN-LEXENV X ,#&lt;NULL-LEXENV&gt;<span style="color: #5B6268;">)</span>
-0] 1
+<span style="color: #51afef;">(</span>SB-INT:SIMPLE-EVAL-IN-LEXENV X ,#&lt;NULL-LEXENV&gt;<span style="color: #51afef;">)</span>
+0] <span style="color: #da8548; font-weight: bold;">1</span>
 
 Enter a form to be evaluated: <span style="color: #98be65;">"hello"</span>
 </pre>
 </div>
 
 <p>
-Here, I tried printing a variable <code>x</code> that wasn't defined. SBCL will ask you in this case how you want
+Here, I tried printing a variable <code>x</code> that wasn&rsquo;t defined. SBCL will ask you in this case how you want
 to proceed. 
 </p>
 
 <ol class="org-ol">
-<li>This option allows you to simply retry. Unless you're using SWANK (if you don't know if you're
-using it, you probably aren't), this option won't be too useful to you.</li>
+<li>This option allows you to simply retry. Unless you&rsquo;re using SWANK (if you don&rsquo;t know if you&rsquo;re
+using it, you probably aren&rsquo;t), this option won&rsquo;t be too useful to you.</li>
 <li>This option allows us to simply provide SBCL with a new value, and to use that value instead of
 <code>x</code>. This can be very helpful when something crashes and you want to make sure that it succeeds
 with specific data.</li>
 <li>This option is the same as above, but will also set the value of the <code>x</code> variable. So it will
-essentially give <code>x</code> a value that you enter, and then it'll retry.</li>
+essentially give <code>x</code> a value that you enter, and then it&rsquo;ll retry.</li>
 <li>Will simply quit the debugger and send you back to the interactive prompt.</li>
 </ol>
 
 <p>
-There are many options that you can encounter in many different scenarios, so the best thing that
-you can do is simply read the options presented to you at that time and try them out, mess
-around. There's a lot of things you can do with this. 
+There are a lot of options that you can encounter in different scenarios, so the best thing that you
+can do is simply read the options presented to you at that time and try them out, mess around.
+There&rsquo;s a lot of things you can do with this.
 </p>
 
 <p>
@@ -361,26 +337,26 @@ Everything relevant in the next section is also applicable when using <code>--lo
 </p>
 
 <p>
-<a id="org89a4184"></a>
+<a id="orgcd2b436"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org38b2d3e" class="outline-4">
-<h4 id="org38b2d3e"><code>--script</code></h4>
-<div class="outline-text-4" id="text-org38b2d3e">
+<div id="outline-container-org7afb445" class="outline-4">
+<h4 id="org7afb445"><code>--script</code></h4>
+<div class="outline-text-4" id="text-org7afb445">
 <p>
 When using <code>--script</code>, SBCL will simply evaluate your entire program and then quit. This gives you
 less opportunity to interact with your program the same way as you do when using <code>--load</code>. Because of
-this, to debug we'll need to be inserting things into our code, similar to how we debug using <code>trace</code>
+this, to debug we&rsquo;ll need to be inserting things into our code, similar to how we debug using <code>trace</code>
 in Prolog. 
 </p>
 
 <p>
-The first thing that we'll do is add the following to the top of the file to turn on the debuggin
+The first thing that we&rsquo;ll do is add the following to the top of the file to turn on the debugging
 optimizations:
 </p>
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">declaim</span> (optimize (debug 3<span style="color: #5B6268;">)))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">declaim</span> <span style="color: #c678dd;">(</span>optimize <span style="color: #98be65;">(</span>debug <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -390,30 +366,30 @@ will hold onto more meta-data that allow us to debug more effectively.
 </p>
 
 <p>
-Let's say that the following function is what we're trying to debug. The problem with this function
-is that the condition on the <code>if</code> is inverted. Let's see how we can figure that out:
+Let&rsquo;s say that the following function is what we&rsquo;re trying to debug. The problem with this function
+is that the condition on the <code>if</code> is inverted. Let&rsquo;s see how we can figure that out:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">defun</span> <span style="color: #c678dd;">sum</span> (list<span style="color: #5B6268;">)</span>
-  (<span style="color: #51afef;">if</span> (null list<span style="color: #5B6268;">)</span>
-      (+ (car list) (sum (cdr list<span style="color: #5B6268;">)))</span>
-      0<span style="color: #5B6268;">))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">sum</span> <span style="color: #c678dd;">(</span>list<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">if</span> <span style="color: #98be65;">(</span>null list<span style="color: #98be65;">)</span>
+      <span style="color: #98be65;">(</span>+ <span style="color: #51afef;">(</span>car list<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>sum <span style="color: #c678dd;">(</span>cdr list<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span>
+      <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 
 <ul class="org-ul">
-<li><a id="org5f093bc"></a>Trace<br />
-<div class="outline-text-5" id="text-org5f093bc">
+<li><a id="org4b50bc7"></a>Trace<br />
+<div class="outline-text-5" id="text-org4b50bc7">
 <p>
-The first tool we'll use is <code>trace</code>. We can set up trace to watch a specific function and then print
-out the call stack that happens when we call that function. So let's set up <code>trace</code> to trace a call to
+The first tool we&rsquo;ll use is <code>trace</code>. We can set up trace to watch a specific function and then print
+out the call stack that happens when we call that function. So let&rsquo;s set up <code>trace</code> to trace a call to
 our <code>sum</code> function:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(trace sum<span style="color: #5B6268;">)</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span>trace sum<span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -422,8 +398,8 @@ Now if we call <code>(sum '(1 2 3 4 5))</code>, we should get the following:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">0: (SUM (1 2 3 4 5<span style="color: #5B6268;">))</span>
-0: SUM returned 0
+<pre class="src src-lisp">  0: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+  0: SUM returned <span style="color: #da8548; font-weight: bold;">0</span>
 </pre>
 </div>
 
@@ -434,50 +410,50 @@ invert the condition, then we can see how our stack trace would change:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">0: (SUM (1 2 3 4 5<span style="color: #5B6268;">))</span>
-  1: (SUM (2 3 4 5<span style="color: #5B6268;">))</span>
-    2: (SUM (3 4 5<span style="color: #5B6268;">))</span>
-      3: (SUM (4 5<span style="color: #5B6268;">))</span>
-  4: (SUM (5<span style="color: #5B6268;">))</span>
-    5: (SUM NIL<span style="color: #5B6268;">)</span>
-    5: SUM returned 0
-  4: SUM returned 5
-      3: SUM returned 9
-    2: SUM returned 12
-  1: SUM returned 14
-0: SUM returned 15
+<pre class="src src-lisp">  0: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+    1: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+      2: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+        3: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+          4: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+            5: <span style="color: #51afef;">(</span>SUM NIL<span style="color: #51afef;">)</span>
+            5: SUM returned <span style="color: #da8548; font-weight: bold;">0</span>
+          4: SUM returned <span style="color: #da8548; font-weight: bold;">5</span>
+        3: SUM returned <span style="color: #da8548; font-weight: bold;">9</span>
+      2: SUM returned <span style="color: #da8548; font-weight: bold;">12</span>
+    1: SUM returned <span style="color: #da8548; font-weight: bold;">14</span>
+  0: SUM returned <span style="color: #da8548; font-weight: bold;">15</span>
 </pre>
 </div>
 
 <p>
 Now we can see the full call-stack for the <code>sum</code> function. As you can see, trace is particularly handy
-for recursive functions. We can also add trace to functions that are called by our own functions to
-see a little more in depth what's going on. 
+for recursive functions. We can also add trace to functions that get called by our own functions to
+see a little more in depth what&rsquo;s going on. 
 </p>
 </div>
 </li>
 
-<li><a id="org12fe17b"></a>Step<br />
-<div class="outline-text-5" id="text-org12fe17b">
+<li><a id="orgf2afcd5"></a>Step<br />
+<div class="outline-text-5" id="text-orgf2afcd5">
 <p>
 The other tool that we can use is <code>step</code>. Step is more like the type of interactive debugger that
-you'd use for Java. You can use <code>step</code> simply by wrapping your function call in a call to the <code>step</code>
+you&rsquo;d use for Java. You can use <code>step</code> simply by wrapping your function call in a call to the <code>step</code>
 function, like so:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(step (sum '(1 2 3 4 5<span style="color: #5B6268;">)))</span>
+<pre class="src src-lisp"><span style="color: #51afef;">(</span>step <span style="color: #c678dd;">(</span>sum '<span style="color: #98be65;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
 <p>
-Now if we run this, we'll get an interactive debugger. Now, this debugger is command-line based, so
-it'll be a little different than the typical GUI one you'd get in Eclipse for Java. When invoking
-the debugger using <code>step</code>, you'll get something like the following:
+Now if we run this, we&rsquo;ll get an interactive debugger. Now, this debugger is command-line based, so
+it&rsquo;ll be a little different than the typical GUI one you&rsquo;d get in Eclipse for Java. When invoking
+the debugger using <code>step</code>, you&rsquo;ll get something like the following:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">* (step (sum '(1 2 3 4 5<span style="color: #5B6268;">)))</span>
+<pre class="src src-lisp">* <span style="color: #51afef;">(</span>step <span style="color: #c678dd;">(</span>sum '<span style="color: #98be65;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 <span style="color: #5B6268;">; </span><span style="color: #5B6268;">Evaluating call:</span>
 <span style="color: #5B6268;">;   </span><span style="color: #5B6268;">(SUM '(1 2 3 4 5))</span>
 <span style="color: #5B6268;">; </span><span style="color: #5B6268;">With arguments:</span>
@@ -488,17 +464,17 @@ the debugger using <code>step</code>, you'll get something like the following:
 </div>
 
 <p>
-At this point, there are lots of things you can enter here to help with your debugging. We'll go
+At this point, there are lots of things you can enter here to help with your debugging. We&rsquo;ll go
 through some of the most important options:
 </p>
 </div>
 
 <ul class="org-ul">
-<li><a id="org8be2183"></a><code>step</code><br />
-<div class="outline-text-6" id="text-org8be2183">
+<li><a id="org8f055a3"></a><code>step</code><br />
+<div class="outline-text-6" id="text-org8f055a3">
 <p>
-The aptly named <code>step</code> will allow us to step into the function call to see what's going on. To use
-this, we simply type <code>step</code> into the prompt. In this case, we'll get the following when calling <code>step</code>:
+The aptly named <code>step</code> will allow us to step into the function call to see what&rsquo;s going on. To use
+this, we simply type <code>step</code> into the prompt. In this case, we&rsquo;ll get the following when calling <code>step</code>:
 </p>
 
 <div class="org-src-container">
@@ -513,13 +489,13 @@ this, we simply type <code>step</code> into the prompt. In this case, we'll get 
 </div>
 
 <p>
-So it'll step into the function call and evaluate it, the return you back to the debugger. 
+So it&rsquo;ll step into the function call and evaluate it, the return you back to the debugger. 
 </p>
 </div>
 </li>
 
-<li><a id="org07f9804"></a><code>list-locals</code><br />
-<div class="outline-text-6" id="text-org07f9804">
+<li><a id="orgbff092f"></a><code>list-locals</code><br />
+<div class="outline-text-6" id="text-orgbff092f">
 <p>
 This option does exactly what it says, it allows us to list all of the variables so that we can see
 their values at a certain point:
@@ -527,7 +503,7 @@ their values at a certain point:
 
 <div class="org-src-container">
 <pre class="src src-lisp">1] list-locals
-LST  =  (1 2 3 4 5<span style="color: #5B6268;">)</span>
+LST  =  <span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -537,19 +513,19 @@ So here we can see the value of our parameter <code>lst</code>.
 </div>
 </li>
 
-<li><a id="org073ee77"></a><code>source</code> and <code>print</code><br />
-<div class="outline-text-6" id="text-org073ee77">
+<li><a id="org1b68787"></a><code>source</code> and <code>print</code><br />
+<div class="outline-text-6" id="text-org1b68787">
 <p>
-<code>source</code> and <code>print</code> allow us to inspect the function call so that we can see what's being passed to
+<code>source</code> and <code>print</code> allow us to inspect the function call so that we can see what&rsquo;s being passed to
 it. We can use both of them like so:
 </p>
 
 <div class="org-src-container">
 <pre class="src src-lisp">1] print
-(SUM (1 2 3 4 5<span style="color: #5B6268;">))</span>
+<span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 1] source
 
-(SUM (CDR LST<span style="color: #5B6268;">))</span>
+<span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span>CDR LST<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
 1]
 </pre>
 </div>
@@ -560,8 +536,8 @@ Both of them will be used in similar ways, and which one you use just depends on
 </div>
 </li>
 
-<li><a id="org79a6463"></a><code>next</code><br />
-<div class="outline-text-6" id="text-org79a6463">
+<li><a id="org2763102"></a><code>next</code><br />
+<div class="outline-text-6" id="text-org2763102">
 <p>
 We can use <code>next</code> to inspect the next function call. For example:
 </p>
@@ -577,25 +553,25 @@ We can use <code>next</code> to inspect the next function call. For example:
 </div>
 
 <p>
-To be quite honest, I see <code>next</code> as mostly being helpful to see the source for what's being
-evaluated. I'm not 100% certain how to use it and there's very little information available about it
-since 99% of people who use Common Lisp in any serious capacity use Emacs and there's a phenomenal
+To be honest, I see <code>next</code> mostly as being helpful to see the source for what&rsquo;s being
+evaluated. I&rsquo;m not 100% certain how to use it and there&rsquo;s not much information available about it
+since 99% of people who use Common Lisp in any serious capacity use Emacs and there&rsquo;s a phenomenal
 debugger in Common Lisp that kind of abstracts over all of this command line based stuff. 
 </p>
 
 <p>
-I'll update this page once I figure out more about how to effectively use <code>next</code>. 
+I&rsquo;ll update this page once I figure out more about how to effectively use <code>next</code>. 
 </p>
 </div>
 </li>
 </ul>
 </li>
 
-<li><a id="orgf803670"></a>break<br />
-<div class="outline-text-5" id="text-orgf803670">
+<li><a id="org4100628"></a>break<br />
+<div class="outline-text-5" id="text-org4100628">
 <p>
-The last thing that we'll look into is using <code>break</code> to debug. This allows us to set breakpoints in
-our code that we'll stop at like in Java. When using <code>break</code> it allows us to control where we set our
+The last thing that we&rsquo;ll look into is using <code>break</code> to debug. This allows us to set breakpoints in
+our code that we&rsquo;ll stop at like in Java. When using <code>break</code> it allows us to control where we set our
 breakpoints inside functions, and then step through similarly to when using <code>step</code>. 
 </p>
 </div>
@@ -604,23 +580,23 @@ breakpoints inside functions, and then step through similarly to when using <cod
 </div>
 </div>
 
-<div id="outline-container-orga7764fc" class="outline-3">
-<h3 id="orga7764fc">Portacle/Emacs</h3>
-<div class="outline-text-3" id="text-orga7764fc">
+<div id="outline-container-org3611bc7" class="outline-3">
+<h3 id="org3611bc7">Portacle/Emacs</h3>
+<div class="outline-text-3" id="text-org3611bc7">
 <p>
-If you're using Portacle, then you're likely using <a href="https://common-lisp.net/project/slime/">SLIME</a> for executing your Lisp. SLIME is pretty
-advanced, so I think you'll have better luck reading through their <a href="https://common-lisp.net/project/slime/#documentation">documentation</a> and tutorials
+If you&rsquo;re using Portacle, then you&rsquo;re likely using <a href="https://common-lisp.net/project/slime/">SLIME</a> for executing your Lisp. SLIME is pretty
+advanced, so I think you&rsquo;ll have better luck reading through their <a href="https://common-lisp.net/project/slime/#documentation">documentation</a> and tutorials
 that they provide on the site. 
 </p>
 </div>
 </div>
 
 
-<div id="outline-container-orgd00baea" class="outline-3">
-<h3 id="orgd00baea">Conclusion</h3>
-<div class="outline-text-3" id="text-orgd00baea">
+<div id="outline-container-orgaa1533c" class="outline-3">
+<h3 id="orgaa1533c">Conclusion</h3>
+<div class="outline-text-3" id="text-orgaa1533c">
 <p>
-As you can see, there's lots of ways that we can debug in Common Lisp using the command line. Of
+As you can see, there&rsquo;s lots of ways that we can debug in Common Lisp using the command line. Of
 course, simply using <code>print</code> works too, but sometimes you just really want to use a debugger depending
 on what the problem is.
 </p>
@@ -630,8 +606,7 @@ on what the problem is.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-10-21 Wed 11:44</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-11-05 Thu 01:23</p>
 </div>
 </body>
 </html>

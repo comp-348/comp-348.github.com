@@ -6,7 +6,7 @@
 * Question:
 How can we define a function that can be called multiple ways? 
 
-There are a few different ways that we can do this, namely using /optional/ parameters, /keyword/
+There are a couple different ways that we can do this, namely using /optional/ parameters, /keyword
 parameters and /rest/ parameters.
 
 ** Regular function definition
@@ -23,7 +23,7 @@ function. Finally, there's the body of the function. Everything after the parame
 evaluated in sequence and the last expression evaluated will be returned from the function.
 
 ** Optional parameters
-Optional parameters are very simple, we can use them to set default values when we don't want to be
+Optional parameters are simple, we can use them to set default values when we don't want to be
 passing an argument to a function every time we want to call it:
 
 #+begin_src lisp
@@ -49,11 +49,11 @@ We can also change the default values for our optional arguments so that they ar
 (function-name 1 3) ;; 1 3
 #+end_src
 
-Optional arguments are very helpful for having multi-arity functions.
+Optional arguments are helpful for having multi-arity functions.
 
 ** Keyword parameters
 Keyword arguments can be used somewhat like option arguments, except that when we pass them to the
-function they must be passed explicitely.
+function they must be passed explicitly.
 
 #+begin_src lisp
 (defun function-name (a b &key c d)
@@ -105,6 +105,6 @@ keyword arguments, and it should generally be avoided.
 (function-name 1 2 3) ;; 1 2 (3)
 #+end_src
 
-Using keyword arguments along with optional or rest paremeters /can/ work, but you need to be very
-careful about doing it, and as such wouldn't recommend. Also Common Lisp will likely warn you that
-it's a bad idea.
+Using keyword arguments along with optional or rest parameters /can/ work, but you need to be careful
+about doing it, and as such wouldn't recommend. Also Common Lisp will likely warn you that it's a
+bad idea.

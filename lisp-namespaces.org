@@ -1,8 +1,8 @@
 #+SETUPFILE: templates/html.org
 #+TITLE: (list) vs list
 
-One problem that I've seen a lot is confusion between using ~list~ and ~(list)~. The two are very
-different and knowing the difference between them is important.
+One problem that I've seen a lot is confusion between using ~list~ and ~(list)~. The two are different
+and knowing the difference between them is important.
 
 Consider the following Java code:
 #+begin_src java
@@ -31,7 +31,7 @@ When we say ~Example.Example~, the lack of parentheses indicate to Java to get t
 attribute namespace. When we say ~Example.Example()~, it indicated to Java to call this method from
 the method namespace.
 
-This is the exact same thing we have going on Lisp. In Lisp we have 2 namespace: a function and a
+This is the same thing as we have going on Lisp. In Lisp we have 2 namespace: a function and a
 variable namespace. When we say:
 
 #+begin_src lisp

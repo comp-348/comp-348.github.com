@@ -6,8 +6,8 @@
 * Question:
 How do I run lisp code from my terminal in vscode? 
 
-There are a few different ways that you can do it, and it depends on what compiler you're
-using. Refer to the section for your compiler. 
+There are a couple different ways that you can do it, and it depends on what compiler you're using.
+Refer to the section for your compiler.
 
 ** SBCL:
 With SBCL there are two options you'll care about, ~--script~ and ~--load~. 
@@ -78,11 +78,13 @@ NIL
 #+end_src
 
 ** CCL
-CCL mostly has one argument for using it at the terminal that you'll care about, which is the ~--load~
+
+CCL has one argument for using it at the terminal that you'll care about, which is the ~--load~
 argument. When you give CCL the ~--load~ argument, it will drop you into an interactive prompt the
 same way that it will do when using ~--load~ with SBCL. Refer to the section about [[load][~--load~]] for SBCL.
 
 ** CLisp
+
 CLisp can be used almost the same as SBCL, with a couple differences. You have two main options with
 CLisp for how to execute your Lisp files. You can either execute the entire Lisp file and terminate
 the program after the file is done, or you can load the program into an interactive prompt and
