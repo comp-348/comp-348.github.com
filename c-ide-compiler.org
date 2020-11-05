@@ -56,4 +56,8 @@ If you don't want to use CLion, vscode or any other text editor are always optio
 a text editor and write your C code, then open a terminal to compile your code. You can also make
 use of ~Makefile~ or ~CMake~ to ensure that your project can easily be compiled and executed.
 
-For MacOS only, you can download XCode directly from the App Store. When successfully downloaded, you start coding, by clicking on "Create a new XCode project then under the macOS tab, select "Command Line Tool". Then for the Language, select C. A main.c file will be created for you. And you are done! You can now write and compile your code. XCode is also equipped with debugging, auto-completon, error/warning reporting...
+For MacOS only, you can download XCode directly from the App Store. Once downloaded, you can start
+by clicking on "Create a new XCode project" under the macOS tab, then select "Command Line Tool".
+Select C as the language to use for the project. A main.c file will be created for you. And you're
+done! You can now write and compile your code. XCode is also equipped with debugging,
+auto-completion, error/warning reporting, etc.
