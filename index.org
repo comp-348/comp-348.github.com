@@ -51,6 +51,7 @@ Before getting started with C you should [[file:c-ide-compiler.org][set up your 
 
 - [[file:c-exercise-map-filter.org][Function pointers (map/filter)]]
 - [[file:c-exercise-dictionary.org][Memory allocation (implementing a hashmap)]]
+- [[file:c-exercise-linked-lists.org][Structs and Linked Lists]]
 
 ** COMMENT Ruby
 
