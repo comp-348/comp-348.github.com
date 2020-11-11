@@ -1,3 +1,5 @@
+(setq org-html-htmlize-output-type 'css)
+
 (defvar comp-348-build-root
   `("comp-348.github.io:root"
     :base-directory ,default-directory ; Emacs current file directory

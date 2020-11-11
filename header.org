@@ -1,3 +1,9 @@
 #+BEGIN_CENTER
+#+BEGIN_header
 [[file:index.org][Back]]
+#+END_header
 #+END_CENTER
+
+#+BEGIN_toggle
+[[file:assets/toggle-theme.png]]
+#+END_toggle

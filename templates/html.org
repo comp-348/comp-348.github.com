@@ -1,3 +1,10 @@
 #+EMAIL: phdumaresq@protonmail.com
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
 #+LANGUAGE: en
+#+HTML_HEAD: <link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/org.css" />
+#+HTML_HEAD: <script src="assets/toggle.js"></script>
+
+#+HTML_DOCTYPE: html5
+#+OPTIONS: num:nil H:4 email:t
+#+OPTIONS: view:info buttons:t

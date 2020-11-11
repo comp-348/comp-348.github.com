@@ -1,7 +1,10 @@
 #+TITLE: COMP-348
 #+AUTHOR: Philip Dumaresq
 #+SETUPFILE: templates/html.org
+#+HTML_HEAD: <style>.header { display: none; }</style>
 #+OPTIONS: toc:nil
+
+#+INCLUDE: header.org
 
 ** COMMENT Java
 This section is for all questions relating to Java, in particular the ~stream~ API.
