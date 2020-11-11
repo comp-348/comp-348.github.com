@@ -1,0 +1,216 @@
+#+SETUPFILE: templates/html.org
+#+TITLE: Structs and Linked Lists
+#+AUTHOR: Philip Dumaresq
+#+INCLUDE: header.org
+
+* Problem
+
+Linked Lists are a simple data structure that consist of a node that has a piece of data, and a
+pointer to the next node as it's elements. This is simple to represent in C using structs, where if
+we have a ~Node~ struct, it would have two elements: a piece of data, and a pointer to a ~Node~ struct.
+
+Your goal is to create 5 functions that you'll need to work with Linked Lists in C.
+
+** The Node struct
+
+Before begining, we need to know what our linked list will be represented as. You need to create a
+new type struct called ~Node~ that contains 2 attributes: the first one will be the data for that
+element. We're going to assume that it's a string for now, although you can make it anything. The
+second attribute is going to be a pointer to the next ~Node~.
+
+#+INCLUDE: templates/spoiler.org
+#+BEGIN_SRC c
+// We use typedef so that we can avoid writing struct Node everywhere
+// instead of just Node.
+// Note that with typedef we also need to include the name after since
+// the struct and the type don't necessarily need to have the same name.
+typedef struct Node {
+  char *data;
+  struct Node *next;
+} Node;
+#+END_SRC
+
+** llCons
+
+The ~llCons~ function will return a ~Node~ struct and should take in 2 arguments: a variable that
+contains data as the same type as your ~Node~ struct. We'll assume a string for now. And the second
+should be a struct that will become the tail of the returned ~Node~.
+
+Example usage:
+#+begin_src c
+int main() {
+  Node el3 = llCons("element 3", null);
+  Node el2 = llCons("element 2", &el3);
+  Node el1 = llCons("element 1", &el2);
+
+  printf("%s", el1.data);           // element 1
+  printf("%s", el1.next.data);      // element 2
+  printf("%s", el1.next.next.data); // element 3
+
+  return 0;
+}
+#+end_src
+
+#+INCLUDE: templates/spoiler.org
+#+begin_src c
+Node *llCons(char *data, Node *next) {
+  Node *newNode = malloc(sizeof(Node));
+  newNode->data = data;
+  newNode->next = next;
+  return newNode;
+}
+#+end_src
+
+** llNew
+
+The ~llNew~ function should return a new list given the elements in an array. Given an array of
+strings (or whatever the datatype you're using is) and the length of the array, ~llNew~ should create
+a new linked list and return it's head.
+
+#+begin_src c
+int main() {
+  Node list = llNew({"element 1", "element 2", "element 3"}, 3);
+
+  printf("%s", list.data);           // element 1
+  printf("%s", list.next.data);      // element 2
+  printf("%s", list.next.next.data); // element 3
+
+  return 0;
+}
+#+end_src
+
+#+INCLUDE: templates/spoiler.org
+#+begin_src c
+Node *llNew(char **strs, int count) {
+  if (count == 0) {
+    return NULL;
+  }
+
+  //  Here we're doing pointer arithmetic and manually incrementing the
+  //  value of our pointer by 1 so that the "first element" in the array
+  //  passed in recursively becomes the next element sequentially since
+  //  arrays are contiguous in memory.
+  Node *next = llNew(strs + 1, count - 1);
+  return llCons(strs[0], next);
+}
+#+end_src
+
+** llHead
+
+~llHead~ should accept a Node as an argument and return the data for the first element in the linked
+list.
+
+#+begin_src c
+int main() {
+  Node list = llNew({"element 1", "element 2", "element 3"}, 3);
+
+  printf("%s", llHead(list)); // element 1
+
+  return 0;
+}
+#+end_src
+
+#+INCLUDE: templates/spoiler.org
+#+begin_src c
+char *llHead(Node *list) {
+  // We use -> because list is a pointer, this dereferences for us.
+  return list->data;
+}
+#+end_src
+
+** llTail
+
+~llTail~ should take in a Node and return the tail of the list.
+
+#+begin_src c
+int main() {
+  Node list = llNew({"element 1", "element 2", "element 3"}, 3);
+
+  printf("%s", llHead(llTail(list))); // element 2
+
+  return 0;
+}
+#+end_src
+
+#+INCLUDE: templates/spoiler.org
+#+begin_src c
+char *llTail(Node *list) {
+  // Pretty much just the same as llHead
+  return list->next;
+}
+#+end_src
+
+** llNth
+
+~llNth~ should take a list as an argument and an integer, and return the data for the nth element in
+the list. If the number is greater than the length of the list, return null.
+
+#+BEGIN_SRC c
+int main() {
+  Node list = llNew({"element 1", "element 2", "element 3"}, 3);
+
+  printf("%s", llNth(list, 0)); // element 1
+  printf("%s", llNth(list, 1)); // element 2
+  printf("%s", llNth(list, 2)); // element 3
+
+  return 0;
+}
+#+END_SRC
+
+#+INCLUDE: templates/spoiler.org
+#+begin_src c
+char *llNth(Node *list, int n) {
+  Node *curr = list;
+  for (int i = 0; i < n; i++) {
+    if (curr->next != NULL) {
+      curr = curr->next;
+    } else {
+      return NULL;
+    }
+  }
+
+  return curr->data;
+}
+#+end_src
+
+** llAppend
+
+~llAppend~ should take 2 Nodes as arguments and return a Node. The function should find the last
+Node in the first list passed in, and make it's ~next~ be the head of the second list passed in.
+
+#+begin_src c
+int main() {
+  Node list1 = llNew({"element 1", "element 2", "element 3"}, 3);
+  Node list2 = llNew({"element 4", "element 5", "element 6"}, 3);
+  Node appended = llAppend(list1, list2);
+
+  printf("%s", llNth(appended, 1)); // element 2
+  printf("%s", llNth(appended, 3)); // element 4
+  printf("%s", llNth(appended, 5)); // element 6
+
+  return 0;
+}
+#+end_src
+
+#+INCLUDE: templates/spoiler.org
+#+BEGIN_SRC c
+Node *llAppend(Node *list1, Node *list2) {
+  Node *last = list1;
+
+  while (last->next != NULL) {
+    last = last->next;
+  }
+
+  last->next = list2;
+  return list1;
+}
+#+END_SRC
+
+
+While this comes after the section of the course on Lisp, I hope that this helps you understand the
+Lisp functions a little better. Here we've implemented ~cons~, ~list~, ~car~, ~cdr~, ~nth~ and ~append~, all
+important functions to know for Lisp programming.
+
+Note that the ~llAppend~ function differs from ~append~ in Lisp because in Lisp it will return a new
+list, whereas the one we've implemented here will mutate the first list passed in. As such, this is
+more similar to the ~nconc~ function rather than ~append~, but we didn't cover ~nconc~ in class.
