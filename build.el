@@ -26,10 +26,10 @@
     :table-of-contents nil
     :publishing-function org-html-publish-to-html))
 
-(defvar comp-348-build-examples
+(setq comp-348-build-examples
   `("comp-348.github.io:examples"
-    :base-directory ,(concat default-directory "/examples") ; Emacs current file directory
-    :publishing-directory ,(concat default-directory "/docs/examples")
+    :base-directory ,(concat default-directory "/exercises") ; Emacs current file directory
+    :publishing-directory ,(concat default-directory "/docs/exercises")
     :section-numbers nil
     :table-of-contents nil
     :publishing-function org-html-publish-to-html))
@@ -43,6 +43,7 @@
 
 (add-to-list 'org-publish-project-alist comp-348-build-root)
 (add-to-list 'org-publish-project-alist comp-348-build-assets)
+(add-to-list 'org-publish-project-alist comp-348-build-examples)
 (add-to-list 'org-publish-project-alist
              '("comp-348.github.io"
                :components ("comp-348.github.io:root"

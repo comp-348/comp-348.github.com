@@ -87,6 +87,8 @@ pre .org-string { color: var(--code-cgreen); }
 pre .org-function-name { color: var(--code-cpurple); }
 pre .org-comment { color: var(--code-comment); }
 pre .org-comment-delimiter { color: var(--code-comment); }
+pre .org-type { color: var(--code-corange); }
+pre .org-preprocessor { color: var(--code-cblue); }
 
 /* pre .org-variable-name { color: var(--code-cgrey) } */
 /* pre .org-variable-name { color: var(--code-cgrey) } */

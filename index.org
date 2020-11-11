@@ -43,7 +43,14 @@ This section is for all questions relating to C.
 
 Before getting started with C you should [[file:c-ide-compiler.org][set up your development environment]].
 
+*** FAQ
+
 - [[file:c-booleans.org][Booleans in C]]
+
+*** Exercises
+
+- [[file:c-exercise-map-filter.org][Function pointers (map/filter)]]
+- [[file:c-exercise-dictionary.org][Memory allocation (implementing a hashmap)]]
 
 ** COMMENT Ruby
 
