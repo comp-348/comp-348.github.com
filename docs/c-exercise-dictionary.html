@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-10 Tue 21:34 -->
+<!-- 2020-11-10 Tue 21:29 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Let scoping</title>
+<title>Memory allocation and structs with hashmaps</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Philip Dumaresq">
 <style type="text/css">
@@ -220,17 +220,22 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">Let scoping</h1>
+<h1 class="title">Memory allocation and structs with hashmaps</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge2cad51">Question</a></li>
+<li><a href="#org4a42f4a">Problem</a>
+<ul>
+<li><a href="#org4d0d62c">getHash</a></li>
+<li><a href="#org9b9a90f">setHash</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="orge63a381">
+<div class="header" id="org0f8eeff">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -238,87 +243,148 @@
 </div>
 </div>
 
-<div class="toggle" id="org4adcbaa">
+<div class="toggle" id="org31379ac">
 
-<div id="orgfdd34b2" class="figure">
+<div id="orgea78dc3" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-orge2cad51" class="outline-2">
-<h2 id="orge2cad51">Question</h2>
-<div class="outline-text-2" id="text-orge2cad51">
+<div id="outline-container-org4a42f4a" class="outline-2">
+<h2 id="org4a42f4a">Problem</h2>
+<div class="outline-text-2" id="text-org4a42f4a">
 <p>
-Why does this return 2 and not 3?
+The first thing we need do is decide how we&rsquo;re going to model the data for our map. This isn&rsquo;t going
+to be a <i>true</i> hashmap because we&rsquo;re not going to actually hash the keys at all. We&rsquo;re just going to
+use a struct called <code>Pair</code> that contains the key/value pairs, like so:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
-        <span class="org-rainbow-delimiters-depth-1">(</span>a <span class="org-rainbow-delimiters-depth-2">(</span>+ c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    a<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-comment">; RETURNS 2</span>
+<pre class="src src-c"><span class="org-keyword">struct</span> <span class="org-type">Pair</span> {
+  <span class="org-type">char</span> *<span class="org-variable-name">key</span>;
+  <span class="org-type">int</span> <span class="org-variable-name">value</span>;
+};
 </pre>
 </div>
 
 <p>
-The reason here is because of how the scoping works in Lisp when using <code>let</code>. When you use <code>let</code>,
-variables that you&rsquo;re binding aren&rsquo;t able to see variables bound before it in the same <code>let</code>. If we
-did
+We&rsquo;re just going to store integers as our values, although we could store anything here. Our map
+itself is just going to be an array of <code>Pair</code> structs.
+</p>
+</div>
+
+<div id="outline-container-org4d0d62c" class="outline-3">
+<h3 id="org4d0d62c">getHash</h3>
+<div class="outline-text-3" id="text-org4d0d62c">
+<p>
+Now that we&rsquo;ve determined how we&rsquo;re going to store our data, your exercise is to implement 2
+functions. The first one is going to be called <code>getHash</code>. It will take 3 arguments, the first one will
+be our array that the map is stored in, and the second will be it&rsquo;s size. The final argument is the
+key you&rsquo;re searching for.
 </p>
 
+<p>
+The function can be used as below:
+</p>
 <div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>a <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span>
-      <span class="org-rainbow-delimiters-depth-3">(</span>b <span class="org-rainbow-delimiters-depth-1">(</span>+ a <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>print b<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">int</span> <span class="org-variable-name">len</span> = <span class="org-highlight-numbers-number">2</span>;
+  <span class="org-keyword">struct</span> <span class="org-type">Pair</span> <span class="org-variable-name">hashmap</span> = malloc(<span class="org-keyword">sizeof</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span>) * len);
+  hashmap[<span class="org-highlight-numbers-number">0</span>].key = <span class="org-string">"Key 1"</span>;
+  hashmap[<span class="org-highlight-numbers-number">0</span>].value = <span class="org-highlight-numbers-number">1</span>;
+  hashmap[<span class="org-highlight-numbers-number">1</span>].key = <span class="org-string">"Key 2"</span>;
+  hashmap[<span class="org-highlight-numbers-number">1</span>].value = <span class="org-highlight-numbers-number">2</span>;
+
+  printf(<span class="org-string">"%d"</span>, getHash(hashmap, len, <span class="org-string">"Key 1"</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">1</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
 </pre>
 </div>
 
+<button class="toggle-spoiler">Show answer</button>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">getHash</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span> *<span class="org-variable-name">map</span>, <span class="org-type">int</span> <span class="org-variable-name">size</span>, <span class="org-type">char</span> *<span class="org-variable-name">key</span>) {
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; size; i++) {
+    <span class="org-keyword">if</span> (strcmp(map[i].key, key) == <span class="org-highlight-numbers-number">0</span>) {
+      <span class="org-keyword">return</span> map[i].value;
+    }
+  }
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9b9a90f" class="outline-3">
+<h3 id="org9b9a90f">setHash</h3>
+<div class="outline-text-3" id="text-org9b9a90f">
 <p>
-This would give us an error, because <code>a</code> isn&rsquo;t available when binding <code>b</code>. So logically, Lisp would need
-to look to the enclosing scopes to try to find that variable <code>a</code>. That&rsquo;s what&rsquo;s happening in the
-example above as well. Lisp isn&rsquo;t able to bind <code>a</code> to the value of the <code>c</code> bound immediately before it,
-so Lisp looks to the enclosing scope and find that there&rsquo;s a variable <code>c</code> in that scope, and uses it. 
+The second function to write is going to be called <code>setHash</code>. It will take 4 arguments:
 </p>
+<ul class="org-ul">
+<li>The first argument is the array of the <code>Pair</code> structs.</li>
+<li>The second argument will be a reference to the size of the map.</li>
+<li>The third and fourth arguments are the string and integer for the key and value.</li>
+</ul>
 
 <p>
-If we change our inner <code>let</code> to be <code>let*</code>, then we get another interesting question:
+The function should add the <code>Pair</code> at the last available slot in the array, and if the array is full,
+then it should dynamically reallocate the size of the array to allow more elements to be added to
+it.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
-         <span class="org-rainbow-delimiters-depth-1">(</span>a <span class="org-rainbow-delimiters-depth-2">(</span>+ c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    a<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">int</span> <span class="org-variable-name">len</span> = <span class="org-highlight-numbers-number">2</span>;
+  <span class="org-keyword">struct</span> <span class="org-type">Pair</span> <span class="org-variable-name">hashmap</span> = malloc(<span class="org-keyword">sizeof</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span>) * len);
+  setHash(hashmap, &amp;len, <span class="org-string">"Key 1"</span>, <span class="org-highlight-numbers-number">1</span>);
+  setHash(hashmap, &amp;len, <span class="org-string">"Key 2"</span>, <span class="org-highlight-numbers-number">2</span>);
+  setHash(hashmap, &amp;len, <span class="org-string">"Key 3"</span>, <span class="org-highlight-numbers-number">3</span>);
+  setHash(hashmap, &amp;len, <span class="org-string">"Key 4"</span>, <span class="org-highlight-numbers-number">4</span>);
+
+  printf(<span class="org-string">"%d"</span>, getHash(hashmap, len, <span class="org-string">"Key 3"</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">3</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
 </pre>
 </div>
 
-<p>
-Now what will the value of <code>a</code> be? In this case, it&rsquo;ll be 3, because our second <code>c</code> shadows the value of
-the first. So whenever we refer to <code>c</code> inside our nested <code>let*</code> here, it&rsquo;ll be referring to the <code>c</code>
-declared in that block.
-</p>
-
+<button class="toggle-spoiler">Show answer</button>
 <div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span>setf c <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span>print c<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>print c<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">setHash</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span> *<span class="org-variable-name">map</span>, <span class="org-type">int</span> *<span class="org-variable-name">size</span>, <span class="org-type">char</span> *<span class="org-variable-name">key</span>, <span class="org-type">int</span> <span class="org-variable-name">value</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">full</span> = <span class="org-constant">true</span>;
+  <span class="org-type">int</span> <span class="org-variable-name">i</span>;
+  <span class="org-keyword">for</span> (i = <span class="org-highlight-numbers-number">0</span>; i &lt; *size; i++) {
+    <span class="org-keyword">if</span> (map[i].key == <span class="org-constant">NULL</span>) {
+      full = <span class="org-constant">false</span>;
+      <span class="org-keyword">break</span>;
+    }
+  }
+
+  <span class="org-keyword">if</span> (full) {
+    printf(<span class="org-string">"Doubling the size of the hash (%d -&gt; %d)\n"</span>, i, i * <span class="org-highlight-numbers-number">2</span>);
+    *size = i * <span class="org-highlight-numbers-number">2</span>;
+    map = realloc(map, <span class="org-keyword">sizeof</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span>) * *size);
+  }
+
+  map[i].key = key;
+  map[i].value = value;
+}
 </pre>
 </div>
-
-<p>
-What do you think this program will output now?
-</p>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-10 Tue 21:34</p>
+<p class="date">Created: 2020-11-10 Tue 21:29</p>
 </div>
 </body>
 </html>

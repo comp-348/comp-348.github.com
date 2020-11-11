@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-10 Tue 21:34 -->
+<!-- 2020-11-10 Tue 20:52 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Let scoping</title>
+<title>Function pointers in C</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Philip Dumaresq">
 <style type="text/css">
@@ -220,105 +220,139 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">Let scoping</h1>
+<h1 class="title">Function pointers in C</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge2cad51">Question</a></li>
+<li><a href="#org1a3e9f3">Problems</a>
+<ul>
+<li><a href="#orgdcdedbf">Map</a></li>
+<li><a href="#org6160971">Filter</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="orge63a381">
+<div class="header" id="org121dec6">
 <p>
-<a href="index.html">Back</a>
+<a href="../index.html">Back</a>
 </p>
 
 </div>
 </div>
 
-<div class="toggle" id="org4adcbaa">
+<div class="toggle" id="orgeea9072">
 
-<div id="orgfdd34b2" class="figure">
-<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+<div id="org9c5578e" class="figure">
+<p><img src="../assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-orge2cad51" class="outline-2">
-<h2 id="orge2cad51">Question</h2>
-<div class="outline-text-2" id="text-orge2cad51">
+<div id="outline-container-org1a3e9f3" class="outline-2">
+<h2 id="org1a3e9f3">Problems</h2>
+<div class="outline-text-2" id="text-org1a3e9f3">
+</div>
+<div id="outline-container-orgdcdedbf" class="outline-3">
+<h3 id="orgdcdedbf">Map</h3>
+<div class="outline-text-3" id="text-orgdcdedbf">
 <p>
-Why does this return 2 and not 3?
+Implement a function called <code>map</code> that accepts 3 arguments: an list of integers, the length of the
+list, and a pointer to a function. The function should accept a single argument as an integer and
+return an integer.
+</p>
+
+<p>
+The function should return a new array of integers, with each one applied to the argument passed
+into the function. Here&rsquo;s a sample input and output of the function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
-        <span class="org-rainbow-delimiters-depth-1">(</span>a <span class="org-rainbow-delimiters-depth-2">(</span>+ c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    a<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-comment">; RETURNS 2</span>
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">f</span>(<span class="org-type">int</span> <span class="org-variable-name">x</span>) { <span class="org-keyword">return</span> x * x; }
+
+<span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">int</span> <span class="org-variable-name">nums</span>[] = {<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">4</span>, <span class="org-highlight-numbers-number">5</span>, <span class="org-highlight-numbers-number">6</span>, <span class="org-highlight-numbers-number">7</span>, <span class="org-highlight-numbers-number">8</span>, <span class="org-highlight-numbers-number">9</span>, <span class="org-highlight-numbers-number">10</span>};
+  <span class="org-type">int</span> *<span class="org-variable-name">mapped</span> = map(nums, <span class="org-highlight-numbers-number">10</span>, f);
+  <span class="org-comment-delimiter">// </span><span class="org-comment">{ 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 }</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
 </pre>
 </div>
 
+<button class="toggle-spoiler">Show answer</button>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">int</span> *<span class="org-function-name">map</span>(<span class="org-type">int</span> *<span class="org-variable-name">nums</span>, <span class="org-type">int</span> <span class="org-variable-name">size</span>, <span class="org-type">int</span> (*<span class="org-function-name">func</span>)(<span class="org-type">int</span>)) {
+  <span class="org-type">int</span> *<span class="org-variable-name">newnums</span> = malloc(<span class="org-keyword">sizeof</span>(<span class="org-type">int</span>) * size);
+
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; size; i++) {
+    newnums[i] = func(nums[i]);
+  }
+
+  <span class="org-keyword">return</span> newnums;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6160971" class="outline-3">
+<h3 id="org6160971">Filter</h3>
+<div class="outline-text-3" id="text-org6160971">
 <p>
-The reason here is because of how the scoping works in Lisp when using <code>let</code>. When you use <code>let</code>,
-variables that you&rsquo;re binding aren&rsquo;t able to see variables bound before it in the same <code>let</code>. If we
-did
+Implement a function called <code>filter</code> that accepts 3 arguments: a list of integers, a reference to the
+length of the list, and a pointer to a predicate function. The function should accept a single
+argument as an integer and return an integer.
+</p>
+
+<p>
+The function should return a new array of integers, but only the ones for which the predicate
+function returns true. Here&rsquo;s a sample input and output of the function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>a <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span>
-      <span class="org-rainbow-delimiters-depth-3">(</span>b <span class="org-rainbow-delimiters-depth-1">(</span>+ a <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>print b<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">isEven</span>(<span class="org-type">int</span> <span class="org-variable-name">x</span>) { <span class="org-keyword">return</span> x % <span class="org-highlight-numbers-number">2</span> == <span class="org-highlight-numbers-number">0</span>; }
+
+<span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">int</span> <span class="org-variable-name">nums</span>[] = {<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">4</span>, <span class="org-highlight-numbers-number">5</span>, <span class="org-highlight-numbers-number">6</span>, <span class="org-highlight-numbers-number">7</span>, <span class="org-highlight-numbers-number">8</span>, <span class="org-highlight-numbers-number">9</span>, <span class="org-highlight-numbers-number">10</span>};
+  <span class="org-type">int</span> <span class="org-variable-name">len</span> = <span class="org-highlight-numbers-number">10</span>;
+  <span class="org-type">int</span> *<span class="org-variable-name">evens</span> = filter(nums, &amp;len, even);
+  <span class="org-comment-delimiter">// </span><span class="org-comment">{ 2, 4, 6, 8, 10 }</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
 </pre>
 </div>
 
-<p>
-This would give us an error, because <code>a</code> isn&rsquo;t available when binding <code>b</code>. So logically, Lisp would need
-to look to the enclosing scopes to try to find that variable <code>a</code>. That&rsquo;s what&rsquo;s happening in the
-example above as well. Lisp isn&rsquo;t able to bind <code>a</code> to the value of the <code>c</code> bound immediately before it,
-so Lisp looks to the enclosing scope and find that there&rsquo;s a variable <code>c</code> in that scope, and uses it. 
-</p>
-
-<p>
-If we change our inner <code>let</code> to be <code>let*</code>, then we get another interesting question:
-</p>
-
+<button class="toggle-spoiler">Show answer</button>
 <div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
-         <span class="org-rainbow-delimiters-depth-1">(</span>a <span class="org-rainbow-delimiters-depth-2">(</span>+ c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    a<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-c"><span class="org-type">int</span> *<span class="org-function-name">filter</span>(<span class="org-type">int</span> *<span class="org-variable-name">nums</span>, <span class="org-type">int</span> *<span class="org-variable-name">size</span>, <span class="org-type">int</span> (*<span class="org-function-name">pred</span>)(<span class="org-type">int</span>)) {
+  <span class="org-type">int</span> *<span class="org-variable-name">newnums</span> = malloc(<span class="org-keyword">sizeof</span>(<span class="org-type">int</span>) * *size);
+
+  <span class="org-type">int</span> <span class="org-variable-name">j</span> = <span class="org-highlight-numbers-number">0</span>;
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; *size; i++) {
+    <span class="org-keyword">if</span> (pred(nums[i])) {
+      newnums[j++] = nums[i];
+    }
+  }
+
+  newnums = realloc(newnums, <span class="org-keyword">sizeof</span>(<span class="org-type">int</span>) * j);
+  , *size = j;
+  <span class="org-keyword">return</span> newnums;
+}
 </pre>
 </div>
-
-<p>
-Now what will the value of <code>a</code> be? In this case, it&rsquo;ll be 3, because our second <code>c</code> shadows the value of
-the first. So whenever we refer to <code>c</code> inside our nested <code>let*</code> here, it&rsquo;ll be referring to the <code>c</code>
-declared in that block.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span>setf c <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span>print c<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>print c<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-</pre>
 </div>
-
-<p>
-What do you think this program will output now?
-</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-10 Tue 21:34</p>
+<p class="date">Created: 2020-11-10 Tue 20:52</p>
 </div>
 </body>
 </html>

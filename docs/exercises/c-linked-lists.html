@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-11-10 Tue 21:34 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Let scoping</title>
-<meta name="generator" content="Org mode">
-<meta name="author" content="Philip Dumaresq">
+<!-- 2020-11-10 Tue 20:41 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Philip" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -191,10 +193,6 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
-<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
-<link rel="stylesheet" type="text/css" href="assets/org.css" />
-<script src="assets/toggle.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -220,105 +218,10 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">Let scoping</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orge2cad51">Question</a></li>
-</ul>
-</div>
-</div>
-<div class="org-center">
-<div class="header" id="orge63a381">
-<p>
-<a href="index.html">Back</a>
-</p>
-
-</div>
-</div>
-
-<div class="toggle" id="org4adcbaa">
-
-<div id="orgfdd34b2" class="figure">
-<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-orge2cad51" class="outline-2">
-<h2 id="orge2cad51">Question</h2>
-<div class="outline-text-2" id="text-orge2cad51">
-<p>
-Why does this return 2 and not 3?
-</p>
-
-<div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
-        <span class="org-rainbow-delimiters-depth-1">(</span>a <span class="org-rainbow-delimiters-depth-2">(</span>+ c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    a<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-comment">; RETURNS 2</span>
-</pre>
-</div>
-
-<p>
-The reason here is because of how the scoping works in Lisp when using <code>let</code>. When you use <code>let</code>,
-variables that you&rsquo;re binding aren&rsquo;t able to see variables bound before it in the same <code>let</code>. If we
-did
-</p>
-
-<div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>a <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span>
-      <span class="org-rainbow-delimiters-depth-3">(</span>b <span class="org-rainbow-delimiters-depth-1">(</span>+ a <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>print b<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-</pre>
-</div>
-
-<p>
-This would give us an error, because <code>a</code> isn&rsquo;t available when binding <code>b</code>. So logically, Lisp would need
-to look to the enclosing scopes to try to find that variable <code>a</code>. That&rsquo;s what&rsquo;s happening in the
-example above as well. Lisp isn&rsquo;t able to bind <code>a</code> to the value of the <code>c</code> bound immediately before it,
-so Lisp looks to the enclosing scope and find that there&rsquo;s a variable <code>c</code> in that scope, and uses it. 
-</p>
-
-<p>
-If we change our inner <code>let</code> to be <code>let*</code>, then we get another interesting question:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
-         <span class="org-rainbow-delimiters-depth-1">(</span>a <span class="org-rainbow-delimiters-depth-2">(</span>+ c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    a<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-</pre>
-</div>
-
-<p>
-Now what will the value of <code>a</code> be? In this case, it&rsquo;ll be 3, because our second <code>c</code> shadows the value of
-the first. So whenever we refer to <code>c</code> inside our nested <code>let*</code> here, it&rsquo;ll be referring to the <code>c</code>
-declared in that block.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span>setf c <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span>print c<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>print c<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-</pre>
-</div>
-
-<p>
-What do you think this program will output now?
-</p>
-</div>
-</div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Philip Dumaresq</p>
-<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-10 Tue 21:34</p>
+<p class="author">Author: Philip</p>
+<p class="date">Created: 2020-11-10 Tue 20:41</p>
 </div>
 </body>
 </html>
