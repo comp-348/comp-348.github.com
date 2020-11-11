@@ -1,0 +1,106 @@
+#+SETUPFILE: templates/html.org
+#+TITLE: Memory allocation and structs with hashmaps
+#+AUTHOR: Philip Dumaresq
+#+INCLUDE: header.org
+
+* Problem
+
+The first thing we need do is decide how we're going to model the data for our map. This isn't going
+to be a /true/ hashmap because we're not going to actually hash the keys at all. We're just going to
+use a struct called ~Pair~ that contains the key/value pairs, like so:
+
+#+BEGIN_SRC c
+struct Pair {
+  char *key;
+  int value;
+};
+#+END_SRC
+
+We're just going to store integers as our values, although we could store anything here. Our map
+itself is just going to be an array of ~Pair~ structs.
+
+** getHash
+
+Now that we've determined how we're going to store our data, your exercise is to implement 2
+functions. The first one is going to be called ~getHash~. It will take 3 arguments, the first one will
+be our array that the map is stored in, and the second will be it's size. The final argument is the
+key you're searching for.
+
+The function can be used as below:
+#+BEGIN_SRC c
+int main() {
+  int len = 2;
+  struct Pair hashmap = malloc(sizeof(struct Pair) * len);
+  hashmap[0].key = "Key 1";
+  hashmap[0].value = 1;
+  hashmap[1].key = "Key 2";
+  hashmap[1].value = 2;
+
+  printf("%d", getHash(hashmap, len, "Key 1")); // 1
+
+  return 0;
+}
+#+END_SRC
+
+#+INCLUDE: templates/spoiler.org
+#+BEGIN_SRC c
+int getHash(struct Pair *map, int size, char *key) {
+  for (int i = 0; i < size; i++) {
+    if (strcmp(map[i].key, key) == 0) {
+      return map[i].value;
+    }
+  }
+
+  return 0;
+}
+#+END_SRC
+
+** setHash
+
+The second function to write is going to be called ~setHash~. It will take 4 arguments:
+- The first argument is the array of the ~Pair~ structs.
+- The second argument will be a reference to the size of the map.
+- The third and fourth arguments are the string and integer for the key and value.
+
+The function should add the ~Pair~ at the last available slot in the array, and if the array is full,
+then it should dynamically reallocate the size of the array to allow more elements to be added to
+it.
+
+#+BEGIN_SRC c
+int main() {
+  int len = 2;
+  struct Pair hashmap = malloc(sizeof(struct Pair) * len);
+  setHash(hashmap, &len, "Key 1", 1);
+  setHash(hashmap, &len, "Key 2", 2);
+  setHash(hashmap, &len, "Key 3", 3);
+  setHash(hashmap, &len, "Key 4", 4);
+
+  printf("%d", getHash(hashmap, len, "Key 3")); // 3
+
+  return 0;
+}
+#+END_SRC
+
+#+INCLUDE: templates/spoiler.org
+#+BEGIN_SRC c
+void setHash(struct Pair *map, int *size, char *key, int value) {
+  int full = true;
+  int i;
+  for (i = 0; i < *size; i++) {
+    if (map[i].key == NULL) {
+      full = false;
+      break;
+    }
+  }
+
+  if (full) {
+    printf("Doubling the size of the hash (%d -> %d)\n", i, i * 2);
+    *size = i * 2;
+    map = realloc(map, sizeof(struct Pair) * *size);
+  }
+
+  map[i].key = key;
+  map[i].value = value;
+}
+#+END_SRC
+

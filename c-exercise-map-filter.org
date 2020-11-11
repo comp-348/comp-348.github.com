@@ -1,0 +1,79 @@
+#+SETUPFILE: templates/html.org
+#+TITLE: Function pointers in C
+#+AUTHOR: Philip Dumaresq
+#+INCLUDE: header.org
+
+* Problems
+
+** Map
+
+Implement a function called ~map~ that accepts 3 arguments: an list of integers, the length of the
+list, and a pointer to a function. The function should accept a single argument as an integer and
+return an integer.
+
+The function should return a new array of integers, with each one applied to the argument passed
+into the function. Here's a sample input and output of the function.
+
+#+BEGIN_SRC c
+int f(int x) { return x * x; }
+
+int main() {
+  int nums[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  int *mapped = map(nums, 10, f);
+  // { 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 }
+
+  return 0;
+}
+#+END_SRC
+
+#+INCLUDE: templates/spoiler.org
+#+BEGIN_SRC c
+int *map(int *nums, int size, int (*func)(int)) {
+  int *newnums = malloc(sizeof(int) * size);
+
+  for (int i = 0; i < size; i++) {
+    newnums[i] = func(nums[i]);
+  }
+
+  return newnums;
+}
+#+END_SRC
+
+** Filter
+Implement a function called ~filter~ that accepts 3 arguments: a list of integers, a reference to the
+length of the list, and a pointer to a predicate function. The function should accept a single
+argument as an integer and return an integer.
+
+The function should return a new array of integers, but only the ones for which the predicate
+function returns true. Here's a sample input and output of the function.
+
+#+BEGIN_SRC c
+int isEven(int x) { return x % 2 == 0; }
+
+int main() {
+  int nums[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  int len = 10;
+  int *evens = filter(nums, &len, even);
+  // { 2, 4, 6, 8, 10 }
+
+  return 0;
+}
+#+END_SRC
+
+#+INCLUDE: templates/spoiler.org
+#+BEGIN_SRC c
+int *filter(int *nums, int *size, int (*pred)(int)) {
+  int *newnums = malloc(sizeof(int) * *size);
+
+  int j = 0;
+  for (int i = 0; i < *size; i++) {
+    if (pred(nums[i])) {
+      newnums[j++] = nums[i];
+    }
+  }
+
+  newnums = realloc(newnums, sizeof(int) * j);
+  *size = j;
+  return newnums;
+}
+#+END_SRC
