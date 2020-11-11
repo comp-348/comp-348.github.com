@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-11-10 Tue 21:34 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip" />
+<!-- 2020-11-11 Wed 14:34 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Structs and Linked Lists</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -193,6 +191,10 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -218,10 +220,320 @@
 </head>
 <body>
 <div id="content">
+<h1 class="title">Structs and Linked Lists</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9ee8097">Problem</a>
+<ul>
+<li><a href="#orgd41eb87">The Node struct</a></li>
+<li><a href="#orgbb840de">llCons</a></li>
+<li><a href="#orgbbfdd9e">llNew</a></li>
+<li><a href="#org6612927">llHead</a></li>
+<li><a href="#org9dac4ad">llTail</a></li>
+<li><a href="#org6be40ba">llNth</a></li>
+<li><a href="#org114a37e">llAppend</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="org-center">
+<div class="header" id="org1eac33a">
+<p>
+<a href="index.html">Back</a>
+</p>
+
+</div>
+</div>
+
+<div class="toggle" id="org8886c6f">
+
+<div id="orgc6a1ff5" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-org9ee8097" class="outline-2">
+<h2 id="org9ee8097">Problem</h2>
+<div class="outline-text-2" id="text-org9ee8097">
+<p>
+Linked Lists are a simple data structure that consist of a node that has a piece of data, and a
+pointer to the next node as it&rsquo;s elements. This is simple to represent in C using structs, where if
+we have a <code>Node</code> struct, it would have two elements: a piece of data, and a pointer to a <code>Node</code> struct.
+</p>
+
+<p>
+Your goal is to create 5 functions that you&rsquo;ll need to work with Linked Lists in C.
+</p>
+</div>
+
+<div id="outline-container-orgd41eb87" class="outline-3">
+<h3 id="orgd41eb87">The Node struct</h3>
+<div class="outline-text-3" id="text-orgd41eb87">
+<p>
+Before begining, we need to know what our linked list will be represented as. You need to create a
+new type struct called <code>Node</code> that contains 2 attributes: the first one will be the data for that
+element. We&rsquo;re going to assume that it&rsquo;s a string for now, although you can make it anything. The
+second attribute is going to be a pointer to the next <code>Node</code>.
+</p>
+
+<button class="toggle-spoiler">Show answer</button>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-comment-delimiter">// </span><span class="org-comment">We use typedef so that we can avoid writing struct Node everywhere</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">instead of just Node.</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Note that with typedef we also need to include the name after since</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">the struct and the type don't necessarily need to have the same name.</span>
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">Node</span> {
+  <span class="org-type">char</span> *<span class="org-variable-name">data</span>;
+  <span class="org-keyword">struct</span> <span class="org-type">Node</span> *<span class="org-variable-name">next</span>;
+} <span class="org-type">Node</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb840de" class="outline-3">
+<h3 id="orgbb840de">llCons</h3>
+<div class="outline-text-3" id="text-orgbb840de">
+<p>
+The <code>llCons</code> function will return a <code>Node</code> struct and should take in 2 arguments: a variable that
+contains data as the same type as your <code>Node</code> struct. We&rsquo;ll assume a string for now. And the second
+should be a struct that will become the tail of the returned <code>Node</code>.
+</p>
+
+<p>
+Example usage:
+</p>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">Node</span> <span class="org-variable-name">el3</span> = llCons(<span class="org-string">"element 3"</span>, null);
+  <span class="org-type">Node</span> <span class="org-variable-name">el2</span> = llCons(<span class="org-string">"element 2"</span>, &amp;el3);
+  <span class="org-type">Node</span> <span class="org-variable-name">el1</span> = llCons(<span class="org-string">"element 1"</span>, &amp;el2);
+
+  printf(<span class="org-string">"%s"</span>, el1.data);           <span class="org-comment-delimiter">// </span><span class="org-comment">element 1</span>
+  printf(<span class="org-string">"%s"</span>, el1.next.data);      <span class="org-comment-delimiter">// </span><span class="org-comment">element 2</span>
+  printf(<span class="org-string">"%s"</span>, el1.next.next.data); <span class="org-comment-delimiter">// </span><span class="org-comment">element 3</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
+</pre>
+</div>
+
+<button class="toggle-spoiler">Show answer</button>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">Node</span> *<span class="org-function-name">llCons</span>(<span class="org-type">char</span> *<span class="org-variable-name">data</span>, <span class="org-type">Node</span> *<span class="org-variable-name">next</span>) {
+  <span class="org-type">Node</span> *<span class="org-variable-name">newNode</span> = malloc(<span class="org-keyword">sizeof</span>(Node));
+  newNode-&gt;data = data;
+  newNode-&gt;next = next;
+  <span class="org-keyword">return</span> newNode;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbbfdd9e" class="outline-3">
+<h3 id="orgbbfdd9e">llNew</h3>
+<div class="outline-text-3" id="text-orgbbfdd9e">
+<p>
+The <code>llNew</code> function should return a new list given the elements in an array. Given an array of
+strings (or whatever the datatype you&rsquo;re using is) and the length of the array, <code>llNew</code> should create
+a new linked list and return it&rsquo;s head.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">Node</span> <span class="org-variable-name">list</span> = llNew({<span class="org-string">"element 1"</span>, <span class="org-string">"element 2"</span>, <span class="org-string">"element 3"</span>}, <span class="org-highlight-numbers-number">3</span>);
+
+  printf(<span class="org-string">"%s"</span>, list.data);           <span class="org-comment-delimiter">// </span><span class="org-comment">element 1</span>
+  printf(<span class="org-string">"%s"</span>, list.next.data);      <span class="org-comment-delimiter">// </span><span class="org-comment">element 2</span>
+  printf(<span class="org-string">"%s"</span>, list.next.next.data); <span class="org-comment-delimiter">// </span><span class="org-comment">element 3</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
+</pre>
+</div>
+
+<button class="toggle-spoiler">Show answer</button>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">Node</span> *<span class="org-function-name">llNew</span>(<span class="org-type">char</span> **<span class="org-variable-name">strs</span>, <span class="org-type">int</span> <span class="org-variable-name">count</span>) {
+  <span class="org-keyword">if</span> (count == <span class="org-highlight-numbers-number">0</span>) {
+    <span class="org-keyword">return</span> <span class="org-constant">NULL</span>;
+  }
+
+  <span class="org-comment-delimiter">//  </span><span class="org-comment">Here we're doing pointer arithmetic and manually incrementing the</span>
+  <span class="org-comment-delimiter">//  </span><span class="org-comment">value of our pointer by 1 so that the "first element" in the array</span>
+  <span class="org-comment-delimiter">//  </span><span class="org-comment">passed in recursively becomes the next element sequentially since</span>
+  <span class="org-comment-delimiter">//  </span><span class="org-comment">arrays are contiguous in memory.</span>
+  <span class="org-type">Node</span> *<span class="org-variable-name">next</span> = llNew(strs + <span class="org-highlight-numbers-number">1</span>, count - <span class="org-highlight-numbers-number">1</span>);
+  <span class="org-keyword">return</span> llCons(strs[<span class="org-highlight-numbers-number">0</span>], next);
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6612927" class="outline-3">
+<h3 id="org6612927">llHead</h3>
+<div class="outline-text-3" id="text-org6612927">
+<p>
+<code>llHead</code> should accept a Node as an argument and return the data for the first element in the linked
+list.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">Node</span> <span class="org-variable-name">list</span> = llNew({<span class="org-string">"element 1"</span>, <span class="org-string">"element 2"</span>, <span class="org-string">"element 3"</span>}, <span class="org-highlight-numbers-number">3</span>);
+
+  printf(<span class="org-string">"%s"</span>, llHead(list)); <span class="org-comment-delimiter">// </span><span class="org-comment">element 1</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
+</pre>
+</div>
+
+<button class="toggle-spoiler">Show answer</button>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">char</span> *<span class="org-function-name">llHead</span>(<span class="org-type">Node</span> *<span class="org-variable-name">list</span>) {
+  <span class="org-comment-delimiter">// </span><span class="org-comment">We use -&gt; because list is a pointer, this dereferences for us.</span>
+  <span class="org-keyword">return</span> list-&gt;data;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9dac4ad" class="outline-3">
+<h3 id="org9dac4ad">llTail</h3>
+<div class="outline-text-3" id="text-org9dac4ad">
+<p>
+<code>llTail</code> should take in a Node and return the tail of the list.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">Node</span> <span class="org-variable-name">list</span> = llNew({<span class="org-string">"element 1"</span>, <span class="org-string">"element 2"</span>, <span class="org-string">"element 3"</span>}, <span class="org-highlight-numbers-number">3</span>);
+
+  printf(<span class="org-string">"%s"</span>, llHead(llTail(list))); <span class="org-comment-delimiter">// </span><span class="org-comment">element 2</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
+</pre>
+</div>
+
+<button class="toggle-spoiler">Show answer</button>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">char</span> *<span class="org-function-name">llTail</span>(<span class="org-type">Node</span> *<span class="org-variable-name">list</span>) {
+  <span class="org-comment-delimiter">// </span><span class="org-comment">Pretty much just the same as llHead</span>
+  <span class="org-keyword">return</span> list-&gt;next;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6be40ba" class="outline-3">
+<h3 id="org6be40ba">llNth</h3>
+<div class="outline-text-3" id="text-org6be40ba">
+<p>
+<code>llNth</code> should take a list as an argument and an integer, and return the data for the nth element in
+the list. If the number is greater than the length of the list, return null.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">Node</span> <span class="org-variable-name">list</span> = llNew({<span class="org-string">"element 1"</span>, <span class="org-string">"element 2"</span>, <span class="org-string">"element 3"</span>}, <span class="org-highlight-numbers-number">3</span>);
+
+  printf(<span class="org-string">"%s"</span>, llNth(list, <span class="org-highlight-numbers-number">0</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">element 1</span>
+  printf(<span class="org-string">"%s"</span>, llNth(list, <span class="org-highlight-numbers-number">1</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">element 2</span>
+  printf(<span class="org-string">"%s"</span>, llNth(list, <span class="org-highlight-numbers-number">2</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">element 3</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
+</pre>
+</div>
+
+<button class="toggle-spoiler">Show answer</button>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">char</span> *<span class="org-function-name">llNth</span>(<span class="org-type">Node</span> *<span class="org-variable-name">list</span>, <span class="org-type">int</span> <span class="org-variable-name">n</span>) {
+  <span class="org-type">Node</span> *<span class="org-variable-name">curr</span> = list;
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; n; i++) {
+    <span class="org-keyword">if</span> (curr-&gt;next != <span class="org-constant">NULL</span>) {
+      curr = curr-&gt;next;
+    } <span class="org-keyword">else</span> {
+      <span class="org-keyword">return</span> <span class="org-constant">NULL</span>;
+    }
+  }
+
+  <span class="org-keyword">return</span> curr-&gt;data;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org114a37e" class="outline-3">
+<h3 id="org114a37e">llAppend</h3>
+<div class="outline-text-3" id="text-org114a37e">
+<p>
+<code>llAppend</code> should take 2 Nodes as arguments and return a Node. The function should find the last
+Node in the first list passed in, and make it&rsquo;s <code>next</code> be the head of the second list passed in.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">Node</span> <span class="org-variable-name">list1</span> = llNew({<span class="org-string">"element 1"</span>, <span class="org-string">"element 2"</span>, <span class="org-string">"element 3"</span>}, <span class="org-highlight-numbers-number">3</span>);
+  <span class="org-type">Node</span> <span class="org-variable-name">list2</span> = llNew({<span class="org-string">"element 4"</span>, <span class="org-string">"element 5"</span>, <span class="org-string">"element 6"</span>}, <span class="org-highlight-numbers-number">3</span>);
+  <span class="org-type">Node</span> <span class="org-variable-name">appended</span> = llAppend(list1, list2);
+
+  printf(<span class="org-string">"%s"</span>, llNth(appended, <span class="org-highlight-numbers-number">1</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">element 2</span>
+  printf(<span class="org-string">"%s"</span>, llNth(appended, <span class="org-highlight-numbers-number">3</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">element 4</span>
+  printf(<span class="org-string">"%s"</span>, llNth(appended, <span class="org-highlight-numbers-number">5</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">element 6</span>
+
+  <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
+}
+</pre>
+</div>
+
+<button class="toggle-spoiler">Show answer</button>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">Node</span> *<span class="org-function-name">llAppend</span>(<span class="org-type">Node</span> *<span class="org-variable-name">list1</span>, <span class="org-type">Node</span> *<span class="org-variable-name">list2</span>) {
+  <span class="org-type">Node</span> *<span class="org-variable-name">last</span> = list1;
+
+  <span class="org-keyword">while</span> (last-&gt;next != <span class="org-constant">NULL</span>) {
+    last = last-&gt;next;
+  }
+
+  last-&gt;next = list2;
+  <span class="org-keyword">return</span> list1;
+}
+</pre>
+</div>
+
+
+<p>
+While this comes after the section of the course on Lisp, I hope that this helps you understand the
+Lisp functions a little better. Here we&rsquo;ve implemented <code>cons</code>, <code>list</code>, <code>car</code>, <code>cdr</code>, <code>nth</code> and <code>append</code>, all
+important functions to know for Lisp programming.
+</p>
+
+<p>
+Note that the <code>llAppend</code> function differs from <code>append</code> in Lisp because in Lisp it will return a new
+list, whereas the one we&rsquo;ve implemented here will mutate the first list passed in. As such, this is
+more similar to the <code>nconc</code> function rather than <code>append</code>, but we didn&rsquo;t cover <code>nconc</code> in class.
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Philip</p>
-<p class="date">Created: 2020-11-10 Tue 21:34</p>
+<p class="author">Author: Philip Dumaresq</p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-11 Wed 14:34</p>
 </div>
 </body>
 </html>

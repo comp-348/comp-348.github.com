@@ -26,7 +26,7 @@
     :table-of-contents nil
     :publishing-function org-html-publish-to-html))
 
-(setq comp-348-build-examples
+(defvar comp-348-build-examples
   `("comp-348.github.io:examples"
     :base-directory ,(concat default-directory "/exercises") ; Emacs current file directory
     :publishing-directory ,(concat default-directory "/docs/exercises")
