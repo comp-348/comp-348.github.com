@@ -1,0 +1,20 @@
+:root {
+	--background-primary: #282C34;
+	--foreground-primary: #abb2bf;
+    --border-color: #343843;
+    --color-1: #61afef;
+    --color-2: #56b6c2;
+    --color-3: #98c379;
+    --color-4: #d19a66;
+    --color-5: #df6a73;
+    --color-6: #dcaeea;
+    
+    --code-comment: #5B6268;
+    --code-cgrey: #abb2bf;
+    --code-cblue: #51afef;
+    --code-ccyan: #56b6c2;
+    --code-cgreen: #98be65;
+    --code-corange: #da8548;
+    --code-cred: #df6a73;
+    --code-cpurple: #c678dd;
+}

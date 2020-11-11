@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-11-05 Thu 01:23 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2020-11-10 Tue 19:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Debugging Lisp</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -194,6 +192,9 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -229,7 +230,13 @@
 <li><a href="#org6714ec4">SBCL</a>
 <ul>
 <li><a href="#org1c8ede5"><code>--load</code></a></li>
-<li><a href="#org7afb445"><code>--script</code></a></li>
+<li><a href="#org7afb445"><code>--script</code></a>
+<ul>
+<li><a href="#org4b50bc7">Trace</a></li>
+<li><a href="#orgf2afcd5">Step</a></li>
+<li><a href="#org4100628">break</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#org3611bc7">Portacle/Emacs</a></li>
@@ -240,9 +247,21 @@
 </div>
 </div>
 <div class="org-center">
+<div class="header" id="orgf53cd0e">
 <p>
 <a href="index.html">Back</a>
 </p>
+
+</div>
+</div>
+
+<div class="toggle" id="org58a6e2e">
+
+<div id="orgd4b999d" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+</p>
+</div>
+
 </div>
 
 <div id="outline-container-org6c7e3e4" class="outline-2">
@@ -289,24 +308,24 @@ how you want to proceed. For example:
 </p>
 <div class="org-src-container">
 <pre class="src src-lisp">$ sbcl
-* <span style="color: #51afef;">(</span>print x<span style="color: #51afef;">)</span> <span style="color: #5B6268;">; Where x isn't defined</span>
+* <span class="org-rainbow-delimiters-depth-1">(</span>print x<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment">; Where x isn't defined</span>
 
 debugger invoked on a UNBOUND-VARIABLE in thread
-,#&lt;THREAD <span style="color: #98be65;">"main thread"</span> RUNNING {10009F80D3}&gt;:
+,#&lt;THREAD <span class="org-string">"main thread"</span> RUNNING {10009F80D3}&gt;:
   The variable X is unbound.
 
-Type HELP for debugger help, or <span style="color: #51afef;">(</span>SB-EXT:EXIT<span style="color: #51afef;">)</span> to exit from SBCL.
+Type HELP for debugger help, or <span class="org-rainbow-delimiters-depth-1">(</span>SB-EXT:EXIT<span class="org-rainbow-delimiters-depth-1">)</span> to exit from SBCL.
 
-restarts <span style="color: #51afef;">(</span>invokable by number or by possibly-abbreviated name<span style="color: #51afef;">)</span>:
+restarts <span class="org-rainbow-delimiters-depth-1">(</span>invokable by number or by possibly-abbreviated name<span class="org-rainbow-delimiters-depth-1">)</span>:
   0: [CONTINUE   ] Retry using X.
   1: [USE-VALUE  ] Use specified value.
   2: [STORE-VALUE] Set specified value and use it.
   3: [ABORT      ] Exit debugger, returning to top level.
 
-<span style="color: #51afef;">(</span>SB-INT:SIMPLE-EVAL-IN-LEXENV X ,#&lt;NULL-LEXENV&gt;<span style="color: #51afef;">)</span>
-0] <span style="color: #da8548; font-weight: bold;">1</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>SB-INT:SIMPLE-EVAL-IN-LEXENV X ,#&lt;NULL-LEXENV&gt;<span class="org-rainbow-delimiters-depth-1">)</span>
+0] <span class="org-highlight-numbers-number">1</span>
 
-Enter a form to be evaluated: <span style="color: #98be65;">"hello"</span>
+Enter a form to be evaluated: <span class="org-string">"hello"</span>
 </pre>
 </div>
 
@@ -356,7 +375,7 @@ The first thing that we&rsquo;ll do is add the following to the top of the file 
 optimizations:
 </p>
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">declaim</span> <span style="color: #c678dd;">(</span>optimize <span style="color: #98be65;">(</span>debug <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">declaim</span> <span class="org-rainbow-delimiters-depth-2">(</span>optimize <span class="org-rainbow-delimiters-depth-3">(</span>debug <span class="org-highlight-numbers-number">3</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -371,16 +390,16 @@ is that the condition on the <code>if</code> is inverted. Let&rsquo;s see how we
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">sum</span> <span style="color: #c678dd;">(</span>list<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span><span style="color: #51afef;">if</span> <span style="color: #98be65;">(</span>null list<span style="color: #98be65;">)</span>
-      <span style="color: #98be65;">(</span>+ <span style="color: #51afef;">(</span>car list<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>sum <span style="color: #c678dd;">(</span>cdr list<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span>
-      <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">sum</span> <span class="org-rainbow-delimiters-depth-2">(</span>list<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>null list<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>+ <span class="org-rainbow-delimiters-depth-1">(</span>car list<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">(</span>sum <span class="org-rainbow-delimiters-depth-2">(</span>cdr list<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-highlight-numbers-number">0</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
 
-<ul class="org-ul">
-<li><a id="org4b50bc7"></a>Trace<br />
+<div id="outline-container-org4b50bc7" class="outline-5">
+<h5 id="org4b50bc7">Trace</h5>
 <div class="outline-text-5" id="text-org4b50bc7">
 <p>
 The first tool we&rsquo;ll use is <code>trace</code>. We can set up trace to watch a specific function and then print
@@ -389,7 +408,7 @@ our <code>sum</code> function:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span>trace sum<span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>trace sum<span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -398,8 +417,8 @@ Now if we call <code>(sum '(1 2 3 4 5))</code>, we should get the following:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">  0: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-  0: SUM returned <span style="color: #da8548; font-weight: bold;">0</span>
+<pre class="src src-lisp">  0: <span class="org-rainbow-delimiters-depth-1">(</span>SUM <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+  0: SUM returned <span class="org-highlight-numbers-number">0</span>
 </pre>
 </div>
 
@@ -410,18 +429,18 @@ invert the condition, then we can see how our stack trace would change:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">  0: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-    1: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-      2: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-        3: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-          4: <span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-            5: <span style="color: #51afef;">(</span>SUM NIL<span style="color: #51afef;">)</span>
-            5: SUM returned <span style="color: #da8548; font-weight: bold;">0</span>
-          4: SUM returned <span style="color: #da8548; font-weight: bold;">5</span>
-        3: SUM returned <span style="color: #da8548; font-weight: bold;">9</span>
-      2: SUM returned <span style="color: #da8548; font-weight: bold;">12</span>
-    1: SUM returned <span style="color: #da8548; font-weight: bold;">14</span>
-  0: SUM returned <span style="color: #da8548; font-weight: bold;">15</span>
+<pre class="src src-lisp">  0: <span class="org-rainbow-delimiters-depth-1">(</span>SUM <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+    1: <span class="org-rainbow-delimiters-depth-1">(</span>SUM <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+      2: <span class="org-rainbow-delimiters-depth-1">(</span>SUM <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+        3: <span class="org-rainbow-delimiters-depth-1">(</span>SUM <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+          4: <span class="org-rainbow-delimiters-depth-1">(</span>SUM <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+            5: <span class="org-rainbow-delimiters-depth-1">(</span>SUM NIL<span class="org-rainbow-delimiters-depth-1">)</span>
+            5: SUM returned <span class="org-highlight-numbers-number">0</span>
+          4: SUM returned <span class="org-highlight-numbers-number">5</span>
+        3: SUM returned <span class="org-highlight-numbers-number">9</span>
+      2: SUM returned <span class="org-highlight-numbers-number">12</span>
+    1: SUM returned <span class="org-highlight-numbers-number">14</span>
+  0: SUM returned <span class="org-highlight-numbers-number">15</span>
 </pre>
 </div>
 
@@ -431,9 +450,10 @@ for recursive functions. We can also add trace to functions that get called by o
 see a little more in depth what&rsquo;s going on. 
 </p>
 </div>
-</li>
+</div>
 
-<li><a id="orgf2afcd5"></a>Step<br />
+<div id="outline-container-orgf2afcd5" class="outline-5">
+<h5 id="orgf2afcd5">Step</h5>
 <div class="outline-text-5" id="text-orgf2afcd5">
 <p>
 The other tool that we can use is <code>step</code>. Step is more like the type of interactive debugger that
@@ -442,7 +462,7 @@ function, like so:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span>step <span style="color: #c678dd;">(</span>sum '<span style="color: #98be65;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>step <span class="org-rainbow-delimiters-depth-2">(</span>sum '<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -453,11 +473,11 @@ the debugger using <code>step</code>, you&rsquo;ll get something like the follow
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">* <span style="color: #51afef;">(</span>step <span style="color: #c678dd;">(</span>sum '<span style="color: #98be65;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #5B6268;">; </span><span style="color: #5B6268;">Evaluating call:</span>
-<span style="color: #5B6268;">;   </span><span style="color: #5B6268;">(SUM '(1 2 3 4 5))</span>
-<span style="color: #5B6268;">; </span><span style="color: #5B6268;">With arguments:</span>
-<span style="color: #5B6268;">;   </span><span style="color: #5B6268;">(1 2 3 4 5)</span>
+<pre class="src src-lisp">* <span class="org-rainbow-delimiters-depth-1">(</span>step <span class="org-rainbow-delimiters-depth-2">(</span>sum '<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">Evaluating call:</span>
+<span class="org-comment-delimiter">;   </span><span class="org-comment">(SUM '(1 2 3 4 5))</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">With arguments:</span>
+<span class="org-comment-delimiter">;   </span><span class="org-comment">(1 2 3 4 5)</span>
 
 1] 
 </pre>
@@ -470,7 +490,7 @@ through some of the most important options:
 </div>
 
 <ul class="org-ul">
-<li><a id="org8f055a3"></a><code>step</code><br />
+<li><a id="org8f055a3"></a><code>step</code><br>
 <div class="outline-text-6" id="text-org8f055a3">
 <p>
 The aptly named <code>step</code> will allow us to step into the function call to see what&rsquo;s going on. To use
@@ -479,10 +499,10 @@ this, we simply type <code>step</code> into the prompt. In this case, we&rsquo;l
 
 <div class="org-src-container">
 <pre class="src src-lisp">1] step
-<span style="color: #5B6268;">; </span><span style="color: #5B6268;">Evaluating call:</span>
-<span style="color: #5B6268;">;   </span><span style="color: #5B6268;">(SUM (CDR LST))</span>
-<span style="color: #5B6268;">; </span><span style="color: #5B6268;">With arguments:</span>
-<span style="color: #5B6268;">;   </span><span style="color: #5B6268;">(2 3 4 5)</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">Evaluating call:</span>
+<span class="org-comment-delimiter">;   </span><span class="org-comment">(SUM (CDR LST))</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">With arguments:</span>
+<span class="org-comment-delimiter">;   </span><span class="org-comment">(2 3 4 5)</span>
 
 1]
 </pre>
@@ -494,7 +514,7 @@ So it&rsquo;ll step into the function call and evaluate it, the return you back 
 </div>
 </li>
 
-<li><a id="orgbff092f"></a><code>list-locals</code><br />
+<li><a id="orgbff092f"></a><code>list-locals</code><br>
 <div class="outline-text-6" id="text-orgbff092f">
 <p>
 This option does exactly what it says, it allows us to list all of the variables so that we can see
@@ -503,7 +523,7 @@ their values at a certain point:
 
 <div class="org-src-container">
 <pre class="src src-lisp">1] list-locals
-LST  =  <span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #51afef;">)</span>
+LST  =  <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -513,7 +533,7 @@ So here we can see the value of our parameter <code>lst</code>.
 </div>
 </li>
 
-<li><a id="org1b68787"></a><code>source</code> and <code>print</code><br />
+<li><a id="org1b68787"></a><code>source</code> and <code>print</code><br>
 <div class="outline-text-6" id="text-org1b68787">
 <p>
 <code>source</code> and <code>print</code> allow us to inspect the function call so that we can see what&rsquo;s being passed to
@@ -522,10 +542,10 @@ it. We can use both of them like so:
 
 <div class="org-src-container">
 <pre class="src src-lisp">1] print
-<span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>SUM <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 1] source
 
-<span style="color: #51afef;">(</span>SUM <span style="color: #c678dd;">(</span>CDR LST<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>SUM <span class="org-rainbow-delimiters-depth-2">(</span>CDR LST<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 1]
 </pre>
 </div>
@@ -536,7 +556,7 @@ Both of them will be used in similar ways, and which one you use just depends on
 </div>
 </li>
 
-<li><a id="org2763102"></a><code>next</code><br />
+<li><a id="org2763102"></a><code>next</code><br>
 <div class="outline-text-6" id="text-org2763102">
 <p>
 We can use <code>next</code> to inspect the next function call. For example:
@@ -544,9 +564,9 @@ We can use <code>next</code> to inspect the next function call. For example:
 
 <div class="org-src-container">
 <pre class="src src-lisp">1] next
-<span style="color: #5B6268;">; </span><span style="color: #5B6268;">Evaluating call:</span>
-<span style="color: #5B6268;">;   </span><span style="color: #5B6268;">(+ (CAR LST) (SUM (CDR LST)))</span>
-<span style="color: #5B6268;">; </span><span style="color: #5B6268;">With unknown arguments</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">Evaluating call:</span>
+<span class="org-comment-delimiter">;   </span><span class="org-comment">(+ (CAR LST) (SUM (CDR LST)))</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">With unknown arguments</span>
 
 0]
 </pre>
@@ -565,9 +585,10 @@ I&rsquo;ll update this page once I figure out more about how to effectively use 
 </div>
 </li>
 </ul>
-</li>
+</div>
 
-<li><a id="org4100628"></a>break<br />
+<div id="outline-container-org4100628" class="outline-5">
+<h5 id="org4100628">break</h5>
 <div class="outline-text-5" id="text-org4100628">
 <p>
 The last thing that we&rsquo;ll look into is using <code>break</code> to debug. This allows us to set breakpoints in
@@ -575,8 +596,7 @@ our code that we&rsquo;ll stop at like in Java. When using <code>break</code> it
 breakpoints inside functions, and then step through similarly to when using <code>step</code>. 
 </p>
 </div>
-</li>
-</ul>
+</div>
 </div>
 </div>
 
@@ -606,7 +626,8 @@ on what the problem is.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-11-05 Thu 01:23</p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-10 Tue 19:37</p>
 </div>
 </body>
 </html>

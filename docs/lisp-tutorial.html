@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-11-05 Thu 01:23 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2020-11-10 Tue 19:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lisp tutorial for COMP 348</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -194,6 +192,9 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -244,9 +245,21 @@
 </div>
 </div>
 <div class="org-center">
+<div class="header" id="org8d16def">
 <p>
 <a href="index.html">Back</a>
 </p>
+
+</div>
+</div>
+
+<div class="toggle" id="org59cd5cb">
+
+<div id="orgc721bb9" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+</p>
+</div>
+
 </div>
 
 <div id="outline-container-orgf5bbddc" class="outline-2">
@@ -274,7 +287,7 @@ example, to define a linked list, we use the <code>list</code> function, like so
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span>list <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>list <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
@@ -292,10 +305,10 @@ tail of the list.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">my-list</span> <span style="color: #c678dd;">(</span>list <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">my-list</span> <span class="org-rainbow-delimiters-depth-2">(</span>list <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #51afef;">(</span>car my-list<span style="color: #51afef;">)</span> <span style="color: #5B6268;">; 1</span>
-<span style="color: #51afef;">(</span>cdr my-list<span style="color: #51afef;">)</span> <span style="color: #5B6268;">; '(2 3 4 5)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>car my-list<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment">; 1</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>cdr my-list<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment">; '(2 3 4 5)</span>
 </pre>
 </div>
 
@@ -307,7 +320,7 @@ new list, and the <i>tail</i> of the new list. For example,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span>cons <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #c678dd;">(</span>list <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">; '(1 2 3 4 5)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>cons <span class="org-highlight-numbers-number">1</span> <span class="org-rainbow-delimiters-depth-2">(</span>list <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment">; '(1 2 3 4 5)</span>
 </pre>
 </div>
 </div>
@@ -321,10 +334,10 @@ easily. Consider the following function:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">list-identity</span> <span style="color: #c678dd;">(</span>list<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span><span style="color: #51afef;">if</span> <span style="color: #98be65;">(</span>null list<span style="color: #98be65;">)</span>
-      <span style="color: #98be65;">()</span>
-      <span style="color: #98be65;">(</span>cons <span style="color: #51afef;">(</span>car list<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>list-identity <span style="color: #c678dd;">(</span>cdr list<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">list-identity</span> <span class="org-rainbow-delimiters-depth-2">(</span>list<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>null list<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">()</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>cons <span class="org-rainbow-delimiters-depth-1">(</span>car list<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">(</span>list-identity <span class="org-rainbow-delimiters-depth-2">(</span>cdr list<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -340,11 +353,11 @@ every value in that list:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">list-add-constant</span> <span style="color: #c678dd;">(</span>list constant<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span><span style="color: #51afef;">if</span> <span style="color: #98be65;">(</span>null list<span style="color: #98be65;">)</span>
-      <span style="color: #98be65;">()</span>
-      <span style="color: #98be65;">(</span>cons <span style="color: #51afef;">(</span>+ <span style="color: #c678dd;">(</span>car list<span style="color: #c678dd;">)</span> constant<span style="color: #51afef;">)</span> 
-            <span style="color: #51afef;">(</span>list-add-constant <span style="color: #c678dd;">(</span>cdr list<span style="color: #c678dd;">)</span> constant<span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">list-add-constant</span> <span class="org-rainbow-delimiters-depth-2">(</span>list constant<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>null list<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">()</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>cons <span class="org-rainbow-delimiters-depth-1">(</span>+ <span class="org-rainbow-delimiters-depth-2">(</span>car list<span class="org-rainbow-delimiters-depth-2">)</span> constant<span class="org-rainbow-delimiters-depth-1">)</span> 
+            <span class="org-rainbow-delimiters-depth-1">(</span>list-add-constant <span class="org-rainbow-delimiters-depth-2">(</span>cdr list<span class="org-rainbow-delimiters-depth-2">)</span> constant<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -373,10 +386,10 @@ this course:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">7</span> <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> nil 
-      <span style="color: #98be65;">(</span><span style="color: #da8548; font-weight: bold;">2</span> nil nil<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span> 
-   <span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">8</span> nil 
-      <span style="color: #98be65;">(</span><span style="color: #da8548; font-weight: bold;">9</span> nil nil<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-highlight-numbers-number">7</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">1</span> nil 
+      <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-highlight-numbers-number">2</span> nil nil<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span> 
+   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">8</span> nil 
+      <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-highlight-numbers-number">9</span> nil nil<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -387,11 +400,11 @@ like this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java">    <span style="color: #da8548; font-weight: bold;">7</span>
+<pre class="src src-java">    <span class="org-highlight-numbers-number">7</span>
   /   \
- <span style="color: #da8548; font-weight: bold;">1</span>     <span style="color: #da8548; font-weight: bold;">8</span>
+ <span class="org-highlight-numbers-number">1</span>     <span class="org-highlight-numbers-number">8</span>
 / \   / \
-   <span style="color: #da8548; font-weight: bold;">2</span>     <span style="color: #da8548; font-weight: bold;">9</span>
+   <span class="org-highlight-numbers-number">2</span>     <span class="org-highlight-numbers-number">9</span>
   / \   / \
 </pre>
 </div>
@@ -421,18 +434,18 @@ Here&rsquo;s how we&rsquo;ll implement that in Common Lisp:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">binary-search</span> <span style="color: #c678dd;">(</span>list element<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span><span style="color: #51afef;">cond</span> 
-    <span style="color: #5B6268;">; If the subtree is empty, return false</span>
-    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>null list<span style="color: #51afef;">)</span> nil<span style="color: #98be65;">)</span>
-    <span style="color: #5B6268;">; If the head is equal to what we're search for, return true</span>
-    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>equal <span style="color: #c678dd;">(</span>car list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span> t<span style="color: #98be65;">)</span>
-    <span style="color: #5B6268;">; If the head is greater than the element, binary search the left subtree</span>
-    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>&gt; <span style="color: #c678dd;">(</span>car list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span>
-     <span style="color: #51afef;">(</span>binary-search <span style="color: #c678dd;">(</span>second list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span><span style="color: #98be65;">)</span>
-    <span style="color: #5B6268;">; If the head is less than the element, binary search the right subtree</span>
-    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>&lt; <span style="color: #c678dd;">(</span>car list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span>
-     <span style="color: #51afef;">(</span>binary-search <span style="color: #c678dd;">(</span>third list<span style="color: #c678dd;">)</span> element<span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">binary-search</span> <span class="org-rainbow-delimiters-depth-2">(</span>list element<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">cond</span> 
+    <span class="org-comment">; If the subtree is empty, return false</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>null list<span class="org-rainbow-delimiters-depth-1">)</span> nil<span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-comment">; If the head is equal to what we're search for, return true</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>equal <span class="org-rainbow-delimiters-depth-2">(</span>car list<span class="org-rainbow-delimiters-depth-2">)</span> element<span class="org-rainbow-delimiters-depth-1">)</span> t<span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-comment">; If the head is greater than the element, binary search the left subtree</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>&gt; <span class="org-rainbow-delimiters-depth-2">(</span>car list<span class="org-rainbow-delimiters-depth-2">)</span> element<span class="org-rainbow-delimiters-depth-1">)</span>
+     <span class="org-rainbow-delimiters-depth-1">(</span>binary-search <span class="org-rainbow-delimiters-depth-2">(</span>second list<span class="org-rainbow-delimiters-depth-2">)</span> element<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-comment">; If the head is less than the element, binary search the right subtree</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>&lt; <span class="org-rainbow-delimiters-depth-2">(</span>car list<span class="org-rainbow-delimiters-depth-2">)</span> element<span class="org-rainbow-delimiters-depth-1">)</span>
+     <span class="org-rainbow-delimiters-depth-1">(</span>binary-search <span class="org-rainbow-delimiters-depth-2">(</span>third list<span class="org-rainbow-delimiters-depth-2">)</span> element<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -463,12 +476,12 @@ algorithm for an in-order traversal is pretty simple:
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">in-order-traversal</span> <span style="color: #c678dd;">(</span>tree<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span><span style="color: #51afef;">cond</span>
-    <span style="color: #98be65;">(</span><span style="color: #51afef;">(</span>null tree<span style="color: #51afef;">)</span> nil<span style="color: #98be65;">)</span>
-    <span style="color: #98be65;">(</span>t <span style="color: #51afef;">(</span>in-order-traversal <span style="color: #c678dd;">(</span>second tree<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-       <span style="color: #51afef;">(</span>print <span style="color: #c678dd;">(</span>first tree<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-       <span style="color: #51afef;">(</span>in-order-traversal <span style="color: #c678dd;">(</span>third tree<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">in-order-traversal</span> <span class="org-rainbow-delimiters-depth-2">(</span>tree<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">cond</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>null tree<span class="org-rainbow-delimiters-depth-1">)</span> nil<span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>t <span class="org-rainbow-delimiters-depth-1">(</span>in-order-traversal <span class="org-rainbow-delimiters-depth-2">(</span>second tree<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+       <span class="org-rainbow-delimiters-depth-1">(</span>print <span class="org-rainbow-delimiters-depth-2">(</span>first tree<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+       <span class="org-rainbow-delimiters-depth-1">(</span>in-order-traversal <span class="org-rainbow-delimiters-depth-2">(</span>third tree<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -489,7 +502,8 @@ other things.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-11-05 Thu 01:23</p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-10 Tue 19:37</p>
 </div>
 </body>
 </html>

@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-10-21 Wed 11:44 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>quote vs ' in Lisp</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<!-- 2020-11-10 Tue 19:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>quote vs &rsquo; in Lisp</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -40,7 +38,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -194,115 +192,106 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">quote vs ' in Lisp</h1>
+<h1 class="title">quote vs &rsquo; in Lisp</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5b0351f">Question:</a>
+<li><a href="#orgbb71576">Question:</a>
 <ul>
-<li><a href="#orga930901">Short answer:</a></li>
-<li><a href="#org9dec3ba">Long answer:</a></li>
+<li><a href="#org154bb7d">Short answer:</a></li>
+<li><a href="#org8599578">Long answer:</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div class="org-center">
+<div class="header" id="org57ae3b5">
 <p>
 <a href="index.html">Back</a>
 </p>
+
+</div>
 </div>
 
-<div id="outline-container-org5b0351f" class="outline-2">
-<h2 id="org5b0351f">Question:</h2>
-<div class="outline-text-2" id="text-org5b0351f">
-<p>
-The notes use <code>(quote a)</code> but lisp outputs <code>'a</code> - what's the difference?
+<div class="toggle" id="org5ab0e97">
+
+<div id="orge87a0de" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
-<div id="outline-container-orga930901" class="outline-3">
-<h3 id="orga930901">Short answer:</h3>
-<div class="outline-text-3" id="text-orga930901">
+</div>
+
+<div id="outline-container-orgbb71576" class="outline-2">
+<h2 id="orgbb71576">Question:</h2>
+<div class="outline-text-2" id="text-orgbb71576">
+<p>
+The notes use <code>(quote a)</code> but lisp outputs <code>'a</code> - what&rsquo;s the difference?
+</p>
+</div>
+
+<div id="outline-container-org154bb7d" class="outline-3">
+<h3 id="org154bb7d">Short answer:</h3>
+<div class="outline-text-3" id="text-org154bb7d">
 <p>
 There is no difference, they mean the same thing. <code>'a</code> is just a shorthand for saying <code>(quote
 a)</code>. Sometimes in the notes you may see <code>(quote a)</code> instead <code>a</code>, this could be just up to whatever
-compiler the professor used to get the results, or they just computed the result manually and didn't
+compiler the professor used to get the results, or they just computed the result manually and didn&rsquo;t
 copy/paste into a compiler.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9dec3ba" class="outline-3">
-<h3 id="org9dec3ba">Long answer:</h3>
-<div class="outline-text-3" id="text-org9dec3ba">
+<div id="outline-container-org8599578" class="outline-3">
+<h3 id="org8599578">Long answer:</h3>
+<div class="outline-text-3" id="text-org8599578">
 <p>
 <code>(quote a)</code> is construct built into the language. It will take all of the arguments to it literally
-and won't interpret them at all. If <code>a</code> is bound to a variable it doesn't matter, it will be looked at
+and won&rsquo;t interpret them at all. If <code>a</code> is bound to a variable it doesn&rsquo;t matter, it will be looked at
 as the literal symbol <code>a</code>. 
 </p>
 
 <p>
-<code>'a</code> is what's called a <i>reader macro</i>. While almost all of Lisp is the same parentheses syntax
+<code>'a</code> is what&rsquo;s called a <i>reader macro</i>. While almost all of Lisp is the same parentheses syntax
 everywhere, Lisp allows you to define reader macros to modify the way Lisp syntax is read in. You
 can think of it as a way to extend the parser that Lisp uses to transform to transform source-code
-into an internal representation. So there's a reader macro that basically says "when the symbol <code>'</code> is
-encountered, take everything that follows it and wrap it in a list with <code>quote</code> as the first symbol". 
+into an internal representation. So there&rsquo;s a reader macro that basically says &ldquo;when the symbol <code>'</code> is
+encountered, take everything that follows it and wrap it in a list with <code>quote</code> as the first symbol&rdquo;. 
 </p>
 
 <p>
 Now, this is much more advanced topics in Lisp that are not covered by this class and so you will
-not be tested on them at all, but for anyone who was curious, here's what the <code>'</code> really means.
+not be tested on them at all, but for anyone who was curious, here&rsquo;s what the <code>'</code> really means.
 </p>
 </div>
 </div>
@@ -310,8 +299,8 @@ not be tested on them at all, but for anyone who was curious, here's what the <c
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-10-21 Wed 11:44</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-10 Tue 19:37</p>
 </div>
 </body>
 </html>

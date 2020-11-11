@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-11-05 Thu 01:23 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2020-11-10 Tue 19:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Running Lisp from the terminal</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -194,6 +192,9 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -240,9 +241,21 @@
 </div>
 </div>
 <div class="org-center">
+<div class="header" id="org0dfd9ed">
 <p>
 <a href="index.html">Back</a>
 </p>
+
+</div>
+</div>
+
+<div class="toggle" id="orga25042d">
+
+<div id="org76280a8" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+</p>
+</div>
+
 </div>
 
 <div id="outline-container-orgbd3abf8" class="outline-2">
@@ -283,8 +296,8 @@ So if we have the following file:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #5B6268;">;; </span><span style="color: #5B6268;">filename.lisp</span>
-<span style="color: #51afef;">(</span>print <span style="color: #98be65;">"hello world"</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">filename.lisp</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>print <span class="org-string">"hello world"</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -294,7 +307,7 @@ And then we run this in the terminal:
 
 <div class="org-src-container">
 <pre class="src src-bash">$ sbcl --script filename.lisp
-<span style="color: #98be65;">"hello world"</span>
+<span class="org-string">"hello world"</span>
 $
 </pre>
 </div>
@@ -321,9 +334,9 @@ So let&rsquo;s say we have the following file:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #5B6268;">;; </span><span style="color: #5B6268;">filename.lisp</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">sum</span> <span style="color: #c678dd;">(</span>list<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span><span style="color: #51afef;">if</span> list <span style="color: #98be65;">(</span>+ <span style="color: #51afef;">(</span>car list<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>sum <span style="color: #c678dd;">(</span>cdr list<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span> <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">filename.lisp</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">sum</span> <span class="org-rainbow-delimiters-depth-2">(</span>list<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> list <span class="org-rainbow-delimiters-depth-3">(</span>+ <span class="org-rainbow-delimiters-depth-1">(</span>car list<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">(</span>sum <span class="org-rainbow-delimiters-depth-2">(</span>cdr list<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-highlight-numbers-number">0</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -333,9 +346,9 @@ And we call <code>--load</code> in the terminal:
 
 <div class="org-src-container">
 <pre class="src src-bash">$ sbcl --load filename.lisp
-<span style="color: #5B6268;">#</span><span style="color: #5B6268;">&lt;some preamble about sbcl you can ignore&gt;</span>
-* <span style="color: #51afef;">(</span>sum <span style="color: #98be65;">'(1 2 3 4 5))</span>
-<span style="color: #98be65;">15</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">&lt;some preamble about sbcl you can ignore&gt;</span>
+* <span class="org-rainbow-delimiters-depth-1">(</span>sum <span class="org-string">'(1 2 3 4 5))</span>
+<span class="org-string">15</span>
 </pre>
 </div>
 
@@ -351,14 +364,14 @@ Lisp, so we can do:
 
 <div class="org-src-container">
 <pre class="src src-bash">$ sbcl --load filename.lisp
-<span style="color: #5B6268;">#</span><span style="color: #5B6268;">&lt;some preamble about sbcl you can ignore&gt;</span>
-* <span style="color: #51afef;">(</span>sum <span style="color: #c678dd;">(</span>list <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #da8548; font-weight: bold;">15</span>
-<span style="color: #5B6268;"># </span><span style="color: #5B6268;">Make some changes to our filename.lisp file</span>
-* <span style="color: #51afef;">(</span>load <span style="color: #98be65;">"filename.lisp"</span><span style="color: #51afef;">)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">&lt;some preamble about sbcl you can ignore&gt;</span>
+* <span class="org-rainbow-delimiters-depth-1">(</span>sum <span class="org-rainbow-delimiters-depth-2">(</span>list <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-numbers-number">15</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Make some changes to our filename.lisp file</span>
+* <span class="org-rainbow-delimiters-depth-1">(</span>load <span class="org-string">"filename.lisp"</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 T
-* <span style="color: #51afef;">(</span>new-function-that-wasnt-there-before<span style="color: #51afef;">)</span>
+* <span class="org-rainbow-delimiters-depth-1">(</span>new-function-that-wasnt-there-before<span class="org-rainbow-delimiters-depth-1">)</span>
 NIL
 </pre>
 </div>
@@ -411,7 +424,8 @@ instance of <code>--load</code> with <code>-repl</code>.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-11-05 Thu 01:23</p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-10 Tue 19:37</p>
 </div>
 </body>
 </html>

@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-11-05 Thu 01:23 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2020-11-10 Tue 19:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Setting up your Lisp environment</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -194,6 +192,9 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -244,9 +245,21 @@
 </div>
 </div>
 <div class="org-center">
+<div class="header" id="org0a02c3d">
 <p>
 <a href="index.html">Back</a>
 </p>
+
+</div>
+</div>
+
+<div class="toggle" id="orgfb8858c">
+
+<div id="orgb365ff3" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+</p>
+</div>
+
 </div>
 
 <p>
@@ -302,7 +315,7 @@ directory and you&rsquo;re good to go. To do that, it should be something like t
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash">$ <span style="color: #ECBE7B;">git</span> clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+<pre class="src src-bash">$ <span class="org-type">git</span> clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 </pre>
 </div>
 
@@ -333,11 +346,11 @@ For example, if I have the following file:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">add</span> <span style="color: #c678dd;">(</span>a b<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>+ a b<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">add</span> <span class="org-rainbow-delimiters-depth-2">(</span>a b<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>+ a b<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span>x <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #98be65;">)</span> <span style="color: #98be65;">(</span>y <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print <span style="color: #98be65;">(</span>add x y<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>x <span class="org-highlight-numbers-number">10</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>y <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print <span class="org-rainbow-delimiters-depth-3">(</span>add x y<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -437,18 +450,18 @@ Inside your <code>tasks.json</code> file, put the following content:
 
 <div class="org-src-container">
 <pre class="src src-js">{
-  <span style="color: #5B6268;">// </span><span style="color: #5B6268;">See https://go.microsoft.com/fwlink/?LinkId=733558</span>
-  <span style="color: #5B6268;">// </span><span style="color: #5B6268;">for the documentation about the tasks.json format</span>
-  <span style="color: #98be65;">"version"</span>: <span style="color: #98be65;">"2.0.0"</span>,
-  <span style="color: #98be65;">"tasks"</span>: [
+  <span class="org-comment-delimiter">// </span><span class="org-comment">See https://go.microsoft.com/fwlink/?LinkId=733558</span>
+  <span class="org-comment-delimiter">// </span><span class="org-comment">for the documentation about the tasks.json format</span>
+  <span class="org-string">"version"</span>: <span class="org-string">"2.0.0"</span>,
+  <span class="org-string">"tasks"</span>: [
       {
-          <span style="color: #98be65;">"label"</span>: <span style="color: #98be65;">"sbcl"</span>,
-          <span style="color: #98be65;">"type"</span>: <span style="color: #98be65;">"shell"</span>,
-          <span style="color: #98be65;">"command"</span>: <span style="color: #98be65;">"sbcl --script ${file}"</span>,
-          <span style="color: #98be65;">"problemMatcher"</span>: [],
-          <span style="color: #98be65;">"group"</span>: {
-              <span style="color: #98be65;">"kind"</span>: <span style="color: #98be65;">"build"</span>,
-              <span style="color: #98be65;">"isDefault"</span>: <span style="color: #a9a1e1;">true</span>
+          <span class="org-string">"label"</span>: <span class="org-string">"sbcl"</span>,
+          <span class="org-string">"type"</span>: <span class="org-string">"shell"</span>,
+          <span class="org-string">"command"</span>: <span class="org-string">"sbcl --script ${file}"</span>,
+          <span class="org-string">"problemMatcher"</span>: [],
+          <span class="org-string">"group"</span>: {
+              <span class="org-string">"kind"</span>: <span class="org-string">"build"</span>,
+              <span class="org-string">"isDefault"</span>: <span class="org-constant">true</span>
           }
       }
   ]
@@ -563,7 +576,8 @@ learn to compile your lisp code in the terminal/command line. I&rsquo;d recommen
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-11-05 Thu 01:23</p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-10 Tue 19:37</p>
 </div>
 </body>
 </html>

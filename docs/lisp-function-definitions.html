@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-11-05 Thu 01:23 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2020-11-10 Tue 19:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ways to define functions</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -194,6 +192,9 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -237,9 +238,21 @@
 </div>
 </div>
 <div class="org-center">
+<div class="header" id="org1145a86">
 <p>
 <a href="index.html">Back</a>
 </p>
+
+</div>
+</div>
+
+<div class="toggle" id="org180e420">
+
+<div id="orgc0466fc" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+</p>
+</div>
+
 </div>
 
 <div id="outline-container-org4bb1e45" class="outline-2">
@@ -263,8 +276,8 @@ Normal function definitions are very simple.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>arg-1 arg-2 arg-3 ...<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>function-body<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">function-name</span> <span class="org-rainbow-delimiters-depth-2">(</span>arg-1 arg-2 arg-3 ...<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>function-body<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -286,15 +299,15 @@ passing an argument to a function every time we want to call it:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a b <span style="color: #ECBE7B;">&amp;optional</span> c d<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print b<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print c<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print d<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">function-name</span> <span class="org-rainbow-delimiters-depth-2">(</span>a b <span class="org-type">&amp;optional</span> c d<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print a<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print b<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print c<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print d<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
   
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 nil nil</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 nil</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 4</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 nil nil</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 3 nil</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 3 4</span>
 </pre>
 </div>
 
@@ -303,12 +316,12 @@ We can also change the default values for our optional arguments so that they ar
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a <span style="color: #ECBE7B;">&amp;optional</span> <span style="color: #98be65;">(</span>b <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print b<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">function-name</span> <span class="org-rainbow-delimiters-depth-2">(</span>a <span class="org-type">&amp;optional</span> <span class="org-rainbow-delimiters-depth-3">(</span>b <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print a<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print b<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
   
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 3</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">3</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 3</span>
 </pre>
 </div>
 
@@ -327,17 +340,17 @@ function they must be passed explicitly.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a b <span style="color: #ECBE7B;">&amp;key</span> c d<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print b<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print c<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print d<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">function-name</span> <span class="org-rainbow-delimiters-depth-2">(</span>a b <span class="org-type">&amp;key</span> c d<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print a<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print b<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print c<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print d<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
   
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 nil nil</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #c678dd;">:c</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 nil</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #c678dd;">:d</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 nil 4</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #c678dd;">:c</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #c678dd;">:d</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 4</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #c678dd;">:d</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #c678dd;">:c</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 3 4</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 nil nil</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-builtin">:c</span> <span class="org-highlight-numbers-number">3</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 3 nil</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-builtin">:d</span> <span class="org-highlight-numbers-number">4</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 nil 4</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-builtin">:c</span> <span class="org-highlight-numbers-number">3</span> <span class="org-builtin">:d</span> <span class="org-highlight-numbers-number">4</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 3 4</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-builtin">:d</span> <span class="org-highlight-numbers-number">4</span> <span class="org-builtin">:c</span> <span class="org-highlight-numbers-number">3</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 3 4</span>
 </pre>
 </div>
 
@@ -360,15 +373,15 @@ Finally, we can use rest parameters to collect any extra arguments to our functi
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a b <span style="color: #ECBE7B;">&amp;rest</span> c<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print c<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">function-name</span> <span class="org-rainbow-delimiters-depth-2">(</span>a b <span class="org-type">&amp;rest</span> c<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print a<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print c<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
   
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 ()</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 (2)</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 (2 3)</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 (2 3 4)</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> '<span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 ((2 3 4))</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 ()</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 (2)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 (2 3)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 (2 3 4)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> '<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 ((2 3 4))</span>
 </pre>
 </div>
 </div>
@@ -384,14 +397,14 @@ keyword arguments, and it should generally be avoided.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">function-name</span> <span style="color: #c678dd;">(</span>a <span style="color: #ECBE7B;">&amp;optional</span> b <span style="color: #ECBE7B;">&amp;rest</span> c<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print a<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print b<span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>print c<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">function-name</span> <span class="org-rainbow-delimiters-depth-2">(</span>a <span class="org-type">&amp;optional</span> b <span class="org-type">&amp;rest</span> c<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print a<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print b<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print c<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
   
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 nil ()</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 ()</span>
-<span style="color: #51afef;">(</span>function-name <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">1 2 (3)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 nil ()</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 ()</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>function-name <span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">1 2 (3)</span>
 </pre>
 </div>
 
@@ -406,7 +419,8 @@ bad idea.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-11-05 Thu 01:23</p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-10 Tue 19:37</p>
 </div>
 </body>
 </html>

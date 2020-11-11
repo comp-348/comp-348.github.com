@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-11-05 Thu 01:23 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2020-11-10 Tue 19:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What does (X . Y) mean?</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -194,6 +192,9 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -221,9 +222,21 @@
 <div id="content">
 <h1 class="title">What does (X . Y) mean?</h1>
 <div class="org-center">
+<div class="header" id="orgcdacb38">
 <p>
 <a href="index.html">Back</a>
 </p>
+
+</div>
+</div>
+
+<div class="toggle" id="orgdd09cd0">
+
+<div id="orge68caca" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+</p>
+</div>
+
 </div>
 
 <div id="outline-container-org6441a1d" class="outline-2">
@@ -238,7 +251,7 @@ In Lisp, we use <code>cons</code> to <i>construct</i> lists. If we call
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span>cons 'a <span style="color: #c678dd;">()</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>cons 'a <span class="org-rainbow-delimiters-depth-2">()</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -255,9 +268,9 @@ any value. So the following is a perfectly valid call to <code>cons</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">wacky-cons</span> <span style="color: #c678dd;">(</span>cons 'a <span style="color: #98be65;">"Hello world"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span>print wacky-cons<span style="color: #51afef;">)</span>
-<span style="color: #5B6268;">;; </span><span style="color: #5B6268;">(A . "Hello world")</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">wacky-cons</span> <span class="org-rainbow-delimiters-depth-2">(</span>cons 'a <span class="org-string">"Hello world"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>print wacky-cons<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(A . "Hello world")</span>
 </pre>
 </div>
 
@@ -270,7 +283,8 @@ an atom instead of another list or cons cell.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-11-05 Thu 01:23</p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-10 Tue 19:37</p>
 </div>
 </body>
 </html>

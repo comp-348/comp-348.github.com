@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-11-05 Thu 01:23 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2020-11-10 Tue 19:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Declaring and modifying variables in Common Lisp</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -194,6 +192,9 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -241,9 +242,21 @@
 </div>
 </div>
 <div class="org-center">
+<div class="header" id="orgfb2a3b0">
 <p>
 <a href="index.html">Back</a>
 </p>
+
+</div>
+</div>
+
+<div class="toggle" id="orgae4ca70">
+
+<div id="orge2bd9be" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+</p>
+</div>
+
 </div>
 
 <div id="outline-container-org1250036" class="outline-2">
@@ -267,10 +280,10 @@ For creating variables that aren&rsquo;t inside a function, we use the <code>def
 </p>
 
 <div class="org-src-container">
-<pre class="src src-common-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">sym</span> 'hello<span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">num</span> <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">str</span> <span style="color: #98be65;">"Hello world"</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">lst</span> '<span style="color: #c678dd;">(</span>hello <span style="color: #da8548; font-weight: bold;">20</span> <span style="color: #98be65;">"hello world"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-common-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">sym</span> 'hello<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">num</span> <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">str</span> <span class="org-string">"Hello world"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">lst</span> '<span class="org-rainbow-delimiters-depth-2">(</span>hello <span class="org-highlight-numbers-number">20</span> <span class="org-string">"hello world"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -289,12 +302,12 @@ For creating variables inside a function, or to create locally-scoped variables,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-common-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span>sym 'hello<span style="color: #98be65;">)</span>
-      <span style="color: #98be65;">(</span>num <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #98be65;">)</span>
-      <span style="color: #98be65;">(</span>str <span style="color: #98be65;">"Hello world"</span><span style="color: #98be65;">)</span>
-      <span style="color: #98be65;">(</span>lst '<span style="color: #51afef;">(</span>hello <span style="color: #da8548; font-weight: bold;">20</span> <span style="color: #98be65;">"Hello world"</span><span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>format t <span style="color: #98be65;">"Values: ~s, ~d, ~s, ~a"</span> sym num str lst<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span>print <span style="color: #98be65;">"None of those variables are visible here"</span><span style="color: #51afef;">)</span>
+<pre class="src src-common-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>sym 'hello<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>num <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>str <span class="org-string">"Hello world"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>lst '<span class="org-rainbow-delimiters-depth-1">(</span>hello <span class="org-highlight-numbers-number">20</span> <span class="org-string">"Hello world"</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>format t <span class="org-string">"Values: ~s, ~d, ~s, ~a"</span> sym num str lst<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>print <span class="org-string">"None of those variables are visible here"</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -303,12 +316,12 @@ We can also use <code>let*</code> to be able to access previous bindings in the 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span>sym 'hello<span style="color: #98be65;">)</span>
-       <span style="color: #98be65;">(</span>num <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #98be65;">)</span>
-       <span style="color: #98be65;">(</span>str <span style="color: #98be65;">"Hello world"</span><span style="color: #98be65;">)</span>
-       <span style="color: #98be65;">(</span>lst <span style="color: #51afef;">(</span>list sym num str<span style="color: #51afef;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span> <span style="color: #5B6268;">; No need to redeclare the values here</span>
-  <span style="color: #c678dd;">(</span>format t <span style="color: #98be65;">"Values: ~s, ~d, ~s, ~a"</span> sym num str lst<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span>print <span style="color: #98be65;">"None of those variables are visible here"</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>sym 'hello<span class="org-rainbow-delimiters-depth-3">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>num <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-3">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>str <span class="org-string">"Hello world"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>lst <span class="org-rainbow-delimiters-depth-1">(</span>list sym num str<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-comment">; No need to redeclare the values here</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>format t <span class="org-string">"Values: ~s, ~d, ~s, ~a"</span> sym num str lst<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>print <span class="org-string">"None of those variables are visible here"</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
@@ -331,7 +344,7 @@ and a value, and it binds that value to the symbol:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span>set 'x <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>set 'x <span class="org-highlight-numbers-number">10</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
@@ -346,7 +359,7 @@ being passed to it:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-common-lisp"><span style="color: #51afef;">(</span>setq x <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #51afef;">)</span>
+<pre class="src src-common-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>setq x <span class="org-highlight-numbers-number">10</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -366,9 +379,9 @@ variable:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span>x <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #98be65;">)</span> <span style="color: #98be65;">(</span>y <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>setq x <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #c678dd;">)</span>
-  <span style="color: #c678dd;">(</span>setf y <span style="color: #da8548; font-weight: bold;">30</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>x <span class="org-highlight-numbers-number">10</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>y <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>setq x <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>setf y <span class="org-highlight-numbers-number">30</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -377,10 +390,10 @@ Will do the same thing. However, we can <i>also</i> use <code>setf</code> to set
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #dcaeea;">lst</span> '<span style="color: #c678dd;">(</span><span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span>setq <span style="color: #c678dd;">(</span>car lst<span style="color: #c678dd;">)</span> <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">; This will give an error</span>
-<span style="color: #51afef;">(</span>setf <span style="color: #c678dd;">(</span>car lst<span style="color: #c678dd;">)</span> <span style="color: #da8548; font-weight: bold;">10</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">; This will mutate the list</span>
-<span style="color: #51afef;">(</span>print lst<span style="color: #51afef;">)</span> <span style="color: #5B6268;">; '(10 2 3 4 5)</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">lst</span> '<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-highlight-numbers-number">1</span> <span class="org-highlight-numbers-number">2</span> <span class="org-highlight-numbers-number">3</span> <span class="org-highlight-numbers-number">4</span> <span class="org-highlight-numbers-number">5</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>setq <span class="org-rainbow-delimiters-depth-2">(</span>car lst<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-highlight-numbers-number">10</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment">; This will give an error</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>setf <span class="org-rainbow-delimiters-depth-2">(</span>car lst<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-highlight-numbers-number">10</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment">; This will mutate the list</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>print lst<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment">; '(10 2 3 4 5)</span>
 </pre>
 </div>
 </div>
@@ -390,7 +403,8 @@ Will do the same thing. However, we can <i>also</i> use <code>setf</code> to set
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-11-05 Thu 01:23</p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-10 Tue 19:37</p>
 </div>
 </body>
 </html>

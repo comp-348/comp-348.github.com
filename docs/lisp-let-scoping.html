@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-10-21 Wed 11:44 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2020-11-10 Tue 19:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Let scoping</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Philip Dumaresq" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="Philip Dumaresq">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -40,7 +38,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -194,51 +192,30 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://comp-348.github.io/assets/org.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="assets/dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="assets/org.css" />
+<script src="assets/toggle.js"></script>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,49 +225,61 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0a9de37">Question</a></li>
+<li><a href="#orge2cad51">Question</a></li>
 </ul>
 </div>
 </div>
 <div class="org-center">
+<div class="header" id="org522413b">
 <p>
 <a href="index.html">Back</a>
 </p>
+
+</div>
 </div>
 
-<div id="outline-container-org0a9de37" class="outline-2">
-<h2 id="org0a9de37">Question</h2>
-<div class="outline-text-2" id="text-org0a9de37">
+<div class="toggle" id="org5a730ff">
+
+<div id="org74fb20e" class="figure">
+<p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-orge2cad51" class="outline-2">
+<h2 id="orge2cad51">Question</h2>
+<div class="outline-text-2" id="text-orge2cad51">
 <p>
 Why does this return 2 and not 3?
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">let</span> ((c 1<span style="color: #5B6268;">))</span>
-  (<span style="color: #51afef;">let</span> ((c 2<span style="color: #5B6268;">)</span>
-  (a (+ c 1<span style="color: #5B6268;">)))</span>
-    a))<span style="color: #5B6268;">; RETURNS 2</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
+        <span class="org-rainbow-delimiters-depth-1">(</span>a <span class="org-rainbow-delimiters-depth-2">(</span>+ c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    a<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-comment">; RETURNS 2</span>
 </pre>
 </div>
 
 <p>
 The reason here is because of how the scoping works in Lisp when using <code>let</code>. When you use <code>let</code>,
-variables that you're binding aren't able to see variables bound before it in the same <code>let</code>. If we
+variables that you&rsquo;re binding aren&rsquo;t able to see variables bound before it in the same <code>let</code>. If we
 did
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">let</span> ((a 1<span style="color: #5B6268;">)</span>
-      (b (+ a 1<span style="color: #5B6268;">)))</span>
-  (print b<span style="color: #5B6268;">))</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>a <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>b <span class="org-rainbow-delimiters-depth-1">(</span>+ a <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print b<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
 <p>
-This would give us an error, because <code>a</code> isn't available when binding <code>b</code>. So logically, Lisp would need
-to look to the enclosing scopes to try to find that variable <code>a</code>. That's what's happening in the
-example above as well. Lisp isn't able to bind <code>a</code> to the value of the <code>c</code> bound immediately before it,
-so Lisp looks to the enclosing scope and find that there's a variable <code>c</code> in that scope, and uses it. 
+This would give us an error, because <code>a</code> isn&rsquo;t available when binding <code>b</code>. So logically, Lisp would need
+to look to the enclosing scopes to try to find that variable <code>a</code>. That&rsquo;s what&rsquo;s happening in the
+example above as well. Lisp isn&rsquo;t able to bind <code>a</code> to the value of the <code>c</code> bound immediately before it,
+so Lisp looks to the enclosing scope and find that there&rsquo;s a variable <code>c</code> in that scope, and uses it. 
 </p>
 
 <p>
@@ -298,25 +287,25 @@ If we change our inner <code>let</code> to be <code>let*</code>, then we get ano
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">let</span> ((c 1<span style="color: #5B6268;">))</span>
-  (<span style="color: #51afef;">let*</span> ((c 2<span style="color: #5B6268;">)</span>
-   (a (+ c 1<span style="color: #5B6268;">)))</span>
-    a<span style="color: #5B6268;">))</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
+         <span class="org-rainbow-delimiters-depth-1">(</span>a <span class="org-rainbow-delimiters-depth-2">(</span>+ c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    a<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
 <p>
-Now what will the value of <code>a</code> be? In this case, it'll be 3, because our second <code>c</code> shadows the value of
-the first. So whenever we refer to <code>c</code> inside our nested <code>let*</code> here, it'll be referring to the <code>c</code>
+Now what will the value of <code>a</code> be? In this case, it&rsquo;ll be 3, because our second <code>c</code> shadows the value of
+the first. So whenever we refer to <code>c</code> inside our nested <code>let*</code> here, it&rsquo;ll be referring to the <code>c</code>
 declared in that block.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #51afef;">let</span> ((c 1<span style="color: #5B6268;">))</span>
-  (<span style="color: #51afef;">let*</span> ((c 2<span style="color: #5B6268;">))</span>
-    (setf c 20<span style="color: #5B6268;">)</span>
-    (print c<span style="color: #5B6268;">))</span>
-  (print c<span style="color: #5B6268;">))</span>
+<pre class="src src-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>c <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>setf c <span class="org-highlight-numbers-number">20</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>print c<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>print c<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -328,8 +317,8 @@ What do you think this program will output now?
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
-<p class="date">Created: 2020-10-21 Wed 11:44</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
+<p class="date">Created: 2020-11-10 Tue 19:37</p>
 </div>
 </body>
 </html>
