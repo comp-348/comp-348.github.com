@@ -1,0 +1,47 @@
+#+SETUPFILE: templates/html.org
+#+TITLE: Validating data with AspectJ
+#+AUTHOR: Philip Dumaresq
+#+INCLUDE: header.org
+#+OPTIONS: toc:nil
+
+* Problem
+
+One thing that we always need to do is ensure that we have good clean data before storing it. This
+is where validation comes into play. AspectJ can be used to create validation methods that we can
+bind to various methods using pointcuts and advices.
+
+Here's the class we're going to be working with:
+
+#+INCLUDE: /s/work/2020-Concordia/Validator/src/model/User.java src java :lines "3-"
+
+Now, for some stupid reason the person who designed this class made it so that when creating a new
+user any random data can be used to contruct a new object. We obviously don't want that. We want to
+contrain the length of the username so that we can give it a reasonable size in our database, a
+valid email, and we don't want the user's /actual/ plain-text password, we want a /hashed/ password. 
+
+To fix this, create an Aspect that will ensure the following:
+
+- The username is 50 characters long or less.
+- The email follows the basic form for an email: somestring@a.domain.com
+- The password is not the user's actual password. It's a securely stored version of their password.
+  To store the password, your aspect should:
+    - Determine the hash of the user's plaintext password (~String.hashCode()~)
+    - Randomly generate a "salt" for that user (~Math.random()~)
+    - Then apply that salt to the hash (~xor~)
+    - Store the result of applying the salt as the password
+    - Store the salt alongside the password in the user object.
+
+In addition, since we're changing the way our password is stored, we also need to change the data
+getting passed to our login. We should have a method in our aspect that will:
+- Take the password passed to login and hash it (~String.hashCode()~)
+- Take the user's password, and apply the salt to the hash (~xor~ them together)
+
+This way we're not verifying that the plaintext password is equal to the secure password, we're
+ensure that the secure passwords match.
+
+*Note*: This is not how you /actually/ store passwords. The concepts are the same as what you'd do for
+ real, using a salt and a hash, but the "salt" is a cryptographically random number, meaning it uses
+ enough system entropy to be considered securely random using an actual cryptography library and not
+ just ~Math.random~. The password is also generated using more complex algorithms than just
+ ~Object.hashCode~. And finally the salt is applied to the hash using much more complex algorithms
+ than just a single ~xor~. /Yet/ this will still better than how some companies store passwords...
