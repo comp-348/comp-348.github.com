@@ -57,6 +57,12 @@ Before getting started with C you should [[file:c-ide-compiler.org][set up your 
 
 This section is for all questions relating to Ruby.
 
+** AspectJ
+
+*** Exercises
+
+- [[file:aspectj-exercise-validation.org][Password validation]]
+
 ** Contributing
 
 If you have something you'd like to contribute to this website, be it an answer to a question you
