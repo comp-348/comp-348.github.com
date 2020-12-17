@@ -25,11 +25,14 @@ To fix this, create an Aspect that will ensure the following:
 - The email follows the basic form for an email: somestring@a.domain.com
 - The password is not the user's actual password. It's a securely stored version of their password.
   To store the password, your aspect should:
-    - Determine the hash of the user's plaintext password (~String.hashCode()~)
-    - Randomly generate a "salt" for that user (~Math.random()~)
-    - Then apply that salt to the hash (~xor~)
-    - Store the result of applying the salt as the password
-    - Store the salt alongside the password in the user object.
+  - Determine the hash of the user's plaintext password (~String.hashCode()~)
+  - Randomly generate a "salt" for that user
+    - Use ~Math.random()~ to generate a random number
+    - Multiply the number by 1000000 (doesn't matter, we just want some digits left of the decimal)
+    - Cast the double to an integer or a long
+  - Then apply that salt to the hash (~xor~ them together)
+  - Store the result of applying the salt to the hash as the user's password
+  - Store the salt alongside the password in the user object (extend the ~User~ class)
 
 In addition, since we're changing the way our password is stored, we also need to change the data
 getting passed to our login. We should have a method in our aspect that will:

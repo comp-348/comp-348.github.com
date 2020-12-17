@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-12-16 Wed 22:30 -->
+<!-- 2020-12-17 Thu 10:33 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Validating data with AspectJ</title>
@@ -222,7 +222,7 @@
 <div id="content">
 <h1 class="title">Validating data with AspectJ</h1>
 <div class="org-center">
-<div class="header" id="org4c767f4">
+<div class="header" id="orgcec12c7">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -230,9 +230,9 @@
 </div>
 </div>
 
-<div class="toggle" id="org863dedd">
+<div class="toggle" id="org70e09de">
 
-<div id="orgeac8b01" class="figure">
+<div id="org4873f32" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
@@ -267,7 +267,8 @@ Here&rsquo;s the class we&rsquo;re going to be working with:
     <span class="org-rainbow-delimiters-depth-2">}</span>
 
     <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">login</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">String</span> <span class="org-variable-name">user</span>, <span class="org-type">String</span> <span class="org-variable-name">password</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">{</span>
-        <span class="org-keyword">return</span> <span class="org-keyword">this</span>.username == user &amp;&amp; <span class="org-keyword">this</span>.password == password;
+        <span class="org-keyword">return</span> <span class="org-keyword">this</span>.username.equals<span class="org-rainbow-delimiters-depth-3">(</span>user<span class="org-rainbow-delimiters-depth-3">)</span> &amp;&amp; 
+               <span class="org-keyword">this</span>.password.equals<span class="org-rainbow-delimiters-depth-3">(</span>password<span class="org-rainbow-delimiters-depth-3">)</span>;
     <span class="org-rainbow-delimiters-depth-2">}</span>
 <span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
@@ -291,10 +292,15 @@ To fix this, create an Aspect that will ensure the following:
 To store the password, your aspect should:
 <ul class="org-ul">
 <li>Determine the hash of the user&rsquo;s plaintext password (<code>String.hashCode()</code>)</li>
-<li>Randomly generate a &ldquo;salt&rdquo; for that user (<code>Math.random()</code>)</li>
-<li>Then apply that salt to the hash (<code>xor</code>)</li>
-<li>Store the result of applying the salt as the password</li>
-<li>Store the salt alongside the password in the user object.</li>
+<li>Randomly generate a &ldquo;salt&rdquo; for that user
+<ul class="org-ul">
+<li>Use <code>Math.random()</code> to generate a random number</li>
+<li>Multiply the number by 1000000 (doesn&rsquo;t matter, we just want some digits left of the decimal)</li>
+<li>Cast the double to an integer or a long</li>
+</ul></li>
+<li>Then apply that salt to the hash (<code>xor</code> them together)</li>
+<li>Store the result of applying the salt to the hash as the user&rsquo;s password</li>
+<li>Store the salt alongside the password in the user object (extend the <code>User</code> class)</li>
 </ul></li>
 </ul>
 
@@ -326,7 +332,7 @@ ensure that the secure passwords match.
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-12-16 Wed 22:30</p>
+<p class="date">Created: 2020-12-17 Thu 10:33</p>
 </div>
 </body>
 </html>
