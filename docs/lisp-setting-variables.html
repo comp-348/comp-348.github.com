@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-11 Wed 14:32 -->
+<!-- 2021-03-13 Sat 19:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Declaring and modifying variables in Common Lisp</title>
@@ -50,7 +50,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -225,15 +225,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1250036">Question:</a>
+<li><a href="#org8d16afc">Question:</a>
 <ul>
-<li><a href="#org54cf200">Declaring top-level variables</a></li>
-<li><a href="#org3fd7689">Declaring local variables</a></li>
-<li><a href="#org20bd396">Mutating existing variables</a>
+<li><a href="#org8fb1b1e">Declaring top-level variables</a></li>
+<li><a href="#org2236691">Declaring local variables</a></li>
+<li><a href="#orgf8c6e4f">Mutating existing variables</a>
 <ul>
-<li><a href="#org7a9290f"><code>set</code></a></li>
-<li><a href="#orgcef60bc"><code>setq</code></a></li>
-<li><a href="#org9fb79e2"><code>setf</code></a></li>
+<li><a href="#orgb7e41ef"><code>set</code></a></li>
+<li><a href="#orgdcd5cf6"><code>setq</code></a></li>
+<li><a href="#org314fb51"><code>setf</code></a></li>
 </ul>
 </li>
 </ul>
@@ -242,7 +242,7 @@
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="org088ea9a">
+<div class="header" id="org9b809e0">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -250,18 +250,18 @@
 </div>
 </div>
 
-<div class="toggle" id="orgae3b6d8">
+<div class="toggle" id="org568aad7">
 
-<div id="org960ddf7" class="figure">
+<div id="org90e6339" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-org1250036" class="outline-2">
-<h2 id="org1250036">Question:</h2>
-<div class="outline-text-2" id="text-org1250036">
+<div id="outline-container-org8d16afc" class="outline-2">
+<h2 id="org8d16afc">Question:</h2>
+<div class="outline-text-2" id="text-org8d16afc">
 <p>
 How do we set a variable in Lisp?
 </p>
@@ -272,9 +272,9 @@ different situations. For this class, we really only need to worry about 3.
 </p>
 </div>
 
-<div id="outline-container-org54cf200" class="outline-3">
-<h3 id="org54cf200">Declaring top-level variables</h3>
-<div class="outline-text-3" id="text-org54cf200">
+<div id="outline-container-org8fb1b1e" class="outline-3">
+<h3 id="org8fb1b1e">Declaring top-level variables</h3>
+<div class="outline-text-3" id="text-org8fb1b1e">
 <p>
 For creating variables that aren&rsquo;t inside a function, we use the <code>defvar</code> builtin:
 </p>
@@ -294,9 +294,9 @@ warning about this - although it will still work.
 </div>
 </div>
 
-<div id="outline-container-org3fd7689" class="outline-3">
-<h3 id="org3fd7689">Declaring local variables</h3>
-<div class="outline-text-3" id="text-org3fd7689">
+<div id="outline-container-org2236691" class="outline-3">
+<h3 id="org2236691">Declaring local variables</h3>
+<div class="outline-text-3" id="text-org2236691">
 <p>
 For creating variables inside a function, or to create locally-scoped variables, we use <code>let</code> and <code>let*</code>
 </p>
@@ -327,17 +327,17 @@ We can also use <code>let*</code> to be able to access previous bindings in the 
 </div>
 </div>
 
-<div id="outline-container-org20bd396" class="outline-3">
-<h3 id="org20bd396">Mutating existing variables</h3>
-<div class="outline-text-3" id="text-org20bd396">
+<div id="outline-container-orgf8c6e4f" class="outline-3">
+<h3 id="orgf8c6e4f">Mutating existing variables</h3>
+<div class="outline-text-3" id="text-orgf8c6e4f">
 <p>
 To change the value of a variable, we use the <code>set[f/q]</code> functions. 
 </p>
 </div>
 
-<div id="outline-container-org7a9290f" class="outline-4">
-<h4 id="org7a9290f"><code>set</code></h4>
-<div class="outline-text-4" id="text-org7a9290f">
+<div id="outline-container-orgb7e41ef" class="outline-4">
+<h4 id="orgb7e41ef"><code>set</code></h4>
+<div class="outline-text-4" id="text-orgb7e41ef">
 <p>
 The <code>set</code> function is the most basic of the 3 ways to set a value in Lisp. We simply pass it an atom
 and a value, and it binds that value to the symbol:
@@ -350,9 +350,9 @@ and a value, and it binds that value to the symbol:
 </div>
 </div>
 
-<div id="outline-container-orgcef60bc" class="outline-4">
-<h4 id="orgcef60bc"><code>setq</code></h4>
-<div class="outline-text-4" id="text-orgcef60bc">
+<div id="outline-container-orgdcd5cf6" class="outline-4">
+<h4 id="orgdcd5cf6"><code>setq</code></h4>
+<div class="outline-text-4" id="text-orgdcd5cf6">
 <p>
 The <code>setq</code> tool means &ldquo;set quoted&rdquo;. It&rsquo;s similar to <code>set</code>, except that we don&rsquo;t have to quote the symbol
 being passed to it: 
@@ -370,9 +370,9 @@ warning. So if you need to, you can use <code>set</code> to declare variables, b
 </div>
 </div>
 
-<div id="outline-container-org9fb79e2" class="outline-4">
-<h4 id="org9fb79e2"><code>setf</code></h4>
-<div class="outline-text-4" id="text-org9fb79e2">
+<div id="outline-container-org314fb51" class="outline-4">
+<h4 id="org314fb51"><code>setf</code></h4>
+<div class="outline-text-4" id="text-org314fb51">
 <p>
 The <code>setf</code> tool means &ldquo;set field&rdquo;. It behaves the same as <code>setq</code> when trying to set just the value of a
 variable:
@@ -404,7 +404,7 @@ Will do the same thing. However, we can <i>also</i> use <code>setf</code> to set
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-11 Wed 14:32</p>
+<p class="date">Created: 2021-03-13 Sat 19:09</p>
 </div>
 </body>
 </html>

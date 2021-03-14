@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-11 Wed 14:32 -->
+<!-- 2021-03-13 Sat 19:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ways to define functions</title>
@@ -50,7 +50,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -225,20 +225,20 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4bb1e45">Question:</a>
+<li><a href="#org638cab5">Question:</a>
 <ul>
-<li><a href="#org9932213">Regular function definition</a></li>
-<li><a href="#org41f3c58">Optional parameters</a></li>
-<li><a href="#orgb79884f">Keyword parameters</a></li>
-<li><a href="#orgbea2edb">Rest parameters</a></li>
-<li><a href="#org00d8042">Putting them together</a></li>
+<li><a href="#orgf7125c0">Regular function definition</a></li>
+<li><a href="#org2685132">Optional parameters</a></li>
+<li><a href="#org50e34fb">Keyword parameters</a></li>
+<li><a href="#org6fe9229">Rest parameters</a></li>
+<li><a href="#org1c7daef">Putting them together</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="org6735726">
+<div class="header" id="orgde6acbb">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -246,18 +246,18 @@
 </div>
 </div>
 
-<div class="toggle" id="org434a2ea">
+<div class="toggle" id="orgae2dedd">
 
-<div id="orgc8aac60" class="figure">
+<div id="orgb96f606" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-org4bb1e45" class="outline-2">
-<h2 id="org4bb1e45">Question:</h2>
-<div class="outline-text-2" id="text-org4bb1e45">
+<div id="outline-container-org638cab5" class="outline-2">
+<h2 id="org638cab5">Question:</h2>
+<div class="outline-text-2" id="text-org638cab5">
 <p>
 How can we define a function that can be called multiple ways? 
 </p>
@@ -268,9 +268,9 @@ parameters and /rest</i> parameters.
 </p>
 </div>
 
-<div id="outline-container-org9932213" class="outline-3">
-<h3 id="org9932213">Regular function definition</h3>
-<div class="outline-text-3" id="text-org9932213">
+<div id="outline-container-orgf7125c0" class="outline-3">
+<h3 id="orgf7125c0">Regular function definition</h3>
+<div class="outline-text-3" id="text-orgf7125c0">
 <p>
 Normal function definitions are very simple. 
 </p>
@@ -290,9 +290,9 @@ evaluated in sequence and the last expression evaluated will be returned from th
 </div>
 </div>
 
-<div id="outline-container-org41f3c58" class="outline-3">
-<h3 id="org41f3c58">Optional parameters</h3>
-<div class="outline-text-3" id="text-org41f3c58">
+<div id="outline-container-org2685132" class="outline-3">
+<h3 id="org2685132">Optional parameters</h3>
+<div class="outline-text-3" id="text-org2685132">
 <p>
 Optional parameters are simple, we can use them to set default values when we don&rsquo;t want to be
 passing an argument to a function every time we want to call it:
@@ -331,9 +331,9 @@ Optional arguments are helpful for having multi-arity functions.
 </div>
 </div>
 
-<div id="outline-container-orgb79884f" class="outline-3">
-<h3 id="orgb79884f">Keyword parameters</h3>
-<div class="outline-text-3" id="text-orgb79884f">
+<div id="outline-container-org50e34fb" class="outline-3">
+<h3 id="org50e34fb">Keyword parameters</h3>
+<div class="outline-text-3" id="text-org50e34fb">
 <p>
 Keyword arguments can be used somewhat like option arguments, except that when we pass them to the
 function they must be passed explicitly.
@@ -365,9 +365,9 @@ optional arguments.
 </div>
 </div>
 
-<div id="outline-container-orgbea2edb" class="outline-3">
-<h3 id="orgbea2edb">Rest parameters</h3>
-<div class="outline-text-3" id="text-orgbea2edb">
+<div id="outline-container-org6fe9229" class="outline-3">
+<h3 id="org6fe9229">Rest parameters</h3>
+<div class="outline-text-3" id="text-org6fe9229">
 <p>
 Finally, we can use rest parameters to collect any extra arguments to our function into a list:
 </p>
@@ -387,9 +387,9 @@ Finally, we can use rest parameters to collect any extra arguments to our functi
 </div>
 </div>
 
-<div id="outline-container-org00d8042" class="outline-3">
-<h3 id="org00d8042">Putting them together</h3>
-<div class="outline-text-3" id="text-org00d8042">
+<div id="outline-container-org1c7daef" class="outline-3">
+<h3 id="org1c7daef">Putting them together</h3>
+<div class="outline-text-3" id="text-org1c7daef">
 <p>
 Putting them together can be useful in some situations, but isn&rsquo;t generally recommended. Optional
 and rest parameters work together fine, but neither optional or rest arguments work well with
@@ -420,7 +420,7 @@ bad idea.
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-11 Wed 14:32</p>
+<p class="date">Created: 2021-03-13 Sat 19:09</p>
 </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-11 Wed 14:32 -->
+<!-- 2021-03-13 Sat 19:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Setting up your Lisp environment</title>
@@ -50,7 +50,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -225,27 +225,27 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3bd48e8">Compilers</a></li>
-<li><a href="#orgba1d466">Text Editors</a>
+<li><a href="#orga888e1c">Compilers</a></li>
+<li><a href="#org214204d">Text Editors</a>
 <ul>
-<li><a href="#orgd03c5db">Emacs</a></li>
-<li><a href="#org94abf4b">Visual Studio Code</a>
+<li><a href="#orgb32f0b1">Emacs</a></li>
+<li><a href="#org64e6feb">Visual Studio Code</a>
 <ul>
-<li><a href="#org7334290">Terminal</a></li>
-<li><a href="#org9ae43bc">Integrated into vscode</a></li>
+<li><a href="#org46f3ea6">Terminal</a></li>
+<li><a href="#org10789bd">Integrated into vscode</a></li>
 </ul>
 </li>
-<li><a href="#orgad73dbe">Atom</a></li>
-<li><a href="#orgdeb91ac">Vim</a></li>
-<li><a href="#orgdd08a63">Portacle</a></li>
-<li><a href="#orga567c39">Other</a></li>
+<li><a href="#org40768a9">Atom</a></li>
+<li><a href="#org23b094b">Vim</a></li>
+<li><a href="#orge8fc253">Portacle</a></li>
+<li><a href="#org1fe27a2">Other</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="orgabcc531">
+<div class="header" id="orgf518bec">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -253,9 +253,9 @@
 </div>
 </div>
 
-<div class="toggle" id="org547cfe2">
+<div class="toggle" id="orga7ce91c">
 
-<div id="org78ee2f4" class="figure">
+<div id="org421d322" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
@@ -278,9 +278,9 @@ then you can use either the <a href="https://www.tutorialspoint.com/execute_lisp
 If you&rsquo;d like to set up a local environment, then you can follow down below.
 </p>
 
-<div id="outline-container-org3bd48e8" class="outline-2">
-<h2 id="org3bd48e8">Compilers</h2>
-<div class="outline-text-2" id="text-org3bd48e8">
+<div id="outline-container-orga888e1c" class="outline-2">
+<h2 id="orga888e1c">Compilers</h2>
+<div class="outline-text-2" id="text-orga888e1c">
 <p>
 There are lots of compilers available for Common Lisp including Steel Bank Common Lisp, Clozure
 Common Lisp, CLisp and more. I would recommend that you use Steel Bank Common Lisp. While for the
@@ -292,9 +292,9 @@ I would recommend simply sticking to SBCL.
 </div>
 </div>
 
-<div id="outline-container-orgba1d466" class="outline-2">
-<h2 id="orgba1d466">Text Editors</h2>
-<div class="outline-text-2" id="text-orgba1d466">
+<div id="outline-container-org214204d" class="outline-2">
+<h2 id="org214204d">Text Editors</h2>
+<div class="outline-text-2" id="text-org214204d">
 <p>
 When it comes to the text editor that you use, there&rsquo;s a lot more variation. I can&rsquo;t cover how to
 set up your environment for every text editor, so I&rsquo;m going to stick to the most common ones being
@@ -302,9 +302,9 @@ vscode, Atom and Emacs.
 </p>
 </div>
 
-<div id="outline-container-orgd03c5db" class="outline-3">
-<h3 id="orgd03c5db">Emacs</h3>
-<div class="outline-text-3" id="text-orgd03c5db">
+<div id="outline-container-orgb32f0b1" class="outline-3">
+<h3 id="orgb32f0b1">Emacs</h3>
+<div class="outline-text-3" id="text-orgb32f0b1">
 <p>
 Emacs is going to be the best text editor for Common Lisp. <i>However</i> emacs will also require you to do
 some learning as it is more complicated than vscode or Atom. If you&rsquo;d like to use Emacs, then I
@@ -372,9 +372,9 @@ There&rsquo;s tons more things that you can do, all of the hotkeys are available
 </div>
 </div>
 
-<div id="outline-container-org94abf4b" class="outline-3">
-<h3 id="org94abf4b">Visual Studio Code</h3>
-<div class="outline-text-3" id="text-org94abf4b">
+<div id="outline-container-org64e6feb" class="outline-3">
+<h3 id="org64e6feb">Visual Studio Code</h3>
+<div class="outline-text-3" id="text-org64e6feb">
 <p>
 Visual Studio Code is probably what most people use for this course. It won&rsquo;t have as good of
 support as Emacs, but it will be easier to use.
@@ -416,9 +416,9 @@ With these installed, there&rsquo;s two ways that you can execute your code from
 </ol>
 </div>
 
-<div id="outline-container-org7334290" class="outline-4">
-<h4 id="org7334290">Terminal</h4>
-<div class="outline-text-4" id="text-org7334290">
+<div id="outline-container-org46f3ea6" class="outline-4">
+<h4 id="org46f3ea6">Terminal</h4>
+<div class="outline-text-4" id="text-org46f3ea6">
 <p>
 Running your code from the terminal will be the same no matter what editor you&rsquo;re using. With vscode
 you can use the built-in terminal and follow the instructions about <a href="lisp-running-from-terminal.html">running lisp from your terminal</a>
@@ -427,9 +427,9 @@ I wrote on another page.
 </div>
 </div>
 
-<div id="outline-container-org9ae43bc" class="outline-4">
-<h4 id="org9ae43bc">Integrated into vscode</h4>
-<div class="outline-text-4" id="text-org9ae43bc">
+<div id="outline-container-org10789bd" class="outline-4">
+<h4 id="org10789bd">Integrated into vscode</h4>
+<div class="outline-text-4" id="text-org10789bd">
 <p>
 First, make your assignment directory the root of a new workspace in vscode. Then, create a
 directory named <code>.vscode</code>. Inside that directory, you should make a new file called <code>tasks.json</code>.
@@ -477,9 +477,9 @@ then vscode will open a new panel to show you the output.
 </div>
 </div>
 
-<div id="outline-container-orgad73dbe" class="outline-3">
-<h3 id="orgad73dbe">Atom</h3>
-<div class="outline-text-3" id="text-orgad73dbe">
+<div id="outline-container-org40768a9" class="outline-3">
+<h3 id="org40768a9">Atom</h3>
+<div class="outline-text-3" id="text-org40768a9">
 <p>
 Atom is another popular editor that people use for this class and it has pretty decent support for
 Common Lisp.
@@ -515,9 +515,9 @@ linked about that guides you through setting it up and using it.
 </div>
 </div>
 
-<div id="outline-container-orgdeb91ac" class="outline-3">
-<h3 id="orgdeb91ac">Vim</h3>
-<div class="outline-text-3" id="text-orgdeb91ac">
+<div id="outline-container-org23b094b" class="outline-3">
+<h3 id="org23b094b">Vim</h3>
+<div class="outline-text-3" id="text-org23b094b">
 <p>
 Vim isn&rsquo;t a super popular editor for students in this class, but if you use Vim then you use Vim.
 </p>
@@ -546,9 +546,9 @@ Note that I am not a vim user myself and have no idea how well these plugins wor
 </div>
 </div>
 
-<div id="outline-container-orgdd08a63" class="outline-3">
-<h3 id="orgdd08a63">Portacle</h3>
-<div class="outline-text-3" id="text-orgdd08a63">
+<div id="outline-container-orge8fc253" class="outline-3">
+<h3 id="orge8fc253">Portacle</h3>
+<div class="outline-text-3" id="text-orge8fc253">
 <p>
 Surprise! Portacle is actually just Emacs! Scroll back up to my recommendations for using Emacs
 instead of using Portacle right out of the box.
@@ -556,9 +556,9 @@ instead of using Portacle right out of the box.
 </div>
 </div>
 
-<div id="outline-container-orga567c39" class="outline-3">
-<h3 id="orga567c39">Other</h3>
-<div class="outline-text-3" id="text-orga567c39">
+<div id="outline-container-org1fe27a2" class="outline-3">
+<h3 id="org1fe27a2">Other</h3>
+<div class="outline-text-3" id="text-org1fe27a2">
 <p>
 Ultimately, any text editor will work for writing your Lisp code. Notepad++, Sublime,
 etc. If you use any of these other editors though, I&rsquo;d highly recommend taking some time to figure
@@ -577,7 +577,7 @@ learn to compile your lisp code in the terminal/command line. I&rsquo;d recommen
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-11 Wed 14:32</p>
+<p class="date">Created: 2021-03-13 Sat 19:09</p>
 </div>
 </body>
 </html>

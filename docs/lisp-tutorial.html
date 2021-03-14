@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-11 Wed 14:32 -->
+<!-- 2021-03-13 Sat 19:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lisp tutorial for COMP 348</title>
@@ -50,7 +50,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -225,18 +225,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf5bbddc">Lisp at a high level</a>
+<li><a href="#orgcdfdcff">Lisp at a high level</a>
 <ul>
-<li><a href="#orgfc591d0">Lisp Syntax</a></li>
-<li><a href="#org5d21bc4">Core functions</a>
+<li><a href="#orgbf049c7">Lisp Syntax</a></li>
+<li><a href="#org15c59fa">Core functions</a>
 <ul>
-<li><a href="#orged487d5">Destructing and rebuilding lists</a></li>
+<li><a href="#org2f72256">Destructing and rebuilding lists</a></li>
 </ul>
 </li>
-<li><a href="#orgde0915c">Trees</a>
+<li><a href="#org8f0be29">Trees</a>
 <ul>
-<li><a href="#org88d63aa">Binary Search:</a></li>
-<li><a href="#orgc397ad4">Tree Traversals</a></li>
+<li><a href="#orgf4330a9">Binary Search:</a></li>
+<li><a href="#org8980164">Tree Traversals</a></li>
 </ul>
 </li>
 </ul>
@@ -245,7 +245,7 @@
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="org39e5427">
+<div class="header" id="org6ac5200">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -253,18 +253,18 @@
 </div>
 </div>
 
-<div class="toggle" id="orgb3024cb">
+<div class="toggle" id="org2718b87">
 
-<div id="orgca920d7" class="figure">
+<div id="orge8bf2f8" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-orgf5bbddc" class="outline-2">
-<h2 id="orgf5bbddc">Lisp at a high level</h2>
-<div class="outline-text-2" id="text-orgf5bbddc">
+<div id="outline-container-orgcdfdcff" class="outline-2">
+<h2 id="orgcdfdcff">Lisp at a high level</h2>
+<div class="outline-text-2" id="text-orgcdfdcff">
 <p>
 Lisp is a high-level, dynamically typed functional programming language. Lisp first came out in
 1959, around the same time as FORTRAN. Back then it was LISP, which stood for LISt Processing. As
@@ -276,9 +276,9 @@ several prominent dialects at the time.
 </p>
 </div>
 
-<div id="outline-container-orgfc591d0" class="outline-3">
-<h3 id="orgfc591d0">Lisp Syntax</h3>
-<div class="outline-text-3" id="text-orgfc591d0">
+<div id="outline-container-orgbf049c7" class="outline-3">
+<h3 id="orgbf049c7">Lisp Syntax</h3>
+<div class="outline-text-3" id="text-orgbf049c7">
 <p>
 Lisp syntax is simple. Unlike most programming languages that are filled with different syntaxes,
 keywords and operators, Lisp&rsquo;s syntax is uniform and concise. Everything that you write in Lisp will
@@ -293,9 +293,9 @@ example, to define a linked list, we use the <code>list</code> function, like so
 </div>
 </div>
 
-<div id="outline-container-org5d21bc4" class="outline-3">
-<h3 id="org5d21bc4">Core functions</h3>
-<div class="outline-text-3" id="text-org5d21bc4">
+<div id="outline-container-org15c59fa" class="outline-3">
+<h3 id="org15c59fa">Core functions</h3>
+<div class="outline-text-3" id="text-org15c59fa">
 <p>
 Would as you could guess, create a list with 5 elements. Now, as mentioned, Lisp is very good at
 processing linked lists, which includes extracting data from the lists, transforming them, etc. Two
@@ -325,9 +325,9 @@ new list, and the <i>tail</i> of the new list. For example,
 </div>
 </div>
 
-<div id="outline-container-orged487d5" class="outline-4">
-<h4 id="orged487d5">Destructing and rebuilding lists</h4>
-<div class="outline-text-4" id="text-orged487d5">
+<div id="outline-container-org2f72256" class="outline-4">
+<h4 id="org2f72256">Destructing and rebuilding lists</h4>
+<div class="outline-text-4" id="text-org2f72256">
 <p>
 We can use these 3 functions, <code>car</code>, <code>cdr</code> and <code>cons</code> to take apart lists and put them back together
 easily. Consider the following function: 
@@ -376,9 +376,9 @@ general, and this general pattern is going to be helpful in your assignments.
 </div>
 </div>
 
-<div id="outline-container-orgde0915c" class="outline-3">
-<h3 id="orgde0915c">Trees</h3>
-<div class="outline-text-3" id="text-orgde0915c">
+<div id="outline-container-org8f0be29" class="outline-3">
+<h3 id="org8f0be29">Trees</h3>
+<div class="outline-text-3" id="text-org8f0be29">
 <p>
 One of the things we do a lot of in this class is talk about binary trees. Building binary trees,
 searching binary trees, balancing binary trees, etc. Here&rsquo;s how we tend to represent binary trees in
@@ -400,11 +400,11 @@ like this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java">    <span class="org-highlight-numbers-number">7</span>
+<pre class="src src-java">    7
   /   \
- <span class="org-highlight-numbers-number">1</span>     <span class="org-highlight-numbers-number">8</span>
+ 1     8
 / \   / \
-   <span class="org-highlight-numbers-number">2</span>     <span class="org-highlight-numbers-number">9</span>
+   2     9
   / \   / \
 </pre>
 </div>
@@ -415,9 +415,9 @@ those as examples, but I can do binary-search and tree traversals.
 </p>
 </div>
 
-<div id="outline-container-org88d63aa" class="outline-4">
-<h4 id="org88d63aa">Binary Search:</h4>
-<div class="outline-text-4" id="text-org88d63aa">
+<div id="outline-container-orgf4330a9" class="outline-4">
+<h4 id="orgf4330a9">Binary Search:</h4>
+<div class="outline-text-4" id="text-orgf4330a9">
 <p>
 A Binary search is a divide-and-conquer algorithm, so by nature it&rsquo;s going to be recursive. The
 algorithm for binary search is simple:
@@ -457,9 +457,9 @@ just return from whichever condition is true.
 </div>
 </div>
 
-<div id="outline-container-orgc397ad4" class="outline-4">
-<h4 id="orgc397ad4">Tree Traversals</h4>
-<div class="outline-text-4" id="text-orgc397ad4">
+<div id="outline-container-org8980164" class="outline-4">
+<h4 id="org8980164">Tree Traversals</h4>
+<div class="outline-text-4" id="text-org8980164">
 <p>
 Another common thing we want to do with trees is traverse them in various ways. With a binary-tree,
 we often want to do an in-order traversal because it will visit each element in a sorted order. The
@@ -503,7 +503,7 @@ other things.
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-11 Wed 14:32</p>
+<p class="date">Created: 2021-03-13 Sat 19:09</p>
 </div>
 </body>
 </html>

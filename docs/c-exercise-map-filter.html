@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-10 Tue 20:58 -->
+<!-- 2021-03-13 Sat 19:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Function pointers in C</title>
@@ -50,7 +50,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -225,17 +225,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge0b1067">Problems</a>
+<li><a href="#org4ee2ca8">Problems</a>
 <ul>
-<li><a href="#org4a5d85b">Map</a></li>
-<li><a href="#org62ef36b">Filter</a></li>
+<li><a href="#org79f9caa">Map</a></li>
+<li><a href="#org564d215">Filter</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="org1440410">
+<div class="header" id="org5ddc8ed">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -243,22 +243,22 @@
 </div>
 </div>
 
-<div class="toggle" id="orgc87eb96">
+<div class="toggle" id="orge639b9e">
 
-<div id="orgd365598" class="figure">
+<div id="org15fd06f" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-orge0b1067" class="outline-2">
-<h2 id="orge0b1067">Problems</h2>
-<div class="outline-text-2" id="text-orge0b1067">
+<div id="outline-container-org4ee2ca8" class="outline-2">
+<h2 id="org4ee2ca8">Problems</h2>
+<div class="outline-text-2" id="text-org4ee2ca8">
 </div>
-<div id="outline-container-org4a5d85b" class="outline-3">
-<h3 id="org4a5d85b">Map</h3>
-<div class="outline-text-3" id="text-org4a5d85b">
+<div id="outline-container-org79f9caa" class="outline-3">
+<h3 id="org79f9caa">Map</h3>
+<div class="outline-text-3" id="text-org79f9caa">
 <p>
 Implement a function called <code>map</code> that accepts 3 arguments: an list of integers, the length of the
 list, and a pointer to a function. The function should accept a single argument as an integer and
@@ -271,37 +271,37 @@ into the function. Here&rsquo;s a sample input and output of the function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">f</span>(<span class="org-type">int</span> <span class="org-variable-name">x</span>) { <span class="org-keyword">return</span> x * x; }
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">f</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-type">int</span> <span class="org-variable-name">x</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span> <span class="org-keyword">return</span> x * x; <span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span class="org-type">int</span> <span class="org-function-name">main</span>() {
-  <span class="org-type">int</span> <span class="org-variable-name">nums</span>[] = {<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">4</span>, <span class="org-highlight-numbers-number">5</span>, <span class="org-highlight-numbers-number">6</span>, <span class="org-highlight-numbers-number">7</span>, <span class="org-highlight-numbers-number">8</span>, <span class="org-highlight-numbers-number">9</span>, <span class="org-highlight-numbers-number">10</span>};
-  <span class="org-type">int</span> *<span class="org-variable-name">mapped</span> = map(nums, <span class="org-highlight-numbers-number">10</span>, f);
+<span class="org-type">int</span> <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+  <span class="org-type">int</span> <span class="org-variable-name">nums</span><span class="org-rainbow-delimiters-depth-2">[]</span> = <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">4</span>, <span class="org-highlight-numbers-number">5</span>, <span class="org-highlight-numbers-number">6</span>, <span class="org-highlight-numbers-number">7</span>, <span class="org-highlight-numbers-number">8</span>, <span class="org-highlight-numbers-number">9</span>, <span class="org-highlight-numbers-number">10</span><span class="org-rainbow-delimiters-depth-2">}</span>;
+  <span class="org-type">int</span> *<span class="org-variable-name">mapped</span> = map<span class="org-rainbow-delimiters-depth-2">(</span>nums, <span class="org-highlight-numbers-number">10</span>, f<span class="org-rainbow-delimiters-depth-2">)</span>;
   <span class="org-comment-delimiter">// </span><span class="org-comment">{ 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 }</span>
 
   <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
-}
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 
 <button class="toggle-spoiler">Show answer</button>
 <div class="org-src-container">
-<pre class="src src-c"><span class="org-type">int</span> *<span class="org-function-name">map</span>(<span class="org-type">int</span> *<span class="org-variable-name">nums</span>, <span class="org-type">int</span> <span class="org-variable-name">size</span>, <span class="org-type">int</span> (*<span class="org-function-name">func</span>)(<span class="org-type">int</span>)) {
-  <span class="org-type">int</span> *<span class="org-variable-name">newnums</span> = malloc(<span class="org-keyword">sizeof</span>(<span class="org-type">int</span>) * size);
+<pre class="src src-c"><span class="org-type">int</span> *<span class="org-function-name">map</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-type">int</span> *<span class="org-variable-name">nums</span>, <span class="org-type">int</span> <span class="org-variable-name">size</span>, <span class="org-type">int</span> <span class="org-rainbow-delimiters-depth-2">(</span>*<span class="org-function-name">func</span><span class="org-rainbow-delimiters-depth-2">)(</span><span class="org-type">int</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+  <span class="org-type">int</span> *<span class="org-variable-name">newnums</span> = malloc<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">sizeof</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-type">int</span><span class="org-rainbow-delimiters-depth-3">)</span> * size<span class="org-rainbow-delimiters-depth-2">)</span>;
 
-  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; size; i++) {
-    newnums[i] = func(nums[i]);
-  }
+  <span class="org-keyword">for</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; size; i++<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+    newnums<span class="org-rainbow-delimiters-depth-3">[</span>i<span class="org-rainbow-delimiters-depth-3">]</span> = func<span class="org-rainbow-delimiters-depth-3">(</span>nums<span class="org-rainbow-delimiters-depth-1">[</span>i<span class="org-rainbow-delimiters-depth-1">]</span><span class="org-rainbow-delimiters-depth-3">)</span>;
+  <span class="org-rainbow-delimiters-depth-2">}</span>
 
   <span class="org-keyword">return</span> newnums;
-}
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org62ef36b" class="outline-3">
-<h3 id="org62ef36b">Filter</h3>
-<div class="outline-text-3" id="text-org62ef36b">
+<div id="outline-container-org564d215" class="outline-3">
+<h3 id="org564d215">Filter</h3>
+<div class="outline-text-3" id="text-org564d215">
 <p>
 Implement a function called <code>filter</code> that accepts 3 arguments: a list of integers, a reference to the
 length of the list, and a pointer to a predicate function. The function should accept a single
@@ -314,35 +314,35 @@ function returns true. Here&rsquo;s a sample input and output of the function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">isEven</span>(<span class="org-type">int</span> <span class="org-variable-name">x</span>) { <span class="org-keyword">return</span> x % <span class="org-highlight-numbers-number">2</span> == <span class="org-highlight-numbers-number">0</span>; }
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">isEven</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-type">int</span> <span class="org-variable-name">x</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span> <span class="org-keyword">return</span> x % <span class="org-highlight-numbers-number">2</span> == <span class="org-highlight-numbers-number">0</span>; <span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span class="org-type">int</span> <span class="org-function-name">main</span>() {
-  <span class="org-type">int</span> <span class="org-variable-name">nums</span>[] = {<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">4</span>, <span class="org-highlight-numbers-number">5</span>, <span class="org-highlight-numbers-number">6</span>, <span class="org-highlight-numbers-number">7</span>, <span class="org-highlight-numbers-number">8</span>, <span class="org-highlight-numbers-number">9</span>, <span class="org-highlight-numbers-number">10</span>};
+<span class="org-type">int</span> <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+  <span class="org-type">int</span> <span class="org-variable-name">nums</span><span class="org-rainbow-delimiters-depth-2">[]</span> = <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">4</span>, <span class="org-highlight-numbers-number">5</span>, <span class="org-highlight-numbers-number">6</span>, <span class="org-highlight-numbers-number">7</span>, <span class="org-highlight-numbers-number">8</span>, <span class="org-highlight-numbers-number">9</span>, <span class="org-highlight-numbers-number">10</span><span class="org-rainbow-delimiters-depth-2">}</span>;
   <span class="org-type">int</span> <span class="org-variable-name">len</span> = <span class="org-highlight-numbers-number">10</span>;
-  <span class="org-type">int</span> *<span class="org-variable-name">evens</span> = filter(nums, &amp;len, even);
+  <span class="org-type">int</span> *<span class="org-variable-name">evens</span> = filter<span class="org-rainbow-delimiters-depth-2">(</span>nums, &amp;len, even<span class="org-rainbow-delimiters-depth-2">)</span>;
   <span class="org-comment-delimiter">// </span><span class="org-comment">{ 2, 4, 6, 8, 10 }</span>
 
   <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
-}
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 
 <button class="toggle-spoiler">Show answer</button>
 <div class="org-src-container">
-<pre class="src src-c"><span class="org-type">int</span> *<span class="org-function-name">filter</span>(<span class="org-type">int</span> *<span class="org-variable-name">nums</span>, <span class="org-type">int</span> *<span class="org-variable-name">size</span>, <span class="org-type">int</span> (*<span class="org-function-name">pred</span>)(<span class="org-type">int</span>)) {
-  <span class="org-type">int</span> *<span class="org-variable-name">newnums</span> = malloc(<span class="org-keyword">sizeof</span>(<span class="org-type">int</span>) * *size);
+<pre class="src src-c"><span class="org-type">int</span> *<span class="org-function-name">filter</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-type">int</span> *<span class="org-variable-name">nums</span>, <span class="org-type">int</span> *<span class="org-variable-name">size</span>, <span class="org-type">int</span> <span class="org-rainbow-delimiters-depth-2">(</span>*<span class="org-function-name">pred</span><span class="org-rainbow-delimiters-depth-2">)(</span><span class="org-type">int</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+  <span class="org-type">int</span> *<span class="org-variable-name">newnums</span> = malloc<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">sizeof</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-type">int</span><span class="org-rainbow-delimiters-depth-3">)</span> * *size<span class="org-rainbow-delimiters-depth-2">)</span>;
 
   <span class="org-type">int</span> <span class="org-variable-name">j</span> = <span class="org-highlight-numbers-number">0</span>;
-  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; *size; i++) {
-    <span class="org-keyword">if</span> (pred(nums[i])) {
-      newnums[j++] = nums[i];
-    }
-  }
+  <span class="org-keyword">for</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; *size; i++<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>pred<span class="org-rainbow-delimiters-depth-1">(</span>nums<span class="org-rainbow-delimiters-depth-2">[</span>i<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">{</span>
+      newnums<span class="org-rainbow-delimiters-depth-1">[</span>j++<span class="org-rainbow-delimiters-depth-1">]</span> = nums<span class="org-rainbow-delimiters-depth-1">[</span>i<span class="org-rainbow-delimiters-depth-1">]</span>;
+    <span class="org-rainbow-delimiters-depth-3">}</span>
+  <span class="org-rainbow-delimiters-depth-2">}</span>
 
-  newnums = realloc(newnums, <span class="org-keyword">sizeof</span>(<span class="org-type">int</span>) * j);
+  newnums = realloc<span class="org-rainbow-delimiters-depth-2">(</span>newnums, <span class="org-keyword">sizeof</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-type">int</span><span class="org-rainbow-delimiters-depth-3">)</span> * j<span class="org-rainbow-delimiters-depth-2">)</span>;
   *size = j;
   <span class="org-keyword">return</span> newnums;
-}
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
@@ -352,7 +352,7 @@ function returns true. Here&rsquo;s a sample input and output of the function.
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-10 Tue 20:58</p>
+<p class="date">Created: 2021-03-13 Sat 19:09</p>
 </div>
 </body>
 </html>

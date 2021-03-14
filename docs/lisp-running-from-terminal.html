@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-11 Wed 14:32 -->
+<!-- 2021-03-13 Sat 19:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Running Lisp from the terminal</title>
@@ -50,7 +50,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -225,23 +225,23 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbd3abf8">Question:</a>
+<li><a href="#org95bd380">Question:</a>
 <ul>
-<li><a href="#org058a43e">SBCL:</a>
+<li><a href="#org3235256">SBCL:</a>
 <ul>
-<li><a href="#orgd251671"><code>--script</code></a></li>
-<li><a href="#org0c71ca5"><code>--load</code></a></li>
+<li><a href="#orgc9ff298"><code>--script</code></a></li>
+<li><a href="#orgad9ad7a"><code>--load</code></a></li>
 </ul>
 </li>
-<li><a href="#orge3a3fe5">CCL</a></li>
-<li><a href="#org4c7d1ee">CLisp</a></li>
+<li><a href="#org818cdb3">CCL</a></li>
+<li><a href="#org0bc6982">CLisp</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="org8cf119f">
+<div class="header" id="org9578666">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -249,18 +249,18 @@
 </div>
 </div>
 
-<div class="toggle" id="org351534e">
+<div class="toggle" id="orgb385d95">
 
-<div id="org036039f" class="figure">
+<div id="org8d0e7c3" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-orgbd3abf8" class="outline-2">
-<h2 id="orgbd3abf8">Question:</h2>
-<div class="outline-text-2" id="text-orgbd3abf8">
+<div id="outline-container-org95bd380" class="outline-2">
+<h2 id="org95bd380">Question:</h2>
+<div class="outline-text-2" id="text-org95bd380">
 <p>
 How do I run lisp code from my terminal in vscode? 
 </p>
@@ -271,21 +271,21 @@ Refer to the section for your compiler.
 </p>
 </div>
 
-<div id="outline-container-org058a43e" class="outline-3">
-<h3 id="org058a43e">SBCL:</h3>
-<div class="outline-text-3" id="text-org058a43e">
+<div id="outline-container-org3235256" class="outline-3">
+<h3 id="org3235256">SBCL:</h3>
+<div class="outline-text-3" id="text-org3235256">
 <p>
 With SBCL there are two options you&rsquo;ll care about, <code>--script</code> and <code>--load</code>. 
 </p>
 
 
 <p>
-<a id="org7803418"></a>
+<a id="org3904bf5"></a>
 </p>
 </div>
-<div id="outline-container-orgd251671" class="outline-4">
-<h4 id="orgd251671"><code>--script</code></h4>
-<div class="outline-text-4" id="text-orgd251671">
+<div id="outline-container-orgc9ff298" class="outline-4">
+<h4 id="orgc9ff298"><code>--script</code></h4>
+<div class="outline-text-4" id="text-orgc9ff298">
 <p>
 The first of the two will be most like running a Python script or something like that. You pass it 
 a file, it&rsquo;ll evaluate the file, write to your terminal, and then exit. 
@@ -317,13 +317,13 @@ You can see that it&rsquo;ll execute the file, print things, and then exit.
 </p>
 
 <p>
-<a id="org6c92e1f"></a>
+<a id="org23f2098"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org0c71ca5" class="outline-4">
-<h4 id="org0c71ca5"><code>--load</code></h4>
-<div class="outline-text-4" id="text-org0c71ca5">
+<div id="outline-container-orgad9ad7a" class="outline-4">
+<h4 id="orgad9ad7a"><code>--load</code></h4>
+<div class="outline-text-4" id="text-orgad9ad7a">
 <p>
 If you use <code>--load</code>, then it will evaluate everything in your file, and then drop you into an
 interactive prompt so that you can interact with your program:
@@ -379,20 +379,20 @@ NIL
 </div>
 </div>
 
-<div id="outline-container-orge3a3fe5" class="outline-3">
-<h3 id="orge3a3fe5">CCL</h3>
-<div class="outline-text-3" id="text-orge3a3fe5">
+<div id="outline-container-org818cdb3" class="outline-3">
+<h3 id="org818cdb3">CCL</h3>
+<div class="outline-text-3" id="text-org818cdb3">
 <p>
 CCL has one argument for using it at the terminal that you&rsquo;ll care about, which is the <code>--load</code>
 argument. When you give CCL the <code>--load</code> argument, it will drop you into an interactive prompt the
-same way that it will do when using <code>--load</code> with SBCL. Refer to the section about <a href="#org6c92e1f"><code>--load</code></a> for SBCL.
+same way that it will do when using <code>--load</code> with SBCL. Refer to the section about <a href="#org23f2098"><code>--load</code></a> for SBCL.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4c7d1ee" class="outline-3">
-<h3 id="org4c7d1ee">CLisp</h3>
-<div class="outline-text-3" id="text-org4c7d1ee">
+<div id="outline-container-org0bc6982" class="outline-3">
+<h3 id="org0bc6982">CLisp</h3>
+<div class="outline-text-3" id="text-org0bc6982">
 <p>
 CLisp can be used almost the same as SBCL, with a couple differences. You have two main options with
 CLisp for how to execute your Lisp files. You can either execute the entire Lisp file and terminate
@@ -409,13 +409,13 @@ To run a file and terminal, simply do:
 </div>
 
 <p>
-To know more about how this works, refer to the <a href="#org7803418"><code>--script</code></a> option for SBCL. Just keep in mind that
+To know more about how this works, refer to the <a href="#org3904bf5"><code>--script</code></a> option for SBCL. Just keep in mind that
 anywhere that the <code>--script</code> option is provided in SBCL, you want to ignore that flag.
 </p>
 
 <p>
 To load a file and interact with it, you use the <code>-repl</code> option. To learn about how to use this
-option, you can refer to the <a href="#org6c92e1f"><code>--load</code></a> instructions for SBCL. Just keep in mind to replace any
+option, you can refer to the <a href="#org23f2098"><code>--load</code></a> instructions for SBCL. Just keep in mind to replace any
 instance of <code>--load</code> with <code>-repl</code>.
 </p>
 </div>
@@ -425,7 +425,7 @@ instance of <code>--load</code> with <code>-repl</code>.
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-11 Wed 14:32</p>
+<p class="date">Created: 2021-03-13 Sat 19:09</p>
 </div>
 </body>
 </html>

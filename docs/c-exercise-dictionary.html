@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-10 Tue 21:29 -->
+<!-- 2021-03-13 Sat 19:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Memory allocation and structs with hashmaps</title>
@@ -50,7 +50,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -225,17 +225,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4a42f4a">Problem</a>
+<li><a href="#orga86d34d">Problem</a>
 <ul>
-<li><a href="#org4d0d62c">getHash</a></li>
-<li><a href="#org9b9a90f">setHash</a></li>
+<li><a href="#org53ea4ff">getHash</a></li>
+<li><a href="#orgbb4ba43">setHash</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="org0f8eeff">
+<div class="header" id="org9531460">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -243,18 +243,18 @@
 </div>
 </div>
 
-<div class="toggle" id="org31379ac">
+<div class="toggle" id="orgaa5ea93">
 
-<div id="orgea78dc3" class="figure">
+<div id="org45e4d8b" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-org4a42f4a" class="outline-2">
-<h2 id="org4a42f4a">Problem</h2>
-<div class="outline-text-2" id="text-org4a42f4a">
+<div id="outline-container-orga86d34d" class="outline-2">
+<h2 id="orga86d34d">Problem</h2>
+<div class="outline-text-2" id="text-orga86d34d">
 <p>
 The first thing we need do is decide how we&rsquo;re going to model the data for our map. This isn&rsquo;t going
 to be a <i>true</i> hashmap because we&rsquo;re not going to actually hash the keys at all. We&rsquo;re just going to
@@ -262,10 +262,10 @@ use a struct called <code>Pair</code> that contains the key/value pairs, like so
 </p>
 
 <div class="org-src-container">
-<pre class="src src-c"><span class="org-keyword">struct</span> <span class="org-type">Pair</span> {
+<pre class="src src-c"><span class="org-keyword">struct</span> <span class="org-type">Pair</span> <span class="org-rainbow-delimiters-depth-1">{</span>
   <span class="org-type">char</span> *<span class="org-variable-name">key</span>;
   <span class="org-type">int</span> <span class="org-variable-name">value</span>;
-};
+<span class="org-rainbow-delimiters-depth-1">}</span>;
 </pre>
 </div>
 
@@ -275,9 +275,9 @@ itself is just going to be an array of <code>Pair</code> structs.
 </p>
 </div>
 
-<div id="outline-container-org4d0d62c" class="outline-3">
-<h3 id="org4d0d62c">getHash</h3>
-<div class="outline-text-3" id="text-org4d0d62c">
+<div id="outline-container-org53ea4ff" class="outline-3">
+<h3 id="org53ea4ff">getHash</h3>
+<div class="outline-text-3" id="text-org53ea4ff">
 <p>
 Now that we&rsquo;ve determined how we&rsquo;re going to store our data, your exercise is to implement 2
 functions. The first one is going to be called <code>getHash</code>. It will take 3 arguments, the first one will
@@ -289,40 +289,40 @@ key you&rsquo;re searching for.
 The function can be used as below:
 </p>
 <div class="org-src-container">
-<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
   <span class="org-type">int</span> <span class="org-variable-name">len</span> = <span class="org-highlight-numbers-number">2</span>;
-  <span class="org-keyword">struct</span> <span class="org-type">Pair</span> <span class="org-variable-name">hashmap</span> = malloc(<span class="org-keyword">sizeof</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span>) * len);
-  hashmap[<span class="org-highlight-numbers-number">0</span>].key = <span class="org-string">"Key 1"</span>;
-  hashmap[<span class="org-highlight-numbers-number">0</span>].value = <span class="org-highlight-numbers-number">1</span>;
-  hashmap[<span class="org-highlight-numbers-number">1</span>].key = <span class="org-string">"Key 2"</span>;
-  hashmap[<span class="org-highlight-numbers-number">1</span>].value = <span class="org-highlight-numbers-number">2</span>;
+  <span class="org-keyword">struct</span> <span class="org-type">Pair</span> <span class="org-variable-name">hashmap</span> = malloc<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">sizeof</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">struct</span> <span class="org-type">Pair</span><span class="org-rainbow-delimiters-depth-3">)</span> * len<span class="org-rainbow-delimiters-depth-2">)</span>;
+  hashmap<span class="org-rainbow-delimiters-depth-2">[</span><span class="org-highlight-numbers-number">0</span><span class="org-rainbow-delimiters-depth-2">]</span>.key = <span class="org-string">"Key 1"</span>;
+  hashmap<span class="org-rainbow-delimiters-depth-2">[</span><span class="org-highlight-numbers-number">0</span><span class="org-rainbow-delimiters-depth-2">]</span>.value = <span class="org-highlight-numbers-number">1</span>;
+  hashmap<span class="org-rainbow-delimiters-depth-2">[</span><span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">]</span>.key = <span class="org-string">"Key 2"</span>;
+  hashmap<span class="org-rainbow-delimiters-depth-2">[</span><span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">]</span>.value = <span class="org-highlight-numbers-number">2</span>;
 
-  printf(<span class="org-string">"%d"</span>, getHash(hashmap, len, <span class="org-string">"Key 1"</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">1</span>
+  printf<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"%d"</span>, getHash<span class="org-rainbow-delimiters-depth-3">(</span>hashmap, len, <span class="org-string">"Key 1"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">1</span>
 
   <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
-}
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 
 <button class="toggle-spoiler">Show answer</button>
 <div class="org-src-container">
-<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">getHash</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span> *<span class="org-variable-name">map</span>, <span class="org-type">int</span> <span class="org-variable-name">size</span>, <span class="org-type">char</span> *<span class="org-variable-name">key</span>) {
-  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; size; i++) {
-    <span class="org-keyword">if</span> (strcmp(map[i].key, key) == <span class="org-highlight-numbers-number">0</span>) {
-      <span class="org-keyword">return</span> map[i].value;
-    }
-  }
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">getHash</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">struct</span> <span class="org-type">Pair</span> *<span class="org-variable-name">map</span>, <span class="org-type">int</span> <span class="org-variable-name">size</span>, <span class="org-type">char</span> *<span class="org-variable-name">key</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+  <span class="org-keyword">for</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">int</span> <span class="org-variable-name">i</span> = <span class="org-highlight-numbers-number">0</span>; i &lt; size; i++<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>strcmp<span class="org-rainbow-delimiters-depth-1">(</span>map<span class="org-rainbow-delimiters-depth-2">[</span>i<span class="org-rainbow-delimiters-depth-2">]</span>.key, key<span class="org-rainbow-delimiters-depth-1">)</span> == <span class="org-highlight-numbers-number">0</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">{</span>
+      <span class="org-keyword">return</span> map<span class="org-rainbow-delimiters-depth-1">[</span>i<span class="org-rainbow-delimiters-depth-1">]</span>.value;
+    <span class="org-rainbow-delimiters-depth-3">}</span>
+  <span class="org-rainbow-delimiters-depth-2">}</span>
 
   <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
-}
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9b9a90f" class="outline-3">
-<h3 id="org9b9a90f">setHash</h3>
-<div class="outline-text-3" id="text-org9b9a90f">
+<div id="outline-container-orgbb4ba43" class="outline-3">
+<h3 id="orgbb4ba43">setHash</h3>
+<div class="outline-text-3" id="text-orgbb4ba43">
 <p>
 The second function to write is going to be called <code>setHash</code>. It will take 4 arguments:
 </p>
@@ -339,42 +339,42 @@ it.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
   <span class="org-type">int</span> <span class="org-variable-name">len</span> = <span class="org-highlight-numbers-number">2</span>;
-  <span class="org-keyword">struct</span> <span class="org-type">Pair</span> <span class="org-variable-name">hashmap</span> = malloc(<span class="org-keyword">sizeof</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span>) * len);
-  setHash(hashmap, &amp;len, <span class="org-string">"Key 1"</span>, <span class="org-highlight-numbers-number">1</span>);
-  setHash(hashmap, &amp;len, <span class="org-string">"Key 2"</span>, <span class="org-highlight-numbers-number">2</span>);
-  setHash(hashmap, &amp;len, <span class="org-string">"Key 3"</span>, <span class="org-highlight-numbers-number">3</span>);
-  setHash(hashmap, &amp;len, <span class="org-string">"Key 4"</span>, <span class="org-highlight-numbers-number">4</span>);
+  <span class="org-keyword">struct</span> <span class="org-type">Pair</span> <span class="org-variable-name">hashmap</span> = malloc<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">sizeof</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">struct</span> <span class="org-type">Pair</span><span class="org-rainbow-delimiters-depth-3">)</span> * len<span class="org-rainbow-delimiters-depth-2">)</span>;
+  setHash<span class="org-rainbow-delimiters-depth-2">(</span>hashmap, &amp;len, <span class="org-string">"Key 1"</span>, <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-2">)</span>;
+  setHash<span class="org-rainbow-delimiters-depth-2">(</span>hashmap, &amp;len, <span class="org-string">"Key 2"</span>, <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-2">)</span>;
+  setHash<span class="org-rainbow-delimiters-depth-2">(</span>hashmap, &amp;len, <span class="org-string">"Key 3"</span>, <span class="org-highlight-numbers-number">3</span><span class="org-rainbow-delimiters-depth-2">)</span>;
+  setHash<span class="org-rainbow-delimiters-depth-2">(</span>hashmap, &amp;len, <span class="org-string">"Key 4"</span>, <span class="org-highlight-numbers-number">4</span><span class="org-rainbow-delimiters-depth-2">)</span>;
 
-  printf(<span class="org-string">"%d"</span>, getHash(hashmap, len, <span class="org-string">"Key 3"</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">3</span>
+  printf<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"%d"</span>, getHash<span class="org-rainbow-delimiters-depth-3">(</span>hashmap, len, <span class="org-string">"Key 3"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">3</span>
 
   <span class="org-keyword">return</span> <span class="org-highlight-numbers-number">0</span>;
-}
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 
 <button class="toggle-spoiler">Show answer</button>
 <div class="org-src-container">
-<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">setHash</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span> *<span class="org-variable-name">map</span>, <span class="org-type">int</span> *<span class="org-variable-name">size</span>, <span class="org-type">char</span> *<span class="org-variable-name">key</span>, <span class="org-type">int</span> <span class="org-variable-name">value</span>) {
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">setHash</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">struct</span> <span class="org-type">Pair</span> *<span class="org-variable-name">map</span>, <span class="org-type">int</span> *<span class="org-variable-name">size</span>, <span class="org-type">char</span> *<span class="org-variable-name">key</span>, <span class="org-type">int</span> <span class="org-variable-name">value</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span>
   <span class="org-type">int</span> <span class="org-variable-name">full</span> = <span class="org-constant">true</span>;
   <span class="org-type">int</span> <span class="org-variable-name">i</span>;
-  <span class="org-keyword">for</span> (i = <span class="org-highlight-numbers-number">0</span>; i &lt; *size; i++) {
-    <span class="org-keyword">if</span> (map[i].key == <span class="org-constant">NULL</span>) {
+  <span class="org-keyword">for</span> <span class="org-rainbow-delimiters-depth-2">(</span>i = <span class="org-highlight-numbers-number">0</span>; i &lt; *size; i++<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>map<span class="org-rainbow-delimiters-depth-1">[</span>i<span class="org-rainbow-delimiters-depth-1">]</span>.key == <span class="org-constant">NULL</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">{</span>
       full = <span class="org-constant">false</span>;
       <span class="org-keyword">break</span>;
-    }
-  }
+    <span class="org-rainbow-delimiters-depth-3">}</span>
+  <span class="org-rainbow-delimiters-depth-2">}</span>
 
-  <span class="org-keyword">if</span> (full) {
-    printf(<span class="org-string">"Doubling the size of the hash (%d -&gt; %d)\n"</span>, i, i * <span class="org-highlight-numbers-number">2</span>);
+  <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">(</span>full<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+    printf<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"Doubling the size of the hash (%d -&gt; %d)\n"</span>, i, i * <span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-3">)</span>;
     *size = i * <span class="org-highlight-numbers-number">2</span>;
-    map = realloc(map, <span class="org-keyword">sizeof</span>(<span class="org-keyword">struct</span> <span class="org-type">Pair</span>) * *size);
-  }
+    map = realloc<span class="org-rainbow-delimiters-depth-3">(</span>map, <span class="org-keyword">sizeof</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">struct</span> <span class="org-type">Pair</span><span class="org-rainbow-delimiters-depth-1">)</span> * *size<span class="org-rainbow-delimiters-depth-3">)</span>;
+  <span class="org-rainbow-delimiters-depth-2">}</span>
 
-  map[i].key = key;
-  map[i].value = value;
-}
+  map<span class="org-rainbow-delimiters-depth-2">[</span>i<span class="org-rainbow-delimiters-depth-2">]</span>.key = key;
+  map<span class="org-rainbow-delimiters-depth-2">[</span>i<span class="org-rainbow-delimiters-depth-2">]</span>.value = value;
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
@@ -384,7 +384,7 @@ it.
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-10 Tue 21:29</p>
+<p class="date">Created: 2021-03-13 Sat 19:09</p>
 </div>
 </body>
 </html>

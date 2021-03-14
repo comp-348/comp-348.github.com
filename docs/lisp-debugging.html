@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-11 Wed 14:32 -->
+<!-- 2021-03-13 Sat 19:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Debugging Lisp</title>
@@ -50,7 +50,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -225,29 +225,29 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6c7e3e4">Question</a>
+<li><a href="#org4658d42">Question</a>
 <ul>
-<li><a href="#org6714ec4">SBCL</a>
+<li><a href="#orga1b792e">SBCL</a>
 <ul>
-<li><a href="#org1c8ede5"><code>--load</code></a></li>
-<li><a href="#org7afb445"><code>--script</code></a>
+<li><a href="#org763ca98"><code>--load</code></a></li>
+<li><a href="#orgb56d53b"><code>--script</code></a>
 <ul>
-<li><a href="#org4b50bc7">Trace</a></li>
-<li><a href="#orgf2afcd5">Step</a></li>
-<li><a href="#org4100628">break</a></li>
+<li><a href="#org0a20cf9">Trace</a></li>
+<li><a href="#orgc9ce14b">Step</a></li>
+<li><a href="#org9234fa7">break</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org3611bc7">Portacle/Emacs</a></li>
-<li><a href="#orgaa1533c">Conclusion</a></li>
+<li><a href="#org82f72f7">Portacle/Emacs</a></li>
+<li><a href="#org0df50dd">Conclusion</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div class="org-center">
-<div class="header" id="org65cb02d">
+<div class="header" id="org2bbbfa6">
 <p>
 <a href="index.html">Back</a>
 </p>
@@ -255,18 +255,18 @@
 </div>
 </div>
 
-<div class="toggle" id="org726f26a">
+<div class="toggle" id="orgf59a42d">
 
-<div id="orgbfcdeba" class="figure">
+<div id="orgac92816" class="figure">
 <p><img src="assets/toggle-theme.png" alt="toggle-theme.png">
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-org6c7e3e4" class="outline-2">
-<h2 id="org6c7e3e4">Question</h2>
-<div class="outline-text-2" id="text-org6c7e3e4">
+<div id="outline-container-org4658d42" class="outline-2">
+<h2 id="org4658d42">Question</h2>
+<div class="outline-text-2" id="text-org4658d42">
 <p>
 How do I debug a Lisp program?
 </p>
@@ -285,23 +285,23 @@ SBCL.
 </p>
 </div>
 
-<div id="outline-container-org6714ec4" class="outline-3">
-<h3 id="org6714ec4">SBCL</h3>
-<div class="outline-text-3" id="text-org6714ec4">
+<div id="outline-container-orga1b792e" class="outline-3">
+<h3 id="orga1b792e">SBCL</h3>
+<div class="outline-text-3" id="text-orga1b792e">
 <p>
 If you&rsquo;re using vscode, Atom, Sublime, Vim, etc., then you&rsquo;re likely just running your Lisp from your
 terminal. The way that you&rsquo;re able to debug is going to be partly dependent on how you&rsquo;re executing
-your code. If you&rsquo;re running it interactively, then refer to the <a href="#org924007e"><code>--load</code></a> section, if you&rsquo;re
-executing it like a script, then refer to the <a href="#orgcd2b436"><code>--script</code></a> section.
+your code. If you&rsquo;re running it interactively, then refer to the <a href="#orge22edfa"><code>--load</code></a> section, if you&rsquo;re
+executing it like a script, then refer to the <a href="#org9d259f7"><code>--script</code></a> section.
 </p>
 
 <p>
-<a id="org924007e"></a>
+<a id="orge22edfa"></a>
 </p>
 </div>
-<div id="outline-container-org1c8ede5" class="outline-4">
-<h4 id="org1c8ede5"><code>--load</code></h4>
-<div class="outline-text-4" id="text-org1c8ede5">
+<div id="outline-container-org763ca98" class="outline-4">
+<h4 id="org763ca98"><code>--load</code></h4>
+<div class="outline-text-4" id="text-org763ca98">
 <p>
 If you&rsquo;re using <code>--load</code>, then whenever you encounter an error, SBCL will give you several options for
 how you want to proceed. For example:
@@ -356,13 +356,13 @@ Everything relevant in the next section is also applicable when using <code>--lo
 </p>
 
 <p>
-<a id="orgcd2b436"></a>
+<a id="org9d259f7"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org7afb445" class="outline-4">
-<h4 id="org7afb445"><code>--script</code></h4>
-<div class="outline-text-4" id="text-org7afb445">
+<div id="outline-container-orgb56d53b" class="outline-4">
+<h4 id="orgb56d53b"><code>--script</code></h4>
+<div class="outline-text-4" id="text-orgb56d53b">
 <p>
 When using <code>--script</code>, SBCL will simply evaluate your entire program and then quit. This gives you
 less opportunity to interact with your program the same way as you do when using <code>--load</code>. Because of
@@ -398,9 +398,9 @@ is that the condition on the <code>if</code> is inverted. Let&rsquo;s see how we
 </div>
 </div>
 
-<div id="outline-container-org4b50bc7" class="outline-5">
-<h5 id="org4b50bc7">Trace</h5>
-<div class="outline-text-5" id="text-org4b50bc7">
+<div id="outline-container-org0a20cf9" class="outline-5">
+<h5 id="org0a20cf9">Trace</h5>
+<div class="outline-text-5" id="text-org0a20cf9">
 <p>
 The first tool we&rsquo;ll use is <code>trace</code>. We can set up trace to watch a specific function and then print
 out the call stack that happens when we call that function. So let&rsquo;s set up <code>trace</code> to trace a call to
@@ -452,9 +452,9 @@ see a little more in depth what&rsquo;s going on.
 </div>
 </div>
 
-<div id="outline-container-orgf2afcd5" class="outline-5">
-<h5 id="orgf2afcd5">Step</h5>
-<div class="outline-text-5" id="text-orgf2afcd5">
+<div id="outline-container-orgc9ce14b" class="outline-5">
+<h5 id="orgc9ce14b">Step</h5>
+<div class="outline-text-5" id="text-orgc9ce14b">
 <p>
 The other tool that we can use is <code>step</code>. Step is more like the type of interactive debugger that
 you&rsquo;d use for Java. You can use <code>step</code> simply by wrapping your function call in a call to the <code>step</code>
@@ -490,8 +490,8 @@ through some of the most important options:
 </div>
 
 <ul class="org-ul">
-<li><a id="org8f055a3"></a><code>step</code><br>
-<div class="outline-text-6" id="text-org8f055a3">
+<li><a id="org73d79e5"></a><code>step</code><br>
+<div class="outline-text-6" id="text-org73d79e5">
 <p>
 The aptly named <code>step</code> will allow us to step into the function call to see what&rsquo;s going on. To use
 this, we simply type <code>step</code> into the prompt. In this case, we&rsquo;ll get the following when calling <code>step</code>:
@@ -514,8 +514,8 @@ So it&rsquo;ll step into the function call and evaluate it, the return you back 
 </div>
 </li>
 
-<li><a id="orgbff092f"></a><code>list-locals</code><br>
-<div class="outline-text-6" id="text-orgbff092f">
+<li><a id="orga7c1b98"></a><code>list-locals</code><br>
+<div class="outline-text-6" id="text-orga7c1b98">
 <p>
 This option does exactly what it says, it allows us to list all of the variables so that we can see
 their values at a certain point:
@@ -533,8 +533,8 @@ So here we can see the value of our parameter <code>lst</code>.
 </div>
 </li>
 
-<li><a id="org1b68787"></a><code>source</code> and <code>print</code><br>
-<div class="outline-text-6" id="text-org1b68787">
+<li><a id="org7f76f1d"></a><code>source</code> and <code>print</code><br>
+<div class="outline-text-6" id="text-org7f76f1d">
 <p>
 <code>source</code> and <code>print</code> allow us to inspect the function call so that we can see what&rsquo;s being passed to
 it. We can use both of them like so:
@@ -556,8 +556,8 @@ Both of them will be used in similar ways, and which one you use just depends on
 </div>
 </li>
 
-<li><a id="org2763102"></a><code>next</code><br>
-<div class="outline-text-6" id="text-org2763102">
+<li><a id="orgdfe7ff7"></a><code>next</code><br>
+<div class="outline-text-6" id="text-orgdfe7ff7">
 <p>
 We can use <code>next</code> to inspect the next function call. For example:
 </p>
@@ -587,9 +587,9 @@ I&rsquo;ll update this page once I figure out more about how to effectively use 
 </ul>
 </div>
 
-<div id="outline-container-org4100628" class="outline-5">
-<h5 id="org4100628">break</h5>
-<div class="outline-text-5" id="text-org4100628">
+<div id="outline-container-org9234fa7" class="outline-5">
+<h5 id="org9234fa7">break</h5>
+<div class="outline-text-5" id="text-org9234fa7">
 <p>
 The last thing that we&rsquo;ll look into is using <code>break</code> to debug. This allows us to set breakpoints in
 our code that we&rsquo;ll stop at like in Java. When using <code>break</code> it allows us to control where we set our
@@ -600,9 +600,9 @@ breakpoints inside functions, and then step through similarly to when using <cod
 </div>
 </div>
 
-<div id="outline-container-org3611bc7" class="outline-3">
-<h3 id="org3611bc7">Portacle/Emacs</h3>
-<div class="outline-text-3" id="text-org3611bc7">
+<div id="outline-container-org82f72f7" class="outline-3">
+<h3 id="org82f72f7">Portacle/Emacs</h3>
+<div class="outline-text-3" id="text-org82f72f7">
 <p>
 If you&rsquo;re using Portacle, then you&rsquo;re likely using <a href="https://common-lisp.net/project/slime/">SLIME</a> for executing your Lisp. SLIME is pretty
 advanced, so I think you&rsquo;ll have better luck reading through their <a href="https://common-lisp.net/project/slime/#documentation">documentation</a> and tutorials
@@ -612,9 +612,9 @@ that they provide on the site.
 </div>
 
 
-<div id="outline-container-orgaa1533c" class="outline-3">
-<h3 id="orgaa1533c">Conclusion</h3>
-<div class="outline-text-3" id="text-orgaa1533c">
+<div id="outline-container-org0df50dd" class="outline-3">
+<h3 id="org0df50dd">Conclusion</h3>
+<div class="outline-text-3" id="text-org0df50dd">
 <p>
 As you can see, there&rsquo;s lots of ways that we can debug in Common Lisp using the command line. Of
 course, simply using <code>print</code> works too, but sometimes you just really want to use a debugger depending
@@ -627,7 +627,7 @@ on what the problem is.
 <div id="postamble" class="status">
 <p class="author">Author: Philip Dumaresq</p>
 <p class="email">Email: <a href="mailto:phdumaresq@protonmail.com">phdumaresq@protonmail.com</a></p>
-<p class="date">Created: 2020-11-11 Wed 14:32</p>
+<p class="date">Created: 2021-03-13 Sat 19:09</p>
 </div>
 </body>
 </html>
